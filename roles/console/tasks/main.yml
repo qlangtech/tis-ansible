@@ -1,0 +1,34 @@
+---
+# tasks file for console
+- name: copy tar
+  copy:
+     src: "{{tis_release_dir}}/{{item}}"
+     dest: /tmp/
+  with_items:
+     - "tis.tar.gz"
+- name: delete history tis.tar.gz
+  file:
+      path: /tmp/tis
+      state: absent
+- name: untar
+  unarchive:
+     src: /tmp/tis.tar.gz
+     dest: /tmp/
+     remote_src: yes
+- name: synchroniz tis
+  shell: |
+       rsync --delete -r /tmp/tis/ /opt/app/spring-boot/tis
+       exit 0
+- name: copy config.properties
+  template:
+     src: template/{{item}}.j2
+     dest: /opt/app/spring-boot/tis/conf/tis-web-config/{{item}}
+  with_items:
+     - "config.properties"
+     - "hdfs-site.xml"
+- name: path owner set
+  file:
+     path: /opt/app/spring-boot/tis
+     owner: spring-boot
+     group: spring-boot
+     recurse: yes

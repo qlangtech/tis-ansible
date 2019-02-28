@@ -1,0 +1,20 @@
+---
+# tasks file for solrhome
+  - file:
+      path: /opt/data/solrhome
+      owner: spring-boot  
+      state: directory
+  - name: copy solr.xml 
+    copy:
+     src: ./files/solrhome/{{item}}
+     dest: /opt/data/solrhome/
+     owner: spring-boot
+    with_items:
+     - "solr.xml"
+  - name: copy app.info
+    copy:
+     src: /opt/data/tiscode/solrhome/{{item}}
+     dest: /opt/app/
+     owner: spring-boot
+    with_items:
+     - "app.info"

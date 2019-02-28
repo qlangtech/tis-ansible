@@ -1,0 +1,69 @@
+---
+# tasks file for assemble
+  - file:
+     path: /opt/data/spring-boot
+     owner: spring-boot
+     state: directory
+  - file:
+     path: /opt/data/flume
+     owner: spring-boot
+     state: directory
+  - name: deploy dir-hdfs20.tar
+    synchronize:
+       src: ./files/dir-hdfs20
+       dest: "/opt/data/spring-boot/"
+       delete: yes
+  - name: copy tis-assemble 
+    copy:
+     src: "{{tis_release_dir}}/{{item}}"
+     dest: /tmp/
+    with_items:
+     - "tis-assemble.tar.gz"
+  - name: copy assemble.properties
+    copy:
+     src: "./files/assemble.properties"
+     dest: /opt/data/spring-boot/
+     force: no
+  - name: delete history tar.gz
+    file:
+      path: /tmp/tis-assemble
+      state: absent
+  - name: untar
+    unarchive:
+      src: /tmp/tis-assemble.tar.gz
+      dest: /tmp/
+      remote_src: yes
+  - name: install rsync
+    yum:
+      name: "{{packages}}"
+    vars:
+      packages:
+      - rsync
+      - java
+  - name: synchroniz assemble
+    synchronize:
+       src: /tmp/tis-assemble/
+       dest: /opt/app/spring-boot/tis-assemble
+       delete: yes
+       recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
+  - name: mkdir tis-web-config
+    file:
+     path: /opt/app/spring-boot/tis/conf/tis-web-config
+     state: directory
+  - name: copy config.properties
+    template:
+     src: template/{{item}}.j2
+     dest: /opt/app/spring-boot/tis/conf/tis-web-config/{{item}}
+    with_items:
+     - "config.properties"
+     - "hdfs-site.xml"
+  - name: path owner set
+    file:
+     path: "{{item}}"
+     owner: spring-boot
+     group: spring-boot
+     recurse: yes
+    with_items:
+     - "/opt/app/spring-boot/tis-assemble"
+     - "/opt/data/spring-boot"

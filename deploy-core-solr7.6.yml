@@ -1,0 +1,61 @@
+---
+- name: build dumpcenter
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: git pull
+    git:
+     repo: 'git@github.com:baisui1981/tis.git'
+     dest: /opt/data/tiscode/tis
+     version: '{{git_branch}}'
+  
+  - name: copy compile shell script
+    copy: src=compile.sh dest=/opt/data/tiscode/tis mode=u+rwx
+
+  - name: compile and package
+    command: ./compile.sh {{runtime}} solr
+    args:
+     chdir: /opt/data/tiscode/tis
+
+- name: synchronize jars
+  hosts: "solr7.6"
+  become: yes
+  become_method: sudo
+  tags: deploy
+  tasks:
+  - name: copy tar 
+    copy:
+     src: /opt/data/tiscode/tis/{{item}}
+     dest: /tmp/
+    with_items:
+     - "solr.tar.gz"
+  - name: delete history tar.gz
+    file:
+      path: /tmp/solr
+      state: absent
+  - name: untar
+    unarchive:
+      src: /tmp/solr.tar.gz
+      dest: /tmp/
+      remote_src: yes
+  - name: synchroniz solr
+    synchronize:
+     src: /tmp/solr/
+     dest: /opt/app/spring-boot/solr
+     delete: yes
+     recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
+  - name: copy config.properties
+    template:
+     src: template/{{item}}.j2
+     dest: /opt/app/spring-boot/tis/conf/tis-web-config/{{item}}
+    with_items:
+     - "config.properties"
+     - "hdfs-site.xml"
+  - name: path owner set
+    file:
+     path: /opt/app/spring-boot/solr
+     owner: spring-boot
+     group: spring-boot
+     recurse: yes

@@ -1,0 +1,37 @@
+[tis-prod]
+
+[assemblehost]
+10.68.11.178
+
+[buildtask]
+10.68.11.31
+#10.68.10.140
+
+[solr6-kr]
+10.68.11.165
+10.68.13.166
+#10.68.10.100
+#10.68.13.35
+
+[solr5-kr]
+10.68.11.64
+10.68.13.5
+
+[assemblehost:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
+ansible_ssh_user=centos
+
+[buildtask:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
+ansible_ssh_user=centos
+
+[solr5-kr:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
+ansible_ssh_user=centos
+
+[solr6-kr:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
+ansible_ssh_user=centos
+
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

@@ -1,0 +1,33 @@
+---
+# tasks file for spring-boot
+  - name: add spring-boot user
+    user:
+      name: spring-boot
+  - name: copy springboot config
+    copy:
+     src: ./files/springboot/{{item}}
+     dest: /opt/app/spring-boot/
+     owner: spring-boot
+    with_items:
+     - "spring-boot.conf"
+     - "env.conf"
+  - name: copy spring-boot script
+    copy:
+     src: ./files/springboot/{{item}}
+     dest: /etc/init.d/
+     owner: spring-boot
+    with_items:
+     - "spring-boot"
+  - name: install jdk..
+    yum:
+      name: "{{packages}}"
+    vars:
+      packages:
+      - rsync
+      - java-1.8.0-openjdk-devel
+      - java-1.6.0-openjdk
+      - nmap.x86_64
+  - name: restart spring-boot
+    service:
+     name: spring-boot
+     state: restarted

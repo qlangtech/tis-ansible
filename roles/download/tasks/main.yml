@@ -1,0 +1,18 @@
+---
+# tasks file for download
+- name: Create Tmp Dir
+  file: 
+   path: "{{tis_release_dir}}"
+   state: directory
+ 
+- name: Download Release Package
+  get_url:
+    url: "{{release_repository}}/{{item}}"
+    dest: "{{tis_release_dir}}/{{item}}"
+  with_items:
+    - "solr.tar.gz"
+    - "tis-assemble.tar.gz"
+    - "tis-cluster-status-collect.tar.gz"
+    - "tis-index-builder.tar.gz"
+    - "tis.tar.gz"
+    

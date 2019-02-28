@@ -1,0 +1,11 @@
+---
+- name: build dumpcenter
+  hosts: localhost
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Dump tis db
+    mysql_db:
+      state: dump
+      name: tis_console
+      target: /tmp/tis_db.sql
