@@ -11,19 +11,19 @@
       dest: "/tmp/{{item}}"
     with_items:
       - "{{mvn_zip_package_name}}"
-    when: ismvndeploy|failed
+    when: ismvndeploy is failed
     
   - name: deploy maven builder
     unarchive:
       src: '/tmp/{{mvn_zip_package_name}}'
       dest: '{{mvn_home}}'
       remote_src: yes
-    when: ismvndeploy|failed
+    when: ismvndeploy is failed
     
   - template:
      src: template/settings.xml.j2
      dest: '{{mvn_home}}/conf/settings.xml'
-    when: ismvndeploy|failed
+    when: ismvndeploy is failed
    
   - name: mkdir
     file:
