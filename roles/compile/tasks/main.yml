@@ -27,7 +27,7 @@
    
   - name: mkdir
     file:
-     path: {{src_dir}}
+     path: "{{src_dir}}"
      state: directory
 
   - name: git pull
