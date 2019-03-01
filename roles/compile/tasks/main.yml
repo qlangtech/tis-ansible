@@ -45,4 +45,4 @@
   - name: compile and package
     command: ./compile.sh {{runtime}} {{appname}}
     args:
-     chdir: {{src_dir}}
+     chdir: "{{src_dir}}"
