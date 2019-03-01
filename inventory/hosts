@@ -1,37 +1,49 @@
-[tis-prod]
 
-[assemblehost]
-10.68.11.178
 
-[buildtask]
-10.68.11.31
-#10.68.10.140
 
-[solr6-kr]
-10.68.11.165
-10.68.13.166
-#10.68.10.100
-#10.68.13.35
 
-[solr5-kr]
-10.68.11.64
-10.68.13.5
 
-[assemblehost:vars]
-#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
-ansible_ssh_user=centos
+[tis-console]
+10.1.29.227
 
-[buildtask:vars]
-#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
-ansible_ssh_user=centos
+[assemble]
+10.1.29.64
 
-[solr5-kr:vars]
-#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
-ansible_ssh_user=centos
+[buildtask-overseer]
+10.1.27.162
 
-[solr6-kr:vars]
-#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q centos@13.209.174.34 -p 22" -o StrictHostKeyChecking=no'
-ansible_ssh_user=centos
+[buildtask-worker]
+10.1.28.176
+
+[solr7.6]
+10.1.25.214
+
+[assemble:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q baisui@10.5.0.2 -p 22" -o StrictHostKeyChecking=no'
+#ansible_ssh_user=baisui
+ansible_ssh_user=root
+
+#[buildtask:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q baisui@10.5.0.2 -p 22" -o StrictHostKeyChecking=no'
+#ansible_ssh_user=root
+
+[solr7.6:vars]
+#ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q baisui@10.5.0.2 -p 22" -o StrictHostKeyChecking=no'
+ansible_ssh_user=root
+
 
 [all:vars]
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+git_src=git@github.com:baisui1981/tis.git
+git_branch=master
+runtime=daily
+
+task_worker_memory=400m
+tis_online_repository=
+hdfs_namenode_ha1=10.1.21.131
+hdfs_namenode_ha2=10.1.21.141
+
+tisconsole_db_url=127.0.0.1
+tisconsole_db_username=root
+tisconsole_db_password=root
+tisconsole_db_dbname=tis_console

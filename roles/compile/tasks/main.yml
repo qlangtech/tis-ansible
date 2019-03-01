@@ -1,2 +1,48 @@
 ---
 # tasks file for compile
+  - name: judge maven is deployed
+    shell: ls {{mvn_home}}/conf/setting.xml
+    ignore_errors: True
+    register: ismvndeploy
+    
+  - name: get maven package
+    get_url:
+      url: "{{release_repository}}/{{item}}"
+      dest: "/tmp/{{item}}"
+    with_items:
+      - "{{mvn_zip_package_name}}"
+    when: ismvndeploy|succeeded
+    
+  - name: deploy maven builder
+    unarchive:
+      src: '/tmp/{{mvn_zip_package_name}}'
+      dest: '{{mvn_home}}'
+      remote_src: yes
+    when: ismvndeploy|succeeded
+    
+  - template:
+     src: template/settings.xml.j2
+     dest: '{{mvn_home}}/conf/settings.xml'
+    when: ismvndeploy|succeeded
+   
+  - name: mkdir
+    file:
+     path: {{src_dir}}
+     state: directory
+
+  - name: git pull
+    git:
+     repo: '{{git_src}}'
+     dest: '{{src_dir}}'
+     version: '{{git_branch}}'
+  
+  - name: copy compile shell script
+    copy: src=compile.sh dest='{{src_dir}}' mode=u+rwx
+    template:
+     src: template/compile.sh.j2
+     dest: '{{src_dir}}/compile.sh'
+
+  - name: compile and package
+    command: ./compile.sh {{runtime}} {{appname}}
+    args:
+     chdir: {{src_dir}}

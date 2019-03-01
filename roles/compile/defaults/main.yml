@@ -1,2 +1,8 @@
 ---
 # defaults file for compile
+git_src: git@github.com:baisui1981/tis.git
+src_dir: /opt/data/tiscode/tis
+mvn_home: /opt/app/apache-maven-3.3.9
+appname: all
+mvn_zip_package_name: apache-maven-3.3.3.zip
+mvn_local_repo: /opt/data/mvn_repository
