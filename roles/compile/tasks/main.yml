@@ -12,7 +12,12 @@
     with_items:
       - "{{mvn_zip_package_name}}"
     when: ismvndeploy is failed
-    
+  
+  - name: make {{mvn_home}}
+    file:
+     path: "{{mvn_home}}"
+     state: directory
+  
   - name: deploy maven builder
     unarchive:
       src: '/tmp/{{mvn_zip_package_name}}'
