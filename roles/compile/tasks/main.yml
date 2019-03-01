@@ -37,10 +37,10 @@
      version: '{{git_branch}}'
   
   - name: copy compile shell script
-    copy: src=compile.sh dest='{{src_dir}}' mode=u+rwx
     template:
      src: template/compile.sh.j2
      dest: '{{src_dir}}/compile.sh'
+     mode: u+rwx
 
   - name: compile and package
     command: ./compile.sh {{runtime}} {{appname}}
