@@ -5,10 +5,13 @@
     ignore_errors: True
     register: ismvndeploy
     
-  - name: make {{mvn_home}}
+  - name: make {{mvn_local_repo}} {{mvn_home}}
     file:
-     path: "{{mvn_home}}"
+     path: "{{item}}"
      state: directory
+    with_items:
+     - "{{mvn_local_repo}}"
+     - "{{mvn_home}}"
     when: ismvndeploy is failed
   
   - name: deploy maven builder
@@ -16,6 +19,12 @@
       src: '{{release_repository}}/{{mvn_zip_package_name}}'
       dest: '{{mvn_parent_dir}}'
       remote_src: yes
+    when: ismvndeploy is failed
+  
+  - name: make sh mvn mode
+    file:
+     path: "{{mvn_home}}/bin/mvn"
+     mode: u+rwx
     when: ismvndeploy is failed
     
   - template:
