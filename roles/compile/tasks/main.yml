@@ -5,23 +5,16 @@
     ignore_errors: True
     register: ismvndeploy
     
-  - name: get maven package
-    get_url:
-      url: "{{release_repository}}/{{item}}"
-      dest: "/tmp/{{item}}"
-    with_items:
-      - "{{mvn_zip_package_name}}"
-    when: ismvndeploy is failed
-  
   - name: make {{mvn_home}}
     file:
      path: "{{mvn_home}}"
      state: directory
+    when: ismvndeploy is failed
   
   - name: deploy maven builder
     unarchive:
-      src: '/tmp/{{mvn_zip_package_name}}'
-      dest: '{{mvn_home}}'
+      src: '{{release_repository}}/{{mvn_zip_package_name}}'
+      dest: '{{mvn_parent_dir}}'
       remote_src: yes
     when: ismvndeploy is failed
     
