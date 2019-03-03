@@ -1,42 +1,9 @@
 ---
-- name: compile tis release tar package
+- name: compile tis src tar package
   vars_files:
    - vars.yml
   hosts: localhost
   roles:
    - role: compile
   
-- name: deploy tis_console
-  vars_files:
-   - vars.yml
-  hosts: tis-console
-  roles:
-   - role: console
-   
-- name: deploy assemble
-  vars_files:
-   - vars.yml
-  hosts: assemble
-  roles:
-   - role: assemble
 
-- name: deploy taskcenter
-  vars_files:
-   - vars.yml
-  hosts: buildtask-overseer
-  roles:
-   - role: taskcenter
-
-- name: deploy taskcenter-worker
-  vars_files:
-   - vars.yml
-  hosts: buildtask-worker
-  roles:
-   - role: taskcenter-worker
-
-- name: deploy solr-core
-  vars_files:
-   - vars.yml
-  hosts: solr7.6
-  roles:
-   - role: solr_core
