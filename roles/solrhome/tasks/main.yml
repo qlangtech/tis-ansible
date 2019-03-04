@@ -13,7 +13,7 @@
      - "solr.xml"
   - name: copy app.info
     copy:
-     src: /opt/data/tiscode/solrhome/{{item}}
+     src: ./files/solrhome/{{item}}
      dest: /opt/app/
      owner: spring-boot
     with_items:

@@ -6,6 +6,6 @@
   roles:
    - role: compile
    
-- include: install_struct.yml
+- import_playbook: install_struct.yml
   
 
