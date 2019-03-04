@@ -54,7 +54,7 @@
        path: '{{src_dir}}/{{item}}' 
        state: absent
     with_lines:
-       - find {{src_dir}} -type f -name "*.tar.gz"
+       - find {{src_dir}} -type f -name "*.tar.gz" -printf '%f\n'
   
   - name: compile and package
     command: ./compile.sh {{runtime}} {{appname}}
@@ -71,13 +71,13 @@
        path: '{{tis_release_dir}}/{{item}}' 
        state: absent
     with_lines:
-       - find {{tis_release_dir}} -type f -name "*.tar.gz"
+       - find {{tis_release_dir}} -type f -name "*.tar.gz" -printf '%f\n'
   
   - name: copy to release dir
     copy:
        src: '{{src_dir}}/{{item}}'
        dest: '{{tis_release_dir}}/{{item}}'
     with_lines:
-       - find {{src_dir}} -type f -name "*.tar.gz"
+       - find {{src_dir}} -type f -name "*.tar.gz" -printf '%f\n'
      
      
