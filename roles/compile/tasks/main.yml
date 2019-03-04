@@ -63,7 +63,7 @@
      
   - name: make release dir
     file:
-     path: {{tis_release_dir}}
+     path: '{{tis_release_dir}}'
      state: directory
   
   - name: clear release dir package
