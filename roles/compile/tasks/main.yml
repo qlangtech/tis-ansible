@@ -48,8 +48,36 @@
      src: template/compile.sh.j2
      dest: '{{src_dir}}/compile.sh'
      mode: u+rwx
-
+ 
+  - name: clear old package
+    file:
+       path: '{{src_dir}}/{{item}}' 
+       state: absent
+    with_lines:
+       - find {{src_dir}} -type f -name "*.tar.gz"
+  
   - name: compile and package
     command: ./compile.sh {{runtime}} {{appname}}
     args:
      chdir: "{{src_dir}}"
+     
+  - name: make release dir
+    file:
+     path: {{tis_release_dir}}
+     state: directory
+  
+  - name: clear release dir package
+    file:
+       path: '{{tis_release_dir}}/{{item}}' 
+       state: absent
+    with_lines:
+       - find {{tis_release_dir}} -type f -name "*.tar.gz"
+  
+  - name: copy to release dir
+    copy:
+       src: '{{src_dir}}/{{item}}'
+       dest: '{{tis_release_dir}}/{{item}}'
+    with_lines:
+       - find {{src_dir}} -type f -name "*.tar.gz"
+     
+     

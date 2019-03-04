@@ -2,8 +2,10 @@
 - name: compile tis src tar package
   vars_files:
    - vars.yml
-  hosts: localhost
+  hosts: localhost      
   roles:
    - role: compile
+   
+- include: install_struct.yml
   
 
