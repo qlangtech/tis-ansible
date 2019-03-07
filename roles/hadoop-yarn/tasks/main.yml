@@ -53,9 +53,8 @@
     lineinfile: dest=/etc/hosts regexp='{{ hostvars[item]['ansible_ssh_host'] }}' line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present
     with_items: "{{groups['hadoop-yarn']}}"
   
-  - lineinfile: dest="{{hadoop_cfg_dir}}/yarn-env.sh" regexp="^export JAVA_HOME" line="export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-oracle.x86_64"
+  - lineinfile: dest="{{hadoop_cfg_dir}}/hadoop-env.sh" regexp="^export JAVA_HOME" line="export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64"
   
- 
   - name: set owner
     file:
      path: "{{hadoop_dir}}"
