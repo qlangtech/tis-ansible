@@ -1,0 +1,5 @@
+nodes:
+  - hostname: yarn-master
+    ip: 10.1.27.162
+  - hostname: yarn-slaver
+    ip: 10.1.28.176

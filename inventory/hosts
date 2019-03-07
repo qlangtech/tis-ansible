@@ -9,15 +9,20 @@
 [assemble]
 10.1.29.64
 
-[hadoop-yarn-resource-manager]
-10.1.27.162
-
-[hadoop-yarn]
-10.1.28.176
-10.1.27.162
-
 [solr7.6]
 10.1.25.214
+
+[hadoop-yarn-resource-manager]
+yarn-master ansible_ssh_host=10.1.27.162
+
+[hadoop-yarn]
+yarn-node-1 ansible_ssh_host=10.1.28.176
+
+[hadoop-yarn-resource-manager:vars]
+nodesfile=./inventory/nodesfile
+
+[hadoop-yarn:vars]
+nodesfile=./inventory/nodesfile
 
 [assemble:vars]
 #ansible_ssh_common_args='-o ProxyCommand="ssh -W %h:%p -q baisui@10.5.0.2 -p 22" -o StrictHostKeyChecking=no'
