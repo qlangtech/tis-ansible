@@ -10,7 +10,6 @@
       state: absent
     with_items:
      - "{{hadoop_dir_name}}"
-     - "{{hadoop_dir_name}}.tar.gz"
       
   - name: get hadoop tar from http repository
     get_url:
