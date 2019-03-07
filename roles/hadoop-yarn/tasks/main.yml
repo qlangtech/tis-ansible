@@ -50,7 +50,7 @@
     with_items: "{{groups['hadoop-yarn-resource-manager']}}"
     
   - name: "Build hosts file yarn slaver"
-    lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_hos'] }} {{ item }}" state=present create=yes
+    lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
     with_items: "{{groups['hadoop-yarn']}}"
   
   - lineinfile: dest="{{hadoop_cfg_dir}}/hadoop-env.sh" regexp="^export JAVA_HOME" line="export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64"
