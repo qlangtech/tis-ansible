@@ -12,7 +12,7 @@
      - "{{hadoop_dir_name}}"
      - "{{hadoop_dir_name}}.tar.gz"
       
-  - name: synchronize tar
+  - name: get hadoop tar from http repository
     get_url:
      url: "{{release_repository}}/{{item}}"
      dest: "/tmp/{{item}}"
