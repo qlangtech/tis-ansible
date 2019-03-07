@@ -1,6 +1,6 @@
 ---
 # defaults file for compile
-git_src: git@github.com:baisui1981/tis.git
+git_src: git@github.com:baisui1981/tis-solr.git
 src_dir: /opt/data/tiscode/tis
 mvn_pkg_name: apache-maven-3.3.3
 mvn_parent_dir: /opt/app

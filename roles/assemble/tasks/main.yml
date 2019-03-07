@@ -49,12 +49,12 @@
     delegate_to: "{{ inventory_hostname }}"
   - name: mkdir tis-web-config
     file:
-     path: /opt/app/spring-boot/tis/conf/tis-web-config
+     path: /opt/app/spring-boot/tis-assemble/conf/tis-web-config
      state: directory
   - name: copy config.properties
     template:
      src: template/{{item}}.j2
-     dest: /opt/app/spring-boot/tis/conf/tis-web-config/{{item}}
+     dest: /opt/app/spring-boot/tis-assemble/conf/tis-web-config/{{item}}
     with_items:
      - "config.properties"
      - "hdfs-site.xml"

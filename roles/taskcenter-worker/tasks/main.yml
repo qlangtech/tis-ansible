@@ -5,28 +5,34 @@
      path: /tmp/{{item}}
      state: absent
     with_items:
-     - "tis-index-builder"
-     - "tis-index-builder.tar.gz"
+     - "tis-index-builder-yarn"
+     - "tis-index-builder-yarn.tar.gz"
   
-  - name: copy tis-index-builder
-    copy: src="{{tis_release_dir}}/tis-index-builder.tar.gz" dest=/tmp/
+  - name: copy tis-index-builder-yarn
+    copy: src="{{tis_release_dir}}/tis-index-builder-yarn.tar.gz" dest=/tmp/
 
-  - name: unzip tis-index-builder tar
+  - name: unzip tis-index-builder-yarn tar
     unarchive:
-     src: /tmp/tis-index-builder.tar.gz
+     src: /tmp/tis-index-builder-yarn.tar.gz
      dest: /tmp/
      remote_src: yes
-
-  - name: synchronize jars in tis-index-builder
+  
+  
+  - name: make dir localJarDir
+    file: 
+     path: '{{local_jar_dir}}'
+     state: directory
+       
+  - name: synchronize jars in tis-index-builder-yarn
     synchronize:
-      src: /tmp/tis-index-builder/
-      dest: /home/admin/terminator_builder/sharelib/indexbuilder7.6
+      src: /tmp/tis-index-builder-yarn/
+      dest: '{{local_jar_dir}}'
       delete: yes
     delegate_to: "{{ inventory_hostname }}"
 
   - name: set owner
     file:
-      path: /home/admin/terminator_builder/sharelib/indexbuilder7.6
-      owner: admin
+      path: '{{local_jar_dir}}'
+      owner: spring-boot
       recurse: yes
-      group: admin
+      group: spring-boot
