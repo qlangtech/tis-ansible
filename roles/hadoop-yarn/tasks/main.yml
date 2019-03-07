@@ -59,7 +59,7 @@
  
   - name: set owner
     file:
-     path: '{{hadoop_dir}}'
-     owner: {{hadoop_user}}
-     group: {{hadoop_group}}
+     path: "{{hadoop_dir}}"
+     owner: "{{hadoop_user}}"
+     group: "{{hadoop_group}}"
      recurse: yes
