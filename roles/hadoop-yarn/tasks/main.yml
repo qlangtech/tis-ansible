@@ -47,11 +47,11 @@
       - {name: "config.properties"}
       
   - name: "Build hosts file yarn master"
-    lineinfile: dest=/etc/hosts regexp="{{ item['ansible_ssh_host']}}" line="{{  item['ansible_ssh_host'] }} {{ item }}" state=present
+    lineinfile: dest=/etc/hosts regexp="{{ hostvars[item]['ansible_ssh_host']}}" line="{{  hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present
     with_items: "{{groups['hadoop-yarn-resource-manager']}}"
     
   - name: "Build hosts file yarn slaver"
-    lineinfile: dest=/etc/hosts regexp='{{ item['ansible_ssh_host'] }}' line="{{ item['ansible_ssh_host'] }} {{ item }}" state=present
+    lineinfile: dest=/etc/hosts regexp='{{ hostvars[item]['ansible_ssh_host'] }}' line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present
     with_items: "{{groups['hadoop-yarn']}}"
   
   - lineinfile: dest="{{hadoop_cfg_dir}}/yarn-env.sh" regexp="^export JAVA_HOME" line="export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-oracle.x86_64"
