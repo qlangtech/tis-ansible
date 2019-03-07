@@ -3,7 +3,6 @@
   - name: add yarn user
     user:
      name: yarn
-     group: yarn
   
   - name: remove old file
     file:
