@@ -1,4 +1,4 @@
-- name:  get file in tis_release_dir
+- name: get file in tis_release_dir
   vars_files:
    - vars.yml
   shell: ls {{tis_release_dir}}
