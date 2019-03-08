@@ -21,6 +21,7 @@
   - shell: 'ls {{tis_release_dir}}'
     ignore_errors: True
     register: release_files
+    delegate_to: "localhost"
   - include_role:
      name: assemble
     when: release_files.stdout.find('tis-assemble.tar.gz') != -1
@@ -33,6 +34,7 @@
   - shell: 'ls {{tis_release_dir}}'
     ignore_errors: True
     register: release_files
+    delegate_to: "localhost"
   - include_role:
      name: solr_core
     when: release_files.stdout.find('solr.tar.gz') != -1
