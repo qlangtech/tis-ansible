@@ -1,5 +1,6 @@
 ---
-- include_vars: "vars.yml"
+- name: include_vars vars.yml
+  include_vars: "vars.yml"
 
 - name: compile tis src tar package
   hosts: localhost      
