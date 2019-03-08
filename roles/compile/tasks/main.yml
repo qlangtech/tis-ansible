@@ -26,7 +26,13 @@
      path: "{{mvn_home}}/bin/mvn"
      mode: u+rwx
     when: ismvndeploy is failed
-    
+  
+  - name: make log dir
+    file:
+     path: "{{mvn_home}}/conf/logging"
+     state: directory
+    when: ismvndeploy is failed
+       
   - template:
      src: template/settings.xml.j2
      dest: '{{mvn_home}}/conf/settings.xml'
