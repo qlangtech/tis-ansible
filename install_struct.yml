@@ -7,6 +7,7 @@
   - shell: 'ls {{tis_release_dir}}'
     ignore_errors: True
     register: release_files
+  - debug: var=release_files
   - include_role:
      name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
