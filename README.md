@@ -24,3 +24,5 @@ ansible solr6 -i ./inventory/kr-online -m service --become  -a "name=spring-boot
 mysqldump -d -uxx -pxxx -h127.0.0.1  tis_console > tis_console.sql
 
 the option '-d' means nodata just table struct
+
+5. 添加Role： ansible-galaxy init --init-path=roles taskcenter-worker

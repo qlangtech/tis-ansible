@@ -8,7 +8,7 @@
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
-  - debug: var=release_files
+  #- debug: var=release_files
   - include_role:
      name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
@@ -25,6 +25,19 @@
   - include_role:
      name: assemble
     when: release_files.stdout.find('tis-assemble.tar.gz') != -1
+
+- name: deploy indexbuilder
+  vars_files:
+   - vars.yml
+  hosts: hadoop-yarn
+  tasks:
+  - shell: 'ls {{tis_release_dir}}'
+    ignore_errors: True
+    register: release_files
+    delegate_to: "localhost"
+  - include_role:
+     name: index-builder
+    when: release_files.stdout.find('tis-index-builder-yarn.tar.gz') != -1
 
 - name: deploy solr-core
   hosts: solr7.6
