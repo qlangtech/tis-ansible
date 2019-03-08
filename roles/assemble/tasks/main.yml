@@ -57,6 +57,10 @@
      - "config.properties"
      - "hdfs-site.xml"
      - "yarn-site.xml"
+     
+  - name: "Build hosts file yarn master"
+    lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
+    with_items: "{{groups['hadoop-yarn-resource-manager']}}"
 
   - name: path owner set
     file:
