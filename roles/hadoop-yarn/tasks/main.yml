@@ -62,7 +62,7 @@
   - name: set nodemanager resourcemanager max heap size
     lineinfile: 
       dest: "{{hadoop_cfg_dir}}/hadoop-env.sh"
-      regexp: "^export {{item}}"
+      regexp: "^#export {{item}}"
       line: "export {{item}}={{YARN_RESOURCE_NODE_MANAGER_HEAPSIZE}}"
       state: present
     with_items:
