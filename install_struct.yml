@@ -1,10 +1,16 @@
 
+- name: judge maven is deployed
+  shell: ls {{tis_release_dir}}
+  ignore_errors: True
+  register: release_files
+
 - name: deploy tis_console
   vars_files:
    - vars.yml
   hosts: tis-console
   roles:
    - role: console
+  when: release_files.stdout.find('tis.tar.gz') != -1
    
 - name: deploy assemble
   vars_files:
@@ -12,20 +18,7 @@
   hosts: assemble
   roles:
    - role: assemble
-
-- name: deploy taskcenter
-  vars_files:
-   - vars.yml
-  hosts: buildtask-overseer
-  roles:
-   - role: taskcenter
-
-- name: deploy taskcenter-worker
-  vars_files:
-   - vars.yml
-  hosts: buildtask-worker
-  roles:
-   - role: taskcenter-worker
+  when: release_files.stdout.find('tis-assemble.tar.gz') != -1
 
 - name: deploy solr-core
   vars_files:
@@ -33,3 +26,4 @@
   hosts: solr7.6
   roles:
    - role: solr_core
+  when: release_files.stdout.find('solr.tar.gz') != -1
