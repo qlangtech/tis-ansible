@@ -44,6 +44,7 @@
       - {name: "hdfs-site.xml" }
       - {name: "yarn-site.xml"}
       - {name: "config.properties"}
+      - {name: "core-site.xml"}
       
   - name: "Build hosts file yarn master"
     lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
