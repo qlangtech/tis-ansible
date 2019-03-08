@@ -28,18 +28,14 @@
     file:
       path: /tmp/tis-assemble
       state: absent
+
   - name: untar
     unarchive:
       src: /tmp/tis-assemble.tar.gz
       dest: /tmp/
       remote_src: yes
-  - name: install rsync
-    yum:
-      name: "{{packages}}"
-    vars:
-      packages:
-      - rsync
-      - java
+
+
   - name: synchroniz assemble
     synchronize:
        src: /tmp/tis-assemble/
@@ -47,10 +43,12 @@
        delete: yes
        recursive: yes
     delegate_to: "{{ inventory_hostname }}"
+
   - name: mkdir tis-web-config
     file:
      path: /opt/app/spring-boot/tis-assemble/conf/tis-web-config
      state: directory
+
   - name: copy config.properties
     template:
      src: template/{{item}}.j2
@@ -58,6 +56,7 @@
     with_items:
      - "config.properties"
      - "hdfs-site.xml"
+
   - name: path owner set
     file:
      path: "{{item}}"

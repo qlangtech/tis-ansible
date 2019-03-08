@@ -19,6 +19,15 @@
  
   - name: 'mkdir {{sharelib_dir}}'
     file: path={{sharelib_dir}} state=directory
+  
+  - name: copy config files
+    template:
+      src: 'template/{{item.name}}.j2'
+      dest: '{{index_builder_conf_dir}}/tis-web-config/{{item.name}}'
+    with_items:
+      - {name: "hdfs-site.xml" }
+      - {name: "yarn-site.xml"}
+      - {name: "config.properties"}
       
   - name: synchronize jars in tis-index-builder
     synchronize:
