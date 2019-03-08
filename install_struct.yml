@@ -1,18 +1,12 @@
 
-- name: get file in tis_release_dir
-  hosts: localhost
-  vars_files:
-   - vars.yml
-  tasks:
-  - shell: 'ls {{tis_release_dir}}'
-    ignore_errors: True
-    register: release_files
-
 - name: deploy tis_console
   vars_files:
    - vars.yml
   hosts: tis-console
   tasks:
+  - shell: 'ls {{tis_release_dir}}'
+    ignore_errors: True
+    register: release_files
   - include_role:
      name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
@@ -22,6 +16,9 @@
    - vars.yml
   hosts: assemble
   tasks:
+  - shell: 'ls {{tis_release_dir}}'
+    ignore_errors: True
+    register: release_files
   - include_role:
      name: assemble
     when: release_files.stdout.find('tis-assemble.tar.gz') != -1
@@ -31,6 +28,9 @@
   vars_files:
    - vars.yml
   tasks:
+  - shell: 'ls {{tis_release_dir}}'
+    ignore_errors: True
+    register: release_files
   - include_role:
      name: solr_core
     when: release_files.stdout.find('solr.tar.gz') != -1
