@@ -20,6 +20,8 @@
   - name: 'mkdir {{sharelib_dir}}'
     file: path={{sharelib_dir}} state=directory
   
+  - file: state=directory path='{{index_builder_conf_dir}}/tis-web-config' 
+  
   - name: copy config files
     template:
       src: 'template/{{item.name}}.j2'
