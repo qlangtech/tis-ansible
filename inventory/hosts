@@ -13,10 +13,10 @@
 10.1.25.214
 
 [hadoop-yarn-resource-manager]
-yarn-master hostname=yarn-master ansible_ssh_host=10.1.27.162
+yarn-master ansible_ssh_host=10.1.27.162
 
 [hadoop-yarn]
-yarn-1 hostname=yarn-1 ansible_ssh_host=10.1.28.176
+yarn-1 ansible_ssh_host=10.1.5.68
 
 
 [assemble:vars]
