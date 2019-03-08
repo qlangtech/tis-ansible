@@ -59,6 +59,16 @@
      line: "export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64"
      state: present
   
+  - name: set nodemanager resourcemanager max heap size
+    lineinfile: 
+      dest: "{{hadoop_cfg_dir}}/hadoop-env.sh"
+      regexp: "^export {{item}}"
+      line: "export {{item}}={{YARN_RESOURCE_NODE_MANAGER_HEAPSIZE}}"
+      state: present
+    with_items:
+     - "YARN_RESOURCEMANAGER_HEAPSIZE"
+     - "YARN_NODEMANAGER_HEAPSIZE"
+  
   - name: set owner
     file:
      path: "{{hadoop_dir}}"

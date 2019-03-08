@@ -16,7 +16,7 @@
 yarn-master ansible_ssh_host=10.1.27.162
 
 [hadoop-yarn]
-yarn-node-1 ansible_ssh_host=10.1.28.176
+yarn-1 ansible_ssh_host=10.1.28.176
 
 
 [assemble:vars]
