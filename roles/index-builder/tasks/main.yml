@@ -1,6 +1,5 @@
 ---
 # tasks file for index-builder
----
   - name: clear local temp dir
     file:
      path: /tmp/{{item}}
