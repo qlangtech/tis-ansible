@@ -1,5 +1,5 @@
 ---
-# tasks file for compile
+# tasks file for compile  
   - name: judge maven is deployed
     shell: ls {{mvn_home}}/conf/setting.xml
     ignore_errors: True

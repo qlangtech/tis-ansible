@@ -1,7 +1,7 @@
 ---
+- include_vars: "vars.yml"
+
 - name: compile tis src tar package
-  vars_files:
-   - vars.yml
   hosts: localhost      
   roles:
    - role: compile
