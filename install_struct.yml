@@ -1,5 +1,6 @@
-
-- name: judge maven is deployed
+- name:  get file in tis_release_dir
+  vars_files:
+   - vars.yml
   shell: ls {{tis_release_dir}}
   ignore_errors: True
   register: release_files
