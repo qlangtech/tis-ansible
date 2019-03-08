@@ -1,13 +1,4 @@
 
-- name: get file in tis_release_dir
-  hosts: localhost
-  vars_files:
-   - vars.yml
-  tasks:
-   shell: 'ls {{tis_release_dir}}'
-   ignore_errors: True
-   register: release_files
-
 - name: deploy tis_console
   vars_files:
    - vars.yml
