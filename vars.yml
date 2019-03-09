@@ -1,2 +1,4 @@
-tis_release_dir: /tmp/tis-release
+tis_release_dir: '/tmp/tis-release'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
+
+hadoop_log_dirs: '/opt/logs/yarn'
