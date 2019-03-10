@@ -64,7 +64,6 @@
     vars:
       packages:
       - rsync
-      - java
   - name: synchroniz assemble
     synchronize:
        src: /tmp/tis-assemble/
