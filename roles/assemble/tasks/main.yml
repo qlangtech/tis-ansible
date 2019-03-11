@@ -4,21 +4,19 @@
      path: /opt/data/spring-boot
      owner: spring-boot
      state: directory
+
   - file:
      path: /opt/data/flume
      owner: spring-boot
      state: directory
-  - name: deploy dir-hdfs20.tar
-    synchronize:
-       src: ./files/dir-hdfs20
-       dest: "/opt/data/spring-boot/"
-       delete: yes
+
   - name: copy tis-assemble 
     copy:
      src: "{{tis_release_dir}}/{{item}}"
      dest: /tmp/
     with_items:
      - "tis-assemble.tar.gz"
+
   - name: copy assemble.properties
     copy:
      src: "./files/assemble.properties"

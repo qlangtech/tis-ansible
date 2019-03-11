@@ -49,7 +49,7 @@
   - name: copy config.properties
     template:
      src: template/{{item}}.j2
-     dest: /opt/app/spring-boot/tis/conf/tis-web-config/{{item}}
+     dest: /opt/app/spring-boot/solr/conf/tis-web-config/{{item}}
     with_items:
      - "config.properties"
      - "hdfs-site.xml"

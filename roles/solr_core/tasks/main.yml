@@ -1,2 +1,42 @@
 ---
 # tasks file for solr_core
+  - name: copy tis-assemble 
+    copy:
+     src: "{{tis_release_dir}}/{{item}}"
+     dest: /tmp/
+    with_items:
+     - "solr.tar.gz"
+  
+  - name: delete history tar.gz
+    file:
+      path: /tmp/solr
+      state: absent
+ 
+  - name: untar
+    unarchive:
+      src: /tmp/solr.tar.gz
+      dest: /tmp/
+      remote_src: yes
+ 
+  - name: synchroniz solr
+    synchronize:
+     src: /tmp/solr/
+     dest: /opt/app/spring-boot/solr
+     delete: yes
+     recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
+ 
+  - name: copy config.properties
+    template:
+     src: template/{{item}}.j2
+     dest: /opt/app/spring-boot/solr/conf/tis-web-config/{{item}}
+    with_items:
+     - "config.properties"
+     - "hdfs-site.xml"
+ 
+  - name: path owner set
+    file:
+     path: /opt/app/spring-boot/solr
+     owner: spring-boot
+     group: spring-boot
+     recurse: yes
