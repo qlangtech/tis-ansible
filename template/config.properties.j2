@@ -9,11 +9,12 @@ tis.datasource.username={{tisconsole_db_username}}
 tis.datasource.password={{tisconsole_db_password}}
 tis.datasource.dbname={{tisconsole_db_dbname}}
 
-
-
-ocClient.baseUrl=https://cloudapps.qlangtech.net:8443
-ocClient.userName=baisui
-ocClient.password=123456
+{% if ocClient_enable is defined %}
+ocClient.enable={{ocClient_enable}}
+ocClient.baseUrl={{ocClient_baseUrl}}
+ocClient.userName={{ocClient_userName}}
+ocClient.password={{ocClient_password}}
+{% endif %}
 
 assemble.host={{groups['assemble'][0]}}
 tis.host={{groups['tis-console'][0]}}

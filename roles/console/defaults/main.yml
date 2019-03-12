@@ -1,2 +1,6 @@
 ---
 # defaults file for console
+ocClient_enable: false
+ocClient_baseUrl: https://cloudapps.qlangtech.net:8443
+ocClient_userName: baisui
+ocClient_password: 123456
