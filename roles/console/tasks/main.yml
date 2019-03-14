@@ -26,6 +26,7 @@
   with_items:
      - "config.properties"
      - "hdfs-site.xml"
+     - "yarn-site.xml"
 - name: path owner set
   file:
      path: /opt/app/spring-boot/tis
