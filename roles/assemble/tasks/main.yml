@@ -41,6 +41,7 @@
        delete: yes
        recursive: yes
     delegate_to: "{{ inventory_hostname }}"
+    notify: restart spring-boot
 
   - name: mkdir tis-web-config
     file:
@@ -55,6 +56,7 @@
      - "config.properties"
      - "hdfs-site.xml"
      - "yarn-site.xml"
+    notify: restart spring-boot
      
   - name: "Build hosts file yarn master"
     lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
