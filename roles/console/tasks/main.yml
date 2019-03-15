@@ -16,9 +16,14 @@
      dest: /tmp/
      remote_src: yes
 - name: synchroniz tis
-  shell: |
-       rsync --delete -r /tmp/tis/ /opt/app/spring-boot/tis
-       exit 0
+  synchronize:
+     src: /tmp/tis/
+     dest: /opt/app/spring-boot/tis
+     delete: yes
+     recursive: yes
+  delegate_to: "{{ inventory_hostname }}"
+  notify: restart spring-boot
+  
 - name: copy config.properties
   template:
      src: template/{{item}}.j2
@@ -27,6 +32,8 @@
      - "config.properties"
      - "hdfs-site.xml"
      - "yarn-site.xml"
+  notify: restart spring-boot
+  
 - name: path owner set
   file:
      path: /opt/app/spring-boot/tis

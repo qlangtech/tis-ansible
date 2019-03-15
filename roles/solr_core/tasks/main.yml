@@ -25,6 +25,7 @@
      delete: yes
      recursive: yes
     delegate_to: "{{ inventory_hostname }}"
+    notify: restart spring-boot
  
   - name: copy config.properties
     template:
@@ -33,7 +34,8 @@
     with_items:
      - "config.properties"
      - "hdfs-site.xml"
- 
+    notify: restart spring-boot
+    
   - name: path owner set
     file:
      path: /opt/app/spring-boot/solr
