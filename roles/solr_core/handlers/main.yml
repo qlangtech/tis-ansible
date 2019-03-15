@@ -1,5 +1,4 @@
----
-# handlers file for console
+
   - name: restart spring-boot
     service:
      name: spring-boot

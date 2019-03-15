@@ -26,7 +26,3 @@
       - rsync
       - java-1.8.0-openjdk
       - nmap.x86_64
-  - name: restart spring-boot
-    service:
-     name: spring-boot
-     state: restarted
