@@ -21,6 +21,10 @@ max.yarn.cpu.cores={{max_yarn_cpu_cores}}
 max.yarn.heap.memory={{(yarn_nodemanager_resource_memorymb*0.8)|int}}
 {% endif %}
 
+{% if max_doc_make_faild_limit is defined %}
+max.doc.make.faild.limit={{max_doc_make_faild_limit}}
+{% endif %}
+
 assemble.host={{groups['assemble'][0]}}
 tis.host={{groups['tis-console'][0]}}
 yarn.resource.manager.host={{groups['hadoop-yarn-resource-manager'][0]}}
