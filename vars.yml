@@ -1,7 +1,7 @@
 tis_release_dir: '/tmp/tis-release'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 
-hadoop_log_dirs: '/opt/logs/yarn'
+
 
 # yarn容器启动分配的cpu核数
 max_yarn_cpu_cores: 6 

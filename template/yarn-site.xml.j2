@@ -26,6 +26,7 @@
     <value>{{groups['hadoop-yarn-resource-manager'][0]}}:8033</value>
   </property>
   
+  {% if yarn_nodemanager_resource_memorymb is defined %}
   <!--http://hadoop.apache.org/docs/r2.4.1/hadoop-project-dist/hadoop-common/ClusterSetup.html-->
   <property>
     <name>yarn.scheduler.minimum-allocation-mb</name>
@@ -34,23 +35,20 @@
   
   <property>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <value>{{yarn_nodemanager_resource_memorymb*0.8}}</value>
+    <value>{{int(yarn_nodemanager_resource_memorymb*0.8)}}</value>
   </property>
-  
- 
   <property>
     <name>yarn.nodemanager.resource.memory-mb</name>
     <value>{{yarn_nodemanager_resource_memorymb}}</value>
   </property>
-  
   <property>
     <name>yarn.nodemanager.log-dirs</name>
     <value>{{hadoop_log_dirs}}</value>
   </property>
-  
   <property>
     <name>yarn.nodemanager.vmem-pmem-ratio</name>
     <value>1.1</value>
   </property>
+  {% endif %}
   
 </configuration>
