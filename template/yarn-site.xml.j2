@@ -26,7 +26,7 @@
     <value>{{groups['hadoop-yarn-resource-manager'][0]}}:8033</value>
   </property>
   
-  {% if yarn_nodemanager_resource_memorymb is defined %}
+  {% if hadoop_log_dirs is defined %}
   <!--http://hadoop.apache.org/docs/r2.4.1/hadoop-project-dist/hadoop-common/ClusterSetup.html-->
   <property>
     <name>yarn.scheduler.minimum-allocation-mb</name>
