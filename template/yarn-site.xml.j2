@@ -35,7 +35,7 @@
   
   <property>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <value>{{int(yarn_nodemanager_resource_memorymb*0.8,default=0)}}</value>
+    <value>{{yarn_nodemanager_resource_memorymb*0.8 | int}}</value>
   </property>
   <property>
     <name>yarn.nodemanager.resource.memory-mb</name>

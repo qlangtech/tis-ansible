@@ -18,7 +18,7 @@ ocClient.password={{ocClient_password}}
 
 {% if yarn_nodemanager_resource_memorymb is defined %}
 max.yarn.cpu.cores={{max_yarn_cpu_cores}}
-max.yarn.heap.memory={{int(yarn_nodemanager_resource_memorymb*0.8,default=0)}}
+max.yarn.heap.memory={{yarn_nodemanager_resource_memorymb*0.8 | int}}
 {% endif %}
 
 assemble.host={{groups['assemble'][0]}}
