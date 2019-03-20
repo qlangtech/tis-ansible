@@ -1,3 +1,8 @@
 ---
 # defaults file for taskcenter
 YARN_RESOURCE_NODE_MANAGER_HEAPSIZE: 600
+
+# yarn容器启动分配的cpu核数
+max_yarn_cpu_cores: 6 
+# yarn容器启动分配的内存大小,单位M,14336为14G
+yarn_nodemanager_resource_memorymb: 14336

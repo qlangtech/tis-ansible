@@ -35,13 +35,13 @@
   <!--12G-->
   <property>
     <name>yarn.scheduler.maximum-allocation-mb</name>
-    <value>13312</value>
+    <value>{{yarn_nodemanager_resource_memorymb*0.8}}</value>
   </property>
   
   <!--14G-->
   <property>
     <name>yarn.nodemanager.resource.memory-mb</name>
-    <value>14336</value>
+    <value>{{yarn_nodemanager_resource_memorymb}}</value>
   </property>
   
   <property>

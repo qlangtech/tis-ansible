@@ -16,6 +16,11 @@ ocClient.userName={{ocClient_userName}}
 ocClient.password={{ocClient_password}}
 {% endif %}
 
+{% if yarn_nodemanager_resource_memorymb is defined %}
+max.yarn.cpu.cores={{max_yarn_cpu_cores}}
+max.yarn.heap.memory={{yarn_nodemanager_resource_memorymb*0.75}}
+{% endif %}
+
 assemble.host={{groups['assemble'][0]}}
 tis.host={{groups['tis-console'][0]}}
 yarn.resource.manager.host={{groups['hadoop-yarn-resource-manager'][0]}}

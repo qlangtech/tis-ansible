@@ -39,7 +39,6 @@ git_src=git@github.com:baisui1981/tis.git
 git_branch=master
 runtime=daily
 
-task_worker_memory=400m
 tis_online_repository=
 hdfs_namenode_ha1=10.1.21.131
 hdfs_namenode_ha2=10.1.21.141
