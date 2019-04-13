@@ -1,5 +1,5 @@
 
-  - name: restart spring-boot
+  - name: restart solr
     service:
      name: spring-boot
      state: restarted

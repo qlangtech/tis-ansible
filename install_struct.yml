@@ -49,5 +49,5 @@
     register: release_files
     delegate_to: "localhost"
   - include_role:
-     name: solr_core
+     name: solr-core
     when: release_files.stdout.find('solr.tar.gz') != -1

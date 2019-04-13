@@ -1,6 +1,10 @@
 ---
 # tasks file for solr_core
-  - name: copy tis-assemble 
+  - name: add user solr
+    user:
+      name: solr
+      group: solr
+  - name: copy solr.tar 
     copy:
      src: "{{tis_release_dir}}/{{item}}"
      dest: /tmp/
@@ -25,20 +29,29 @@
      delete: yes
      recursive: yes
     delegate_to: "{{ inventory_hostname }}"
-    notify: restart spring-boot
+    notify: restart solr
  
   - name: copy config.properties
     template:
      src: template/{{item}}.j2
-     dest: /opt/app/spring-boot/solr/conf/tis-web-config/{{item}}
+     dest: "{{solr_app_dir}}/conf/tis-web-config/{{item}}"
     with_items:
      - "config.properties"
      - "hdfs-site.xml"
-    notify: restart spring-boot
+    notify: restart solr
+    
+  - name: copy solr start script
+    template:
+     src: ./template/{{item}}.j2
+     dest: "{{solr_app_dir}}/{{item}}"
+    with_items:
+     - "solr"
+     - "solr.in.sh"
+    notify: restart solr
     
   - name: path owner set
     file:
-     path: /opt/app/spring-boot/solr
-     owner: spring-boot
-     group: spring-boot
+     path: "{{solr_app_dir}}"
+     owner: solr
+     group: solr
      recurse: yes
