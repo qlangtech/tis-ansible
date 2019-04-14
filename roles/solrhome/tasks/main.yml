@@ -1,20 +1,28 @@
 ---
 # tasks file for solrhome
+  - group: name=solr
+  - name: add user solr
+    user:
+      name: solr
+      group: solr
+  
   - file:
       path: /opt/data/solrhome
-      owner: spring-boot  
+      owner: solr  
       state: directory
+  
   - name: copy solr.xml 
     copy:
      src: ./files/solrhome/{{item}}
      dest: /opt/data/solrhome/
-     owner: spring-boot
+     owner: solr
     with_items:
      - "solr.xml"
+     
   - name: copy app.info
     copy:
      src: ./files/solrhome/{{item}}
      dest: /opt/app/
-     owner: spring-boot
+     owner: solr
     with_items:
      - "app.info"

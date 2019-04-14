@@ -1,11 +1,5 @@
 ---
 # tasks file for solr_core
-  - group: name=solr
-  - name: add user solr
-    user:
-      name: solr
-      group: solr
-      append: yes
   - name: copy solr.tar 
     copy:
      src: "{{tis_release_dir}}/{{item}}"
