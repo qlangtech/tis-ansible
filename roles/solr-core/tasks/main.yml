@@ -50,6 +50,12 @@
      - "solr"
      - "solr.in.sh"
     notify: restart solr
+  
+  - name: set solr script mode
+    file:
+     src: "{{solr_app_dir}}/solr"
+     mode: '+x'
+    notify: restart solr
     
   - name: path owner set
     file:
