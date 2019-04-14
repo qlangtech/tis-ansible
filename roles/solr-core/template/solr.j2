@@ -75,7 +75,7 @@ done
 
 SOLR_TIP=`dirname "$SOLR_SCRIPT"`/..
 SOLR_TIP=`cd "$SOLR_TIP"; pwd`
-DEFAULT_SERVER_DIR="$SOLR_TIP/server"
+DEFAULT_SERVER_DIR="$SOLR_TIP/solr"
 
 # baisui add hard code 
 SOLR_INCLUDE={{solr_app_dir}}/solr.in.sh
@@ -1693,10 +1693,10 @@ if [ -z "$SOLR_SERVER_DIR" ]; then
   SOLR_SERVER_DIR="$DEFAULT_SERVER_DIR"
 fi
 
-if [ ! -e "$SOLR_SERVER_DIR" ]; then
-  echo -e "\nSolr server directory $SOLR_SERVER_DIR not found!\n"
-  exit 1
-fi
+#if [ ! -e "$SOLR_SERVER_DIR" ]; then
+#  echo -e "\nSolr server directory $SOLR_SERVER_DIR not found!\n"
+#  exit 1
+#fi
 
 if [[ "$FG" == 'true' && "$EXAMPLE" != "" ]]; then
   FG='false'
@@ -1863,10 +1863,10 @@ fi
 
 # NOTE: If the script gets to here, then it is starting up a Solr node.
 
-if [ ! -e "$SOLR_HOME" ]; then
-  echo -e "\nSolr home directory $SOLR_HOME not found!\n"
-  exit 1
-fi
+#if [ ! -e "$SOLR_HOME" ]; then
+#  echo -e "\nSolr home directory $SOLR_HOME not found!\n"
+#  exit 1
+#fi
 if [[ $SOLR_DATA_HOME ]] && [ ! -e "$SOLR_DATA_HOME" ]; then
   echo -e "\nSolr data home directory $SOLR_DATA_HOME not found!\n"
   exit 1
