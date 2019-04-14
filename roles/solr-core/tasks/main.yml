@@ -34,9 +34,10 @@
     notify: restart solr
   
   - name: create log dir
-    file: "{{solr_log_dir}}"
-    state: directory
-    owner: solr
+    file: 
+     path: "{{solr_log_dir}}"
+     state: directory
+     owner: solr
     
   - name: copy config.properties
     template:
