@@ -1,5 +1,6 @@
 ---
 # tasks file for solr_core
+  - group: name=solr
   - name: add user solr
     user:
       name: solr
