@@ -1847,10 +1847,7 @@ if [ -z "$SOLR_LOGS_DIR" ]; then
   SOLR_LOGS_DIR="$SOLR_SERVER_DIR/logs"
 fi
 EXAMPLE_DIR="$SOLR_TIP/example"
-if [ "${SOLR_HOME:0:${#EXAMPLE_DIR}}" = "$EXAMPLE_DIR" ]; then
-  LOG4J_PROPS="$EXAMPLE_DIR/resources/log4j2.xml"
-  SOLR_LOGS_DIR="$SOLR_HOME/../logs"
-fi
+
 
 LOG4J_CONFIG=()
 if [ -n "$LOG4J_PROPS" ]; then
