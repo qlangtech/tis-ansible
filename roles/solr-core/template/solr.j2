@@ -1442,10 +1442,10 @@ if [[ "$SCRIPT_CMD" == "auth" ]]; then
   if [ -z "$SOLR_SERVER_DIR" ]; then
     SOLR_SERVER_DIR="$DEFAULT_SERVER_DIR"
   fi
-  if [ ! -e "$SOLR_SERVER_DIR" ]; then
-    echo -e "\nSolr server directory $SOLR_SERVER_DIR not found!\n"
-    exit 1
-  fi
+ # if [ ! -e "$SOLR_SERVER_DIR" ]; then
+ #   echo -e "\nSolr server directory $SOLR_SERVER_DIR not found!\n"
+ #   exit 1
+ # fi
 
   if [ -z "$SOLR_HOME" ]; then
     SOLR_HOME="$SOLR_SERVER_DIR/solr"
@@ -1778,9 +1778,9 @@ if [[ "$SCRIPT_CMD" == "stop" && -z "$SOLR_PORT" ]]; then
   exit
 fi
 
-if [ -z "$SOLR_PORT" ]; then
-  SOLR_PORT=8983
-fi
+
+SOLR_PORT=8080
+
 
 if [ -z "$STOP_PORT" ]; then
   STOP_PORT=`expr $SOLR_PORT - 1000`
@@ -1840,6 +1840,8 @@ fi
 if [ -z "$DEFAULT_CONFDIR" ]; then
   DEFAULT_CONFDIR="$SOLR_SERVER_DIR/solr/configsets/_default/conf"
 fi
+
+SOLR_LOGS_DIR="/opt/logs/solr"
 
 # This is quite hacky, but examples rely on a different log4j2.xml
 # so that we can write logs for examples to $SOLR_HOME/../logs
@@ -1943,11 +1945,6 @@ if [ "$SOLR_MODE" == 'solrcloud' ]; then
     CLOUD_MODE_OPTS+=('-Dbootstrap_confdir=./solr/collection1/conf' '-Dcollection.configName=myconf' '-DnumShards=1')
   fi
 
-else
-  if [ ! -e "$SOLR_HOME/solr.xml" ]; then
-    echo -e "\nSolr home directory $SOLR_HOME must contain a solr.xml file!\n"
-    exit 1
-  fi
 fi
 
 # These are useful for attaching remote profilers like VisualVM/JConsole
@@ -2083,17 +2080,16 @@ function launch_solr() {
   # need to launch solr from the server dir
   cd "$SOLR_SERVER_DIR"
 
-  if [ ! -e "$SOLR_SERVER_DIR/start.jar" ]; then
-    echo -e "\nERROR: start.jar file not found in $SOLR_SERVER_DIR!\nPlease check your -d parameter to set the correct Solr server directory.\n"
+  if [ ! -e "$SOLR_SERVER_DIR/solr.jar" ]; then
+    echo -e "\nERROR: solr.jar file not found in $SOLR_SERVER_DIR!\nPlease check your -d parameter to set the correct Solr server directory.\n"
     exit 1
   fi
 
   SOLR_START_OPTS=('-server' "${JAVA_MEM_OPTS[@]}" "${GC_TUNE[@]}" "${GC_LOG_OPTS[@]}" \
-    "${REMOTE_JMX_OPTS[@]}" "${CLOUD_MODE_OPTS[@]}" $SOLR_LOG_LEVEL_OPT -Dsolr.log.dir="$SOLR_LOGS_DIR" \
+    "${REMOTE_JMX_OPTS[@]}" "${CLOUD_MODE_OPTS[@]}" $SOLR_LOG_LEVEL_OPT -Dlog.dir="$SOLR_LOGS_DIR" \
     "-Djetty.port=$SOLR_PORT" "-DSTOP.PORT=$stop_port" "-DSTOP.KEY=$STOP_KEY" \
-    "${SOLR_HOST_ARG[@]}" "-Duser.timezone=$SOLR_TIMEZONE" \
-    "-Djetty.home=$SOLR_SERVER_DIR" "-Dsolr.solr.home=$SOLR_HOME" "-Dsolr.data.home=$SOLR_DATA_HOME" "-Dsolr.install.dir=$SOLR_TIP" \
-    "-Dsolr.default.confdir=$DEFAULT_CONFDIR" "${LOG4J_CONFIG[@]}" "${SOLR_OPTS[@]}")
+    "${SOLR_HOST_ARG[@]}"  \
+    "${SOLR_OPTS[@]}")
 
   if [ "$SOLR_MODE" == "solrcloud" ]; then
     IN_CLOUD_MODE=" in SolrCloud mode"
@@ -2116,12 +2112,12 @@ function launch_solr() {
   esac
 
   if [ "$run_in_foreground" == "true" ]; then
-    exec "$JAVA" "${SOLR_START_OPTS[@]}" $SOLR_ADDL_ARGS -jar start.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG
+    exec "$JAVA" "${SOLR_START_OPTS[@]}" $SOLR_ADDL_ARGS -jar solr.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG
   else
     # run Solr in the background
     nohup "$JAVA" "${SOLR_START_OPTS[@]}" $SOLR_ADDL_ARGS -Dsolr.log.muteconsole \
 	"-XX:OnOutOfMemoryError=$SOLR_TIP/bin/oom_solr.sh $SOLR_PORT $SOLR_LOGS_DIR" \
-        -jar start.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG \
+        -jar solr.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG \
 	1>"$SOLR_LOGS_DIR/solr-$SOLR_PORT-console.log" 2>&1 & echo $! > "$SOLR_PID_DIR/solr-$SOLR_PORT.pid"
 
     # check if /proc/sys/kernel/random/entropy_avail exists then check output of cat /proc/sys/kernel/random/entropy_avail to see if less than 300
@@ -2149,7 +2145,7 @@ function launch_solr() {
             exit # subshell!
           fi
         else
-          SOLR_PID=`ps auxww | grep start\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
+          SOLR_PID=`ps auxww | grep solr\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
           echo -e "\nStarted Solr server on port $SOLR_PORT (pid=$SOLR_PID). Happy searching!\n"
           exit # subshell!
         fi
