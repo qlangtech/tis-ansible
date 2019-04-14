@@ -99,9 +99,11 @@ elif [ -r "$SOLR_INCLUDE" ]; then
   . "$SOLR_INCLUDE"
 fi
 
-if [ -z "$SOLR_PID_DIR" ]; then
-  SOLR_PID_DIR="$SOLR_TIP/bin"
-fi
+SOLR_PID_DIR="{{solr_app_dir}}"
+
+#if [ -z "$SOLR_PID_DIR" ]; then
+#  SOLR_PID_DIR="$SOLR_TIP/bin"
+#fi
 
 if [ -n "$SOLR_JAVA_HOME" ]; then
   JAVA="$SOLR_JAVA_HOME/bin/java"
