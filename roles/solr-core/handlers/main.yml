@@ -1,5 +1,5 @@
 
-  - name: restart solr
-    service:
-     name: spring-boot
-     state: restarted
+- name: restart solr
+  command: sudo -u solr ./solr restart
+  args:
+    chdir: "{{solr_app_dir}}"
