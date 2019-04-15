@@ -80,7 +80,7 @@ DEFAULT_SERVER_DIR="$SOLR_TIP/solr"
 echo "SOLR_TIP:$SOLR_TIP,DEFAULT_SERVER_DIR:$DEFAULT_SERVER_DIR" >debug.log
 
 # baisui add hard code 
-SOLR_INCLUDE={{solr_app_dir}}/tis.in.sh
+SOLR_INCLUDE={{tis_app_dir}}/tis.in.sh
 
 # If an include wasn't specified in the environment, then search for one...
 if [ -z "$SOLR_INCLUDE" ]; then
@@ -771,7 +771,7 @@ function stop_solr() {
 echo "DIR:$DIR,SOLR_PORT:$SOLR_PORT,THIS_STOP_PORT:$THIS_STOP_PORT,STOP_KEY:$STOP_KEY,SOLR_PID:$SOLR_PID">>debug.log
   if [ "$SOLR_PID" != "" ]; then
     echo -e "Sending stop command to Solr running on port $SOLR_PORT ... waiting up to $SOLR_STOP_WAIT seconds to allow Jetty process $SOLR_PID to stop gracefully." >>debug.log
-    "$JAVA" $SOLR_SSL_OPTS $AUTHC_OPTS "-DSTOP.PORT=$THIS_STOP_PORT" "-DSTOP.KEY=$STOP_KEY" -jar "$DIR/{{app_name}}.jar"  --stop || true
+    "$JAVA" $SOLR_SSL_OPTS $AUTHC_OPTS "-DSTOP.PORT=$THIS_STOP_PORT" "-DSTOP.KEY=$STOP_KEY" -jar "$DIR/{{tis_app_name}}.jar"  --stop || true
       (loops=0
       while true
       do
@@ -2084,8 +2084,8 @@ function launch_solr() {
   # need to launch solr from the server dir
   cd "$SOLR_SERVER_DIR"
 
-  if [ ! -e "$SOLR_SERVER_DIR/{{app_name}}.jar" ]; then
-    echo -e "\nERROR: {{app_name}}.jar file not found in $SOLR_SERVER_DIR!\nPlease check your -d parameter to set the correct Solr server directory.\n"
+  if [ ! -e "$SOLR_SERVER_DIR/{{tis_app_name}}.jar" ]; then
+    echo -e "\nERROR: {{tis_app_name}}.jar file not found in $SOLR_SERVER_DIR!\nPlease check your -d parameter to set the correct Solr server directory.\n"
     exit 1
   fi
 
@@ -2116,12 +2116,12 @@ function launch_solr() {
   esac
 
   if [ "$run_in_foreground" == "true" ]; then
-    exec "$JAVA" "${SOLR_START_OPTS[@]}" $SOLR_ADDL_ARGS -jar {{app_name}}.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG
+    exec "$JAVA" "${SOLR_START_OPTS[@]}" $SOLR_ADDL_ARGS -jar {{tis_app_name}}.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG
   else
     # run Solr in the background
     nohup "$JAVA" "${SOLR_START_OPTS[@]}" $SOLR_ADDL_ARGS \
     "-XX:OnOutOfMemoryError=$SOLR_TIP/oom_solr.sh $SOLR_PORT $SOLR_LOGS_DIR" \
-        -jar {{app_name}}.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG \
+        -jar {{tis_app_name}}.jar "${SOLR_JETTY_CONFIG[@]}" $SOLR_JETTY_ADDL_CONFIG \
     1>"$SOLR_LOGS_DIR/solr-$SOLR_PORT-console.log" 2>&1 & echo $! > "$SOLR_PID_DIR/solr-$SOLR_PORT.pid"
 
     # check if /proc/sys/kernel/random/entropy_avail exists then check output of cat /proc/sys/kernel/random/entropy_avail to see if less than 300
@@ -2149,7 +2149,7 @@ function launch_solr() {
             exit # subshell!
           fi
         else
-          SOLR_PID=`ps auxww | grep {{app_name}}\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
+          SOLR_PID=`ps auxww | grep {{tis_app_name}}\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
           echo -e "\nStarted Solr server on port $SOLR_PORT (pid=$SOLR_PID). Happy searching!\n"
           exit # subshell!
         fi
@@ -2158,7 +2158,7 @@ function launch_solr() {
     else
       echo -e "NOTE: Please install lsof as this script needs it to determine if Solr is listening on port $SOLR_PORT."
       sleep 10
-      SOLR_PID=`ps auxww | grep {{app_name}}\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
+      SOLR_PID=`ps auxww | grep {{tis_app_name}}\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
       echo -e "\nStarted Solr server on port $SOLR_PORT (pid=$SOLR_PID). Happy searching!\n"
       return;
     fi
