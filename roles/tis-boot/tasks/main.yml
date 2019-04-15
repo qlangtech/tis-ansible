@@ -1,0 +1,26 @@
+---
+  - group: name=tis
+  - name: add user tis
+    user:
+      name: tis
+      group: tis
+      
+  - name: copy tis start script
+    template:
+     src: ./template/{{item}}.j2
+     dest: "{{tis_app_dir}}/{{item}}"
+    with_items:
+     - "tis"
+     - "tis.in.sh"
+  
+  - name: set tis script mode
+    file:
+     path: "{{tis_app_dir}}/tis"
+     mode: '+x'
+    
+  - name: path owner set
+    file:
+     path: "{{tis_app_dir}}"
+     owner: tis
+     group: tis
+     recurse: yes

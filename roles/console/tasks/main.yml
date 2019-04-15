@@ -18,11 +18,11 @@
 - name: synchroniz tis
   synchronize:
      src: /tmp/tis/
-     dest: /opt/app/spring-boot/tis
+     dest: /opt/app/spring-boot/{{tis_app_name}}
      delete: yes
      recursive: yes
   delegate_to: "{{ inventory_hostname }}"
-  notify: restart spring-boot
+  notify: restart tis-console
   
 - name: copy config.properties
   template:
@@ -32,11 +32,11 @@
      - "config.properties"
      - "hdfs-site.xml"
      - "yarn-site.xml"
-  notify: restart spring-boot
+  notify: restart tis-console
   
 - name: path owner set
   file:
-     path: /opt/app/spring-boot/tis
-     owner: spring-boot
-     group: spring-boot
+     path: /opt/app/spring-boot/{{tis_app_name}}
+     owner: tis
+     group: tis
      recurse: yes

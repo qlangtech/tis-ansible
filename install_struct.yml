@@ -1,5 +1,7 @@
 
 - name: deploy tis_console
+  vars:
+   tis_app_name: tis 
   vars_files:
    - vars.yml
   hosts: tis-console
@@ -14,6 +16,8 @@
     when: release_files.stdout.find('tis.tar.gz') != -1
    
 - name: deploy assemble
+  vars:
+   tis_app_name: tis-assemble
   vars_files:
    - vars.yml
   hosts: assemble
