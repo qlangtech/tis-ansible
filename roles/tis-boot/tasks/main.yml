@@ -13,6 +13,9 @@
      - "tis"
      - "tis.in.sh"
   
+  - debug: var=tis_app_dir
+ 
+  
   - name: set tis script mode
     file:
      path: "{{tis_app_dir}}/tis"
