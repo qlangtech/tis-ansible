@@ -6,6 +6,7 @@
       group: tis
 
   - file: path={{tis_app_dir}} state=directory
+  - file: path={{tis_log_dir}} state=directory owner=tis
       
   - name: copy tis start script
     template:
