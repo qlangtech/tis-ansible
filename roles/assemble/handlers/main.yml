@@ -1,6 +1,6 @@
 ---
 # handlers file for assemble
-  - name: restart spring-boot
+  - name: restart assemble
     service:
      name: spring-boot
      state: restarted
