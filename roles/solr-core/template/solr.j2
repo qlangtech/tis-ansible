@@ -77,6 +77,8 @@ SOLR_TIP=`dirname "$SOLR_SCRIPT"`/..
 SOLR_TIP=`cd "$SOLR_TIP"; pwd`
 DEFAULT_SERVER_DIR="$SOLR_TIP/solr"
 
+echo "SOLR_TIP:$SOLR_TIP,DEFAULT_SERVER_DIR:$DEFAULT_SERVER_DIR" >debug.log
+
 # baisui add hard code 
 SOLR_INCLUDE={{solr_app_dir}}/solr.in.sh
 
@@ -1816,7 +1818,7 @@ else
   SOLR_PID=`solr_pid_by_port "$SOLR_PORT"`
   if [ -z "$SOLR_PID" ]; then
     # not found using the pid file ... but use ps to ensure not found
-    SOLR_PID=`ps auxww | grep start\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
+    SOLR_PID=`ps auxww | grep solr\.jar | grep -w "\-Djetty\.port=$SOLR_PORT" | grep -v grep | awk '{print $2}' | sort -r`
   fi
   if [ "$SOLR_PID" != "" ]; then
     stop_solr "$SOLR_SERVER_DIR" "$SOLR_PORT" "$STOP_KEY" "$SOLR_PID"
