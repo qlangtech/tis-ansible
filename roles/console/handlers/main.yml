@@ -1,5 +1,5 @@
 ---
-- name: restart tis
+- name: restart tis-console
   command: ./tis restart
   become: yes
   become_user: tis
