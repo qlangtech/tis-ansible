@@ -2,5 +2,6 @@
   command: ./solr restart
   become: yes
   become_user: solr
-  chdir: "{{solr_app_dir}}"
+  args:
+    chdir: "{{solr_app_dir}}/"
     
