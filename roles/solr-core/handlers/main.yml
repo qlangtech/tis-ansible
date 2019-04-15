@@ -1,5 +1,7 @@
 
 - name: restart solr
   command: sudo -u solr ./solr restart
+  become: yes
+  become_user: solr
   args:
     chdir: "{{solr_app_dir}}"
