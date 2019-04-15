@@ -1,6 +1,6 @@
 
 - name: restart solr
-  command: ./solr restart
+  command: ./solr restart > restart.log
   become: yes
   become_user: solr
   args:
