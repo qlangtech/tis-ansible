@@ -4,6 +4,8 @@
     user:
       name: tis
       group: tis
+
+  - file: path={{tis_app_dir}} state=directory
       
   - name: copy tis start script
     template:
