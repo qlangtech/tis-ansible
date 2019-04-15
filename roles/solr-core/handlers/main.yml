@@ -1,6 +1,6 @@
 
 - name: restart solr
-  command: sudo -u solr ./solr restart
+  command: ./solr restart
   become: yes
   become_user: solr
   args:
