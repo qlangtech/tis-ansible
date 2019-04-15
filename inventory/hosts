@@ -43,7 +43,6 @@ tis_online_repository=
 hdfs_namenode_ha1=10.1.21.131
 hdfs_namenode_ha2=10.1.21.141
 
-tisconsole_db_url=10.1.5.68
+tisconsole_db_url=jdbc:mysql://10.1.5.68:3306/tis_console2?useUnicode=yes&amp;characterEncoding=utf8
 tisconsole_db_username=root
 tisconsole_db_password=root
-tisconsole_db_dbname=tis_console2

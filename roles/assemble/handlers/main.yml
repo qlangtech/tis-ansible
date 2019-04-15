@@ -1,6 +1,7 @@
 ---
-# handlers file for assemble
-  - name: restart assemble
-    service:
-     name: spring-boot
-     state: restarted
+- name: restart assemble
+  command: ./tis restart
+  become: yes
+  become_user: tis
+  args:
+    chdir: "{{tis_app_dir}}/"
