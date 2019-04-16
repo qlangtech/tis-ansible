@@ -13,6 +13,6 @@
     - "solr.tar.gz"
     - "tis-assemble.tar.gz"
     - "tis-cluster-status-collect.tar.gz"
-    - "tis-index-builder.tar.gz"
+    - "tis-index-builder-yarn.tar.gz"
     - "tis.tar.gz"
     
