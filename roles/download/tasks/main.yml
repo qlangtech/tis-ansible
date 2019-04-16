@@ -9,6 +9,7 @@
   get_url:
     url: "{{release_repository}}/{{item}}"
     dest: "{{tis_release_dir}}/{{item}}"
+    force: yes
   with_items:
     - "solr.tar.gz"
     - "tis-assemble.tar.gz"

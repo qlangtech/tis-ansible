@@ -18,6 +18,8 @@
       dest: /tmp/
       remote_src: yes
  
+  - file: path=/opt/app/spring-boot/solr state=directory
+  
   - name: synchroniz solr
     synchronize:
      src: /tmp/solr/
