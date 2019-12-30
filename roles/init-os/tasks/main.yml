@@ -1,0 +1,43 @@
+---
+# task file for initialize OS
+# install common software
+# enable ntpd
+# disable firewalld, selinux
+
+  - name: install basic packages
+    yum:
+      name: "{{ basic_packages }}"
+    vars:
+      basic_packages:
+      - epel-release
+      - wget
+      - lrzsz
+      - ntp
+      - bash-completion
+      - net-tools
+      - vim
+      - unzip
+
+  - name: enable ntpd service
+    service: name=ntpd state=started enabled=yes
+
+  - name: disable firewalld service
+    service: name=firewalld state=stopped enabled=no
+
+  - name: disable selinux
+    shell: setenforce 0
+  - name: disable selinux forever
+    lineinfile:
+      dest: /etc/selinux/config
+      regexp: '^SELINUX=enforcing'
+      line: 'SELINUX=disabled'
+      state: present
+
+  # use with_inventory_hostnames to set all hosts to /etc/hosts
+  - name: set hosts file
+    lineinfile:
+      dest: /etc/hosts
+      line: "{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" 
+      state: present
+      create: yes
+    with_inventory_hostnames: all

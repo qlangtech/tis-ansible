@@ -50,11 +50,15 @@
 
   - name: copy config.properties
     template:
+     src: template/hdfs-site-proxy.xml.j2
+     dest: /opt/app/spring-boot/tis-assemble/conf/tis-web-config/hdfs-site.xml
+
+  - name: copy config.properties
+    template:
      src: template/{{item}}.j2
      dest: /opt/app/spring-boot/tis-assemble/conf/tis-web-config/{{item}}
     with_items:
      - "config.properties"
-     - "hdfs-site.xml"
      - "yarn-site.xml"
     notify: restart assemble
      

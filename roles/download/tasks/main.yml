@@ -7,13 +7,20 @@
  
 - name: Download Release Package
   get_url:
-    url: "{{release_repository}}/{{item}}"
-    dest: "{{tis_release_dir}}/{{item}}"
+    url: "{{ release_repository }}/{{ item.name }}"
+    dest: "{{ tis_release_dir }}/{{ item.name }}"
     force: yes
+  when: item.when
   with_items:
-    - "solr.tar.gz"
-    - "tis-assemble.tar.gz"
-    - "tis-cluster-status-collect.tar.gz"
-    - "tis-index-builder-yarn.tar.gz"
-    - "tis.tar.gz"
-    
+    - {name: "solr.tar.gz", when: True}
+    - {name: "tis-assemble.tar.gz", when: True}
+    - {name: "tis-cluster-status-collect.tar.gz", when: True}
+    - {name: "tis-index-builder-yarn.tar.gz", when: True}
+    - {name: "tis.tar.gz", when: True}
+    - {name: "{{ java_gz_file_name }}", when: True}
+    - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }
+    - {name: "{{ hadoop_gz_file_name }}", when: "{{ need_install_hadoop }}" }
+    - {name: "{{ spark_scala_gz_file_name }}", when: "{{ need_install_hadoop and need_install_spark }}" }
+    - {name: "{{ spark_gz_file_name }}", when: "{{ need_install_hadoop and need_install_spark }}" }
+    - {name: "{{ spark_tispark_jar_file_name }}", when: "{{ need_install_hadoop and need_install_spark and need_install_tispark }}" }
+    - {name: "{{ spark_thriftserver_jar_file_name }}", when: "{{ need_install_hadoop and need_install_spark and need_install_spark_shuffle }}" }

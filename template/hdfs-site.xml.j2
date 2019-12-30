@@ -1,96 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
 
 <configuration>
+  <!--NameNode存储元数据的目录 -->
   <property>
-    <name>dfs.nameservices</name>
-    <value>cluster-cdh</value>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:/opt/data/hadoop/name</value>
   </property>
+
+  <!--DataNode存储数据块的目录-->
   <property>
-    <name>dfs.client.failover.proxy.provider.cluster-cdh</name>
-    <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+    <name>dfs.datanode.data.dir</name>
+    <value>file:/opt/data/hadoop/data</value>
   </property>
-  <property>
-    <name>dfs.ha.automatic-failover.enabled.cluster-cdh</name>
-    <value>true</value>
-  </property>
-  <property>
-    <name>dfs.ha.namenodes.cluster-cdh</name>
-    <value>namenode1,namenode2</value>
-  </property>
-  <property>
-    <name>dfs.namenode.rpc-address.cluster-cdh.namenode1</name>
-    <value>{{hdfs_namenode_ha1}}:8020</value>
-  </property>
-  <property>
-    <name>dfs.namenode.servicerpc-address.cluster-cdh.namenode1</name>
-    <value>{{hdfs_namenode_ha1}}:8022</value>
-  </property>
-  <property>
-    <name>dfs.namenode.http-address.cluster-cdh.namenode1</name>
-    <value>{{hdfs_namenode_ha1}}:50070</value>
-  </property>
-  <property>
-    <name>dfs.namenode.https-address.cluster-cdh.namenode1</name>
-    <value>{{hdfs_namenode_ha1}}:50470</value>
-  </property>
-  <property>
-    <name>dfs.namenode.rpc-address.cluster-cdh.namenode2</name>
-    <value>{{hdfs_namenode_ha2}}:8020</value>
-  </property>
-  <property>
-    <name>dfs.namenode.servicerpc-address.cluster-cdh.namenode2</name>
-    <value>{{hdfs_namenode_ha2}}:8022</value>
-  </property>
-  <property>
-    <name>dfs.namenode.http-address.cluster-cdh.namenode2</name>
-    <value>{{hdfs_namenode_ha2}}:50070</value>
-  </property>
-  <property>
-    <name>dfs.namenode.https-address.cluster-cdh.namenode2</name>
-    <value>{{hdfs_namenode_ha2}}:50470</value>
-  </property>
+
+  <!--指定HDFS的副本数量-->
   <property>
     <name>dfs.replication</name>
-    <value>3</value>
+    <value>2</value>
   </property>
+
+  <!--开启HDFS的WEB管理界面功能-->
   <property>
-    <name>dfs.blocksize</name>
-    <value>134217728</value>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
   </property>
+
+  <!--指定HDFS的nameservice为aim，需要和core-site.xml中的保持一致 -->
   <property>
-    <name>dfs.client.use.datanode.hostname</name>
-    <value>false</value>
+    <name>dfs.nameservices</name>
+    <value>{{ groups['hadoop-hdfs-namenode'][0] }}</value>
   </property>
+  
   <property>
     <name>fs.permissions.umask-mode</name>
     <value>022</value>
-  </property>
-  <property>
-    <name>dfs.namenode.acls.enabled</name>
-    <value>false</value>
-  </property>
-  <property>
-    <name>dfs.client.use.legacy.blockreader</name>
-    <value>false</value>
-  </property>
-  <property>
-    <name>dfs.client.read.shortcircuit</name>
-    <value>false</value>
-  </property>
-  <property>
-    <name>dfs.domain.socket.path</name>
-    <value>/var/run/hdfs-sockets/dn</value>
-  </property>
-  <property>
-    <name>dfs.client.read.shortcircuit.skip.checksum</name>
-    <value>false</value>
-  </property>
-  <property>
-    <name>dfs.client.domain.socket.data.traffic</name>
-    <value>false</value>
-  </property>
-  <property>
-    <name>dfs.datanode.hdfs-blocks-metadata.enabled</name>
-    <value>true</value>
   </property>
 </configuration>

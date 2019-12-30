@@ -35,13 +35,17 @@
     file:
       path: '{{hadoop_cfg_dir}}'
       state: directory
-      
+
+  - name: copy config files
+    template:
+      src: template/hdfs-site-proxy.xml.j2
+      dest: '{{hadoop_cfg_dir}}/hdfs-site.xml'
+
   - name: copy config files
     template:
       src: 'template/{{item.name}}.j2'
       dest: '{{hadoop_cfg_dir}}/{{item.name}}'
     with_items:
-      - {name: "hdfs-site.xml" }
       - {name: "yarn-site.xml"}
       - {name: "config.properties"}
       - {name: "core-site.xml"}

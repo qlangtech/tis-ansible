@@ -1,0 +1,111 @@
+---
+# task file for install zookeeper
+  # group and user
+  - name: create group
+    group:
+      name: "{{ zk_group }}"
+      state: present
+  - name: create user
+    user:
+      name: "{{ zk_user }}"
+      comment: "zookeeper" 
+      group: "{{ zk_group }}"
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: .ssh/id_rsa
+      shell: /bin/bash
+
+  # set main node sshpass to other nodes
+  # inventory_hostname is the current hostname
+  - name: fetch main node .ssh key
+    fetch:
+      src: /home/{{ zk_user }}/.ssh/id_rsa.pub
+      dest: /tmp/.zk.id_rsa.pub
+      flat: yes
+    when: main_zk_node == inventory_hostname
+  - name: ignore main node ssh StrictHostKeyChecking
+    copy:
+      src: template/ssh_config
+      dest: /home/{{ zk_user }}/.ssh/config
+      owner: "{{ zk_user }}"
+      group: "{{ zk_group }}"
+      mode: '0644'
+    when: main_zk_node == inventory_hostname
+  - name: send .ssh key file to all nodes
+    copy:
+      src: /tmp/.zk.id_rsa.pub
+      dest: /tmp/.zk.id_rsa.pub
+      owner: "{{ zk_user }}"
+  # authorized_key, key lookup second param is pub key file
+  - name: add main node authorized .ssh key to all nodes
+    authorized_key: 
+      user: "{{ zk_user }}"
+      state: present 
+      key: "{{ lookup('file', '/tmp/.zk.id_rsa.pub') }}"
+
+  # prepare dirctories
+  # prepare directories
+  - name: make /opt/app directory
+    file:
+      path: /opt/{{ item }}
+      state: directory
+      recurse: yes
+      owner: root
+      group: root
+      mode: '0755'
+    with_items:
+      - app
+      - data
+  - name: make /opt/data/zookeeper directory
+    file:
+      path: /opt/data/zookeeper
+      state: directory
+      recurse: yes
+      owner: "{{ zk_user }}"
+      group: "{{ zk_group }}"
+      mode: '0755'
+
+  # copy gzip file and unarchive
+  - name: copy zookeeper file to host
+    copy:
+      src: "{{ local_zk_gz_path }}"
+      dest: "/tmp/{{ zk_gz_file_name }}"
+      owner: root
+      group: root
+      mode: '0644'
+  - name: untar zookeeper gzip file
+    unarchive:
+      src: "/tmp/{{ zk_gz_file_name }}"
+      dest: /opt/app
+      owner: "{{ zk_user }}"
+      group: "{{ zk_group }}"
+      remote_src: yes
+
+  # deploy config files
+  - name: copy config file
+    template:
+      src: 'template/{{item.name}}.j2'
+      dest: '/opt/app/zookeeper-3.4.14/conf/{{ item.name }}'
+      owner: "{{ zk_user }}"
+      group: "{{ zk_group }}"
+      mode: '0644'
+    with_items:
+      - {name: "zoo.cfg" }
+  - name: write id file
+    template:
+      src: 'template/{{item.name}}.j2'
+      dest: '/opt/data/zookeeper/{{ item.name }}'
+      owner: "{{ zk_user }}"
+      group: "{{ zk_group }}"
+      mode: '0755'
+    with_items:
+      - {name: "myid" }
+      - {name: "daemon_zk.sh"}
+
+  # create daemon cron task
+  - name: set cron task to daemon zookeeper
+    cron:
+      name: 'zkDaemon'
+      minute: '*/1'
+      job: '/opt/data/zookeeper/daemon_zk.sh'
+      user: "{{ zk_user }}"

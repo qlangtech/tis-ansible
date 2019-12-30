@@ -1,0 +1,8 @@
+tickTime=2000
+dataDir=/aim/zookeeper-data
+clientPort=2181
+initLimit=5
+syncLimit=2
+{% for item in groups['zookeeper'] %}
+server.{{ hostvars[item]['zk_node_id'] }}={{ item }}:2888:3888
+{% endfor %}

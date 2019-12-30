@@ -1,0 +1,27 @@
+<configuration>
+  <property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+    <description>hive thrift port</description>
+  </property>
+  <property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>{{ groups['hadoop-yarn-resource-manager'][0] }}</value>
+    <description>hive thrift server</description>
+  </property>
+  <property>
+    <name>hive.server2.authentication</name>
+    <value>NONE</value>
+    <description>hive thrift server authentication</description>
+  </property>
+  <!--注意：下面的配置可能不配置可能会导致在移动时无法移动多级目录-->
+  <property>
+    <name>hive.insert.into.multilevel.dirs</name>
+    <value>true</value>
+  </property>
+  <!--注意，下面的配置需要配置，否则可能导致JDBC只能成功一次，参考 http://itxw.net/article/196.html-->
+  <property>
+    <name>fs.hdfs.impl.disable.cache</name>
+    <value>true</value>
+  </property>
+</configuration>

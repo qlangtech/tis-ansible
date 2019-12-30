@@ -1,0 +1,48 @@
+---
+# task file for install java
+  # create directories
+  - name: make /opt/app/java directory
+    file:
+      path: /opt/app/java
+      state: directory
+      recurse: yes
+      owner: root
+      group: root
+      mode: '0755'
+
+  # copy file and unarchive
+  - name: copy java file to host
+    copy:
+      src: "{{ local_java_gz_path }}"
+      dest: "/tmp/{{ java_gz_file_name }}"
+      owner: root
+      group: root
+      mode: '0644'
+  - name: untar java gzip file
+    unarchive:
+      src: "/tmp/{{ java_gz_file_name }}"
+      dest: /opt/app/java
+      remote_src: yes
+
+  # create links
+  - name: make java version to default
+    file:
+      src: "/opt/app/java/{{ jdk_dir_name }}"
+      dest: /opt/app/java/default
+      state: link
+      force: yes
+  - name: make java link to /usr/bin
+    file:
+      src: /opt/app/java/default/bin/java
+      dest: /usr/bin/java
+      state: link
+      force: yes
+
+  # set environment variable
+  - name: set JAVA_HOME and path environment variable
+    copy:
+      src: ./template/jdk.sh
+      dest: "/etc/profile.d/{{ jdk_dir_name }}.sh"
+      owner: root
+      group: root
+      mode: '0644'

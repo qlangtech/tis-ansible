@@ -1,3 +1,10 @@
+- name: init os
+  vars_files:
+    -vars.yml
+  hosts: localhost,tis-console,assemble,solr7.6,hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager,zookeeper,tidb
+  tasks:
+    - include_rule:
+      name: init-os
 
 - name: deploy tis_console
   vars:
