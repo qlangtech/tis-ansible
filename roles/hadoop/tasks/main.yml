@@ -164,7 +164,7 @@
       group: "{{ hadoop_group }}"
       mode: '0644'
     with_items:
-      - slaves.j2
+      - slaves
       - core-site.xml
       - hdfs-site.xml
       - mapred-site.xml
@@ -182,4 +182,4 @@
     become_user: "{{ hadoop_user }}"
     args:
       chdir: /opt/app/hadoop/bin
-    when: inventory_hostname in groups['hadoop-hdfs-namenode']
+    when: inventory_hostname in groups['hadoop-hdfs-namenode'] and not hadoop_namenode_format_file is not exists

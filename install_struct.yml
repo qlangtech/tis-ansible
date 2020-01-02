@@ -22,8 +22,6 @@
       name: init-os
   - include_role:
       name: jdk
-  - include_role:
-      name: spring-boot
 
 - name: deploy zookeeper
   vars_files:

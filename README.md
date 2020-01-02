@@ -65,10 +65,12 @@ cd 到ansible脚本所在目录：
 ansible-playbook ./deploy-tis-by-release.yml
 ```
 
-## 启动系统
+## 启动和停止系统
 
 ```shell
+# 启动系统
 ansible-playbook ./start.yml
+# 停止系统
 ansible-playbook ./stop.yml
 ```
 

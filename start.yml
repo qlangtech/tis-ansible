@@ -1,24 +1,31 @@
+---
 - name: start zookeeper
   vars_files:
     - vars.yml
   hosts: zookeeper
   tasks:
   - command: ./zkServer.sh start
-  become: yes
-  become_user: zookeeper
-  args:
-    chdir: "/opt/app/zookeeper-3.4.14/bin"
+    become: yes
+    become_user: zookeeper
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/zookeeper-3.4.14/bin"
+  - command: sleep 5
+    ignore_errors: yes
 
 - name: start hdfs
   vars_files:
     - vars.yml
-  hosts: 
+  hosts: hadoop-hdfs-namenode
   tasks:
   - command: ./start-dfs.sh
-  become: yes
-  become_user: hadoop
-  args:
-    chdir: "/opt/app/hadoop/sbin"
+    become: yes
+    become_user: hadoop
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/hadoop/sbin"
+  - command: sleep 15
+    ignore_errors: yes
 
 - name: start yarn
   vars_files:
@@ -26,10 +33,13 @@
   hosts: hadoop-yarn-resource-manager
   tasks:
   - command: ./start-yarn.sh
-  become: yes
-  become_user: hadoop
-  args:
-    chdir: "/opt/app/hadoop/sbin"
+    become: yes
+    become_user: hadoop
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/hadoop/sbin"
+  - command: sleep 10
+    ignore_errors: yes
 
 - name: start thriftserver
   vars_files:
@@ -37,11 +47,14 @@
   hosts: hadoop-yarn-resource-manager
   tasks:
   - command: ./start-thriftserver.sh --master yarn --deploy-mode client --name thriftserver
-  become: yes
-  become_user: hadoop
-  args:
-    chdir: "/opt/app/spark/sbin"
-  when: need_install_spark and need_install_spark_shuffle
+    become: yes
+    become_user: hadoop
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/spark/sbin"
+    when: need_install_spark and need_install_spark_shuffle
+  - command: sleep 5
+    ignore_errors: yes
 
 - name: start solr
   vars_files:
@@ -49,10 +62,13 @@
   hosts: solr7.6
   tasks:
   - command: ./solr start
-  become: yes
-  become_user: solr
-  args:
-    chdir: "/opt/app/spring-boot/solr"
+    become: yes
+    become_user: solr
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/spring-boot/solr"
+  - command: sleep 10
+    ignore_errors: yes
 
 - name: start tis
   vars_files:
@@ -60,7 +76,8 @@
   hosts: tis-console,assemble
   tasks:
   - command: ./tis start
-  become: yes
-  become_user: tis
-  args:
-    chdir: "/opt/app/spring-boot/bin"
+    become: yes
+    become_user: tis
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/spring-boot/bin"
