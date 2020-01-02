@@ -70,10 +70,25 @@
   - command: sleep 10
     ignore_errors: yes
 
-- name: start tis
+# must start console first
+- name: start tis-console
   vars_files:
     - vars.yml
-  hosts: tis-console,assemble
+  hosts: tis-console
+  tasks:
+  - command: ./tis start
+    become: yes
+    become_user: tis
+    ignore_errors: yes
+    args:
+      chdir: "/opt/app/spring-boot/bin"
+  - command: sleep 5
+    ignore_errors: yes
+
+- name: start tis-assemble
+  vars_files:
+    - vars.yml
+  hosts: assemble
   tasks:
   - command: ./tis start
     become: yes

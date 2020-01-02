@@ -3,9 +3,11 @@ release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 
 app_dir: /opt/app/spring-boot
 
-# yarn容器启动分配的cpu核数
-max_yarn_cpu_cores: 6 
-# yarn容器启动分配的内存大小,单位M,14336为14G
+# yarn容器启动分配的cpu核数，目前为1
+# 大于1没有太大意义，还会导致默认安装的assemble提交任务报错
+max_yarn_cpu_cores: 1
+
+# yarn容器启动分配的内存大小,单位M,14336为14G，建议为可用内存 75~90%
 yarn_nodemanager_resource_memorymb: 14336
 
 # if need install zookeeper
