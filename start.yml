@@ -1,0 +1,66 @@
+- name: start zookeeper
+  vars_files:
+    - vars.yml
+  hosts: zookeeper
+  tasks:
+  - command: ./zkServer.sh start
+  become: yes
+  become_user: zookeeper
+  args:
+    chdir: "/opt/app/zookeeper-3.4.14/bin"
+
+- name: start hdfs
+  vars_files:
+    - vars.yml
+  hosts: 
+  tasks:
+  - command: ./start-dfs.sh
+  become: yes
+  become_user: hadoop
+  args:
+    chdir: "/opt/app/hadoop/sbin"
+
+- name: start yarn
+  vars_files:
+    - vars.yml
+  hosts: hadoop-yarn-resource-manager
+  tasks:
+  - command: ./start-yarn.sh
+  become: yes
+  become_user: hadoop
+  args:
+    chdir: "/opt/app/hadoop/sbin"
+
+- name: start thriftserver
+  vars_files:
+    - vars.yml
+  hosts: hadoop-yarn-resource-manager
+  tasks:
+  - command: ./start-thriftserver.sh --master yarn --deploy-mode client --name thriftserver
+  become: yes
+  become_user: hadoop
+  args:
+    chdir: "/opt/app/spark/sbin"
+  when: need_install_spark and need_install_spark_shuffle
+
+- name: start solr
+  vars_files:
+    - vars.yml
+  hosts: solr7.6
+  tasks:
+  - command: ./solr start
+  become: yes
+  become_user: solr
+  args:
+    chdir: "/opt/app/spring-boot/solr"
+
+- name: start tis
+  vars_files:
+    - vars.yml
+  hosts: tis-console,assemble
+  tasks:
+  - command: ./tis start
+  become: yes
+  become_user: tis
+  args:
+    chdir: "/opt/app/spring-boot/bin"

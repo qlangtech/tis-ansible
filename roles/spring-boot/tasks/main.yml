@@ -18,11 +18,3 @@
      owner: spring-boot
     with_items:
      - "spring-boot"
-  - name: install jdk..
-    yum:
-      name: "{{packages}}"
-    vars:
-      packages:
-      - rsync
-      - java-1.8.0-openjdk
-      - nmap.x86_64

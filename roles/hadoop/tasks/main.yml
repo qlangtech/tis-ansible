@@ -81,31 +81,21 @@
       key: "{{ lookup('file', '/tmp/.yarn.' + item + '.id_rsa.pub') }}"
     with_items: "{{ groups['hadoop-yarn-resource-manager'] }}"
 
-  # prepare directories
-  - name: make /opt/app directory
+  - name: make directories
     file:
-      path: /opt/{{ item }}
-      state: directory
-      recurse: yes
-      owner: root
-      group: root
-      mode: '0755'
-    with_items:
-      - app
-      - data
-  - name: make /opt/data/hadoop directory
-    file:
-      path: /opt/data/hadoop/{{ item }}
+      path: "{{ item }}"
       state: directory
       recurse: yes
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       mode: '0755'
     with_items:
-      - name
-      - data
-      - log
-      - journal
+      - /opt/logs/yarn
+      - /opt/app/hadoop-2.6.5
+      - /opt/data/hadoop/name
+      - /opt/data/hadoop/data
+      - /opt/data/hadoop/log
+      - /opt/data/hadoop/journal
 
   # copy tar and unarchive
   - name: copy hadoop file to host
@@ -115,19 +105,31 @@
       owner: root
       group: root
       mode: '0644'
+  - name: delete tmp untar directory
+    file: 
+      path: /tmp/hadoop-2.6.5
+      state: absent
   - name: untar hadoop gzip file
     unarchive:
       src: "/tmp/{{ hadoop_gz_file_name }}"
-      dest: /opt/app
+      dest: /tmp
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       remote_src: yes
+  - name: copy fiels to destination
+    synchronize:
+      src: "/tmp/hadoop-2.6.5/"
+      dest: /opt/app/hadoop-2.6.5
+      recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
 
   # link to hadoop-2.6.1 and hadoop
   - name: link to hadoop-2.6.1 for tis code
     file:
       src: /opt/app/hadoop-2.6.5
       dest: /opt/app/{{ item }}
+      owner: "{{ hadoop_user }}"
+      group: "{{ hadoop_group }}"
       state: link
       force: yes
     with_items:
@@ -150,29 +152,34 @@
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       mode: '0644'
+      create: yes
     with_nested:
       - [ 'hadoop-env.sh', 'yarn-env.sh' ]
-      - [ 'export JAVA_HOME=/usr/app/java/default', 'export HADOOP_HOME=/usr/app/hadoop' ]
+      - [ 'export JAVA_HOME=/opt/app/java/default', 'export HADOOP_HOME=/opt/app/hadoop' ]
   - name: copy template files
-    template:    
+    template:
       src: 'template/{{ item }}.j2'
       dest: '/opt/app/hadoop/etc/hadoop/{{ item }}'
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       mode: '0644'
     with_items:
+      - slaves.j2
       - core-site.xml
       - hdfs-site.xml
       - mapred-site.xml
       - yarn-site.xml
   - name: init namenode
     file:
-      path: /opt/app/hadoop/etc/hadoop/slaves.execlude
+      path: /opt/app/hadoop/etc/hadoop/slaves.exclude
       state: touch
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       mode: '0644'
   - name: format namenode
-    command: hdfs namenode -format -force
+    command: ./hdfs namenode -format -force
     become: yes
     become_user: "{{ hadoop_user }}"
+    args:
+      chdir: /opt/app/hadoop/bin
+    when: inventory_hostname in groups['hadoop-hdfs-namenode']

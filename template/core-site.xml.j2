@@ -32,7 +32,7 @@
   <!-- 指定zookeeper地址，为前一节配置的主机，端口2181，逗号分隔-->
   <property>
     <name>ha.zookeeper.quorum</name>
-    <value>{ % for item in groups['zookeeper'] % }{{ item }}:2181{{ '' if loop.last else ',' }}{ % endfor % }</value>
+    <value>{% for item in groups['zookeeper'] %}{{ item }}:2181{{ '' if loop.last else ',' }}{% endfor %}</value>
   </property>
 
   <property>

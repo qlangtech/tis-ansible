@@ -11,16 +11,43 @@
     with_items:
     - {name: "{{ spark_scala_gz_file_name }}", when: "{{ need_install_hadoop and need_install_spark }}" }
     - {name: "{{ spark_gz_file_name }}", when: "{{ need_install_hadoop and need_install_spark }}" }
+  - name: create directories
+    file:
+      path: "{{ item }}"
+      state: directory
+      recurse: yes
+      owner: "{{ hadoop_user }}"
+      group: "{{ hadoop_group }}"
+      mode: '0755'
+    with_items:
+      - /opt/app/scala-2.11.7
+      - /opt/app/spark-2.4.4-bin-hadoop2.6
+  - name: delete tmp untar directory
+    file: 
+      path: "/tmp/{{ item }}"
+      state: absent
+    with_items:
+      - scala-2.11.7
+      - spark-2.4.4-bin-hadoop2.6
   - name: untar gzip files
     unarchive:
       src: "/tmp/{{ item }}"
-      dest: /opt/app
+      dest: /tmp
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       remote_src: yes
     with_items:
       - "{{ spark_scala_gz_file_name }}"
       - "{{ spark_gz_file_name }}"
+  - name: sychronize files
+    synchronize:
+      src: "/tmp/{{ item }}/"
+      dest: /opt/app/{{ item }}
+      recursive: yes
+    with_items:
+      - scala-2.11.7
+      - spark-2.4.4-bin-hadoop2.6
+    delegate_to: "{{ inventory_hostname }}"
 
   # link to scala and spark
   - name: link to scala

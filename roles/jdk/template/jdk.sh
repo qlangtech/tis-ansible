@@ -1,4 +1,4 @@
-JAVA_HOME=/opt/java/default
+JAVA_HOME=/opt/app/java/default
 CLASSPATH=$JAVA_HOME/lib/
 PATH=$PATH:$JAVA_HOME/bin
 export PATH JAVA_HOME CLASSPATH

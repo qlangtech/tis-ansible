@@ -6,8 +6,6 @@
       path: /opt/app/java
       state: directory
       recurse: yes
-      owner: root
-      group: root
       mode: '0755'
 
   # copy file and unarchive
@@ -15,14 +13,25 @@
     copy:
       src: "{{ local_java_gz_path }}"
       dest: "/tmp/{{ java_gz_file_name }}"
-      owner: root
-      group: root
-      mode: '0644'
+  - name: delete tmp untar directory
+    file:
+      path: "/tmp/{{ jdk_dir_name }}"
+      state: absent
   - name: untar java gzip file
     unarchive:
       src: "/tmp/{{ java_gz_file_name }}"
-      dest: /opt/app/java
+      dest: /tmp/
       remote_src: yes
+  - name: make dest directory
+    file: 
+      path: "/opt/app/java/{{ jdk_dir_name }}"
+      state: directory
+  - name: copy fiels to destination
+    synchronize:
+      src: "/tmp/{{ jdk_dir_name }}/"
+      dest: "/opt/app/java/{{ jdk_dir_name }}"
+      recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
 
   # create links
   - name: make java version to default
@@ -43,6 +52,4 @@
     copy:
       src: ./template/jdk.sh
       dest: "/etc/profile.d/{{ jdk_dir_name }}.sh"
-      owner: root
-      group: root
       mode: '0644'

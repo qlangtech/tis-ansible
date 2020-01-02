@@ -116,7 +116,6 @@
   </property>
 
   <!--NM运行的附属服务,需配置成mapreduce_shuffle,才可运行MapReduce程序，如果需要就配置spark shuffle-->
-  
   <property>
     <name>yarn.nodemanager.aux-services</name>
     <value>mapreduce_shuffle{% if need_install_spark_shuffle %},spark_shuffle{% endif %}</value>

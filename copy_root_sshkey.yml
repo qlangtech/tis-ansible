@@ -1,0 +1,12 @@
+- name: set host machine hosts file
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+  - lineinfile:
+      dest: /etc/hosts
+      regexp: "^.*? {{ item }}$"
+      line: "{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}"
+      state: present
+      create: yes
+    with_inventory_hostnames: all

@@ -1,32 +1,89 @@
+---
+# init all hosts
+- name: set host machine hosts file
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+  - lineinfile:
+      dest: /etc/hosts
+      regexp: "^.*? {{ item }}$"
+      line: "{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}"
+      state: present
+      create: yes
+    with_inventory_hostnames: all
+
 - name: init os
   vars_files:
-    -vars.yml
-  hosts: localhost,tis-console,assemble,solr7.6,hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager,zookeeper,tidb
+    - vars.yml
+  hosts: tis-console,assemble,solr7.6,hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager,zookeeper
   tasks:
-    - include_rule:
+  - include_role:
       name: init-os
+  - include_role:
+      name: jdk
+  - include_role:
+      name: spring-boot
+
+- name: deploy zookeeper
+  vars_files:
+    - vars.yml
+  hosts: zookeeper
+  tasks:
+  - shell: 'ls {{ tis_release_dir }}'
+    ignore_errors: True
+    register: release_files
+    delegate_to: "localhost"
+  - include_role:
+      name: zookeeper
+    when: need_install_zookeeper and release_files.stdout.find('zookeeper-3.4.14.tar.gz') != -1
+
+- name: deploy hadoop
+  vars_files:
+    - vars.yml
+  hosts: hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager
+  tasks:
+  - shell: 'ls {{ tis_release_dir }}'
+    ignore_errors: True
+    register: release_files
+    delegate_to: "localhost"
+  - include_role:
+      name: hadoop
+    when: need_install_hadoop and release_files.stdout.find('hadoop-2.6.5.tar.gz') != -1
+
+- name: deploy spark
+  vars_files:
+    - vars.yml
+  hosts: hadoop-yarn-resource-manager,hadoop-yarn-node-manager
+  tasks:
+  - shell: 'ls {{ tis_release_dir }}'
+    ignore_errors: True
+    register: release_files
+    delegate_to: "localhost"
+  - include_role:
+      name: spark
+    when: need_install_hadoop and need_install_spark and release_files.stdout.find('spark-2.4.4-bin-hadoop2.6.tgz') != -1
 
 - name: deploy tis_console
   vars:
-   tis_app_name: tis 
+    tis_app_name: tis 
   vars_files:
-   - vars.yml
+    - vars.yml
   hosts: tis-console
   tasks:
   - shell: 'ls {{tis_release_dir}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
-  #- debug: var=release_files
   - include_role:
-     name: console
+      name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
    
 - name: deploy assemble
   vars:
-   tis_app_name: tis-assemble
+    tis_app_name: tis-assemble
   vars_files:
-   - vars.yml
+    - vars.yml
   hosts: assemble
   tasks:
   - shell: 'ls {{tis_release_dir}}'
@@ -34,31 +91,31 @@
     register: release_files
     delegate_to: "localhost"
   - include_role:
-     name: assemble
+      name: assemble
     when: release_files.stdout.find('tis-assemble.tar.gz') != -1
 
 - name: deploy indexbuilder
   vars_files:
-   - vars.yml
-  hosts: hadoop-yarn,hadoop-yarn-resource-manager
+    - vars.yml
+  hosts: hadoop-yarn-resource-manager,hadoop-yarn-node-manager
   tasks:
   - shell: 'ls {{tis_release_dir}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
   - include_role:
-     name: index-builder
+      name: index-builder
     when: release_files.stdout.find('tis-index-builder-yarn.tar.gz') != -1
 
 - name: deploy solr-core
   hosts: solr7.6
   vars_files:
-   - vars.yml
+    - vars.yml
   tasks:
   - shell: 'ls {{tis_release_dir}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
   - include_role:
-     name: solr-core
+      name: solr-core
     when: release_files.stdout.find('solr.tar.gz') != -1

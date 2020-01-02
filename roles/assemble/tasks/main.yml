@@ -48,7 +48,7 @@
      path: /opt/app/spring-boot/tis-assemble/conf/tis-web-config
      state: directory
 
-  - name: copy config.properties
+  - name: copy hdfs-site-proxy.xml
     template:
      src: template/hdfs-site-proxy.xml.j2
      dest: /opt/app/spring-boot/tis-assemble/conf/tis-web-config/hdfs-site.xml
@@ -61,10 +61,6 @@
      - "config.properties"
      - "yarn-site.xml"
     notify: restart assemble
-     
-  - name: "Build hosts file yarn master"
-    lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
-    with_items: "{{groups['hadoop-yarn-resource-manager']}}"
 
   - name: path owner set
     file:

@@ -49,21 +49,13 @@
       - {name: "yarn-site.xml"}
       - {name: "config.properties"}
       - {name: "core-site.xml"}
-      
-  - name: "Build hosts file yarn master"
-    lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
-    with_items: "{{groups['hadoop-yarn-resource-manager']}}"
-    
-  - name: "Build hosts file yarn slaver"
-    lineinfile: dest=/etc/hosts  line="{{ hostvars[item]['ansible_ssh_host'] }} {{ item }}" state=present create=yes
-    with_items: "{{groups['hadoop-yarn']}}"
-  
+
   - lineinfile: 
      dest: "{{hadoop_cfg_dir}}/hadoop-env.sh"
      regexp: "^export JAVA_HOME"
      line: "export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64"
      state: present
-  
+
   - name: set nodemanager resourcemanager max heap size
     lineinfile: 
       dest: "{{hadoop_cfg_dir}}/yarn-env.sh"
@@ -73,7 +65,7 @@
     with_items:
      - "YARN_RESOURCEMANAGER_HEAPSIZE"
      - "YARN_NODEMANAGER_HEAPSIZE"
-  
+
   - name: set owner
     file:
      path: "{{hadoop_dir}}"
