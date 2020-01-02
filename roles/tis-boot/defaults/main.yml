@@ -1,4 +1,4 @@
 tis_app_dir: "{{app_dir}}/bin"
 tis_log_dir: "/opt/logs/tis"
 
-tis_java_mem: "-Xms513m -Xmx513m"
+tis_java_mem: "-Xms2G -Xmx3G"
