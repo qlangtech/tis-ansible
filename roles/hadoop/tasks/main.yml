@@ -176,10 +176,14 @@
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       mode: '0644'
+  - name: check if namenode formatted before
+    stat:
+      path: "{{ hadoop_namenode_format_file }}"
+    register: has_namenode_formatted
   - name: format namenode
     command: ./hdfs namenode -format -force
     become: yes
     become_user: "{{ hadoop_user }}"
     args:
       chdir: /opt/app/hadoop/bin
-    when: inventory_hostname in groups['hadoop-hdfs-namenode'] and hadoop_namenode_format_file is not exists
+    when: inventory_hostname in groups['hadoop-hdfs-namenode'] and has_namenode_formatted.stat.exists == False

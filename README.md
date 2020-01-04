@@ -101,6 +101,13 @@ mysqldump -d -uxx -pxxx -h127.0.0.1  tis_console > tis_console.sql
 ansible solr7.6 -i ./inventory/hosts -m service --become  -a "name=spring-boot state=restarted"
 ```
 
+4.在第一次进行全量构建时，可能会因为hdfs的权限导致tag文件无法写入，需要在 hdfs 的机器上进行下面的设置：
+
+```shell
+su - hadoop
+hdfs dfs -chmod -R 777 /
+```
+
 ## 向ansible脚本中新添加一个role
 
 ```shell
