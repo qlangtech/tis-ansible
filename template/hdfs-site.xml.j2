@@ -41,7 +41,7 @@
     <value>true</value>
   </property>
 
-  <!--指定HDFS的nameservice为aim，需要和core-site.xml中的保持一致 -->
+  <!--指定HDFS的nameservice，需要和core-site.xml中的保持一致 -->
   <property>
     <name>dfs.nameservices</name>
     <value>{{ groups['hadoop-hdfs-namenode'][0] }}</value>

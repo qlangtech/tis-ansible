@@ -182,4 +182,4 @@
     become_user: "{{ hadoop_user }}"
     args:
       chdir: /opt/app/hadoop/bin
-    when: inventory_hostname in groups['hadoop-hdfs-namenode'] and not hadoop_namenode_format_file is not exists
+    when: inventory_hostname in groups['hadoop-hdfs-namenode'] and hadoop_namenode_format_file is not exists

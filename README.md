@@ -15,6 +15,13 @@
 
 脚本在 CentOS 7.6 上通过测试。
 
+**安装前必读**：
+
+当前版本将程序、数据主要目录都安装到 `/opt` 目录下，如果 `/opt` 不是最大分区，安装脚本会尝试将当前系统最大分区通过 symbol link 的方式链接到 `/opt`。
+这种方式在目前会造成已知的BUG：**如果 hdfs、yarn 几台服务器 /opt 对应的最大分区挂载目录不一致，将导致 namenode、resourcemanager 节点最大分区挂载目录不一致的其它服务器无法启动对应的服务**。
+导致该问题的原因是 `start-dfs.sh`，`start-yarn.sh` 会在一开始通过命令 `dirname "${BASH_SOURCE-$0}"` 获取脚本所在路径，并以此目录为基础查找其它可执行程序。该命令将忽略掉 symbol link，直接获取物理分区所挂载路径。
+为了避免这个问题，需要在安装前将需要安装的机器最大磁盘分区都挂载到相同路径。通过命令：`lsblk | awk '{if ($7) print $4 " " $7}' | sort -h | tail -n 1 | awk '{print $2}'` 可以检查这些机器的最大分区是否为同一个目录。
+
 ## 准备阶段
 
 inventory/hosts 文件示例如下，为了自动生成 hosts 文件，请在主机名后通过 ansible_ssh_host 指定IP：
@@ -85,7 +92,7 @@ mysqldump -d -uxx -pxxx -h127.0.0.1  tis_console > tis_console.sql
 
 在启动tis后，可以通过 tis.xx:8080 通过web访问系统，需要初始化几个值：
 
-- zkaddress：设置为几个主机，后加 `/tis/cloud` 路径，`zk1.aim:2181,zk2.aim:2181,zk3.aim:2181/tis/cloud`
+- zkaddress：设置为几个主机，后加 `/tis/cloud` 路径，`zk1.xxx:2181,zk2.xxx:2181,zk3.xxx:2181/tis/cloud`
 - tis_hdfs_root_dir: 设置为如下路径 `/xxx/data`，不需要前面类似于 `hdfs://hadoop1.xxx:9000` 这样的URL。
 
 3.重启solr服务,注意要加上'--become'才能得到sudo权限

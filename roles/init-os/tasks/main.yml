@@ -32,8 +32,12 @@
   - name: disable firewalld service
     service: name=firewalld state=stopped enabled=no
 
+  - name: get selinux status
+    shell: getenforce
+    register: old_selinux_stat
   - name: disable selinux
     shell: setenforce 0
+    when: old_selinux_stat.stdout != "Disabled"
   - name: disable selinux forever
     lineinfile:
       dest: /etc/selinux/config
@@ -45,21 +49,29 @@
   - name: check largest partition point
     shell: "lsblk | awk '{if ($7) print $4 \" \" $7}' | sort -h | tail -n 1 | awk '{print $2}'"
     register: max_partition_point
-    delegate_to: "{{ inventory_hostname }}"
-  - name: read /opt old link
-    shell: "readlink /opt"
-    register: opt_old_link
+  # if it's already a symbol link to directory, nothing will happedn
+  - name: make sure /opt exists
+    file:
+      path: /opt
+      state: directory
+  - name: read /opt status
+    stat:
+      path: /opt
+    register: opt_old_stat
   - name: check if /opt is empty
     shell: "du -h /opt --max-depth=0 | awk '{print $1}'"
     register: opt_directory_usage
+  # the when conditon make sure symbol link be created under one of the following conditions:
+  # 1. /opt is a link, and it's not linked to the largest partition
+  # 2. /opt is not a link, and it's empty, and the largest partition is not /, and the largest partition is not /opt
   - name: create symbol link when /opt is not linked to largest partition point and /opt is empty
     file:
       src: "{{ max_partition_point.stdout }}"
       name: /opt
       state: link
       force: yes
-    when: 
-      max_partition_point.stdout != opt_old_link.stdout and
+    when:
+      (not opt_old_stat.stat.islnk or max_partition_point.stdout != opt_old_stat.stat.lnk_source) and
       max_partition_point.stdout[0] == '/' and
       max_partition_point.stdout != '/' and
       max_partition_point.stdout != '/opt' and
