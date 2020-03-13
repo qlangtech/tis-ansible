@@ -12,6 +12,7 @@
       chdir: "/opt/app/zookeeper-3.4.14/bin"
   - command: sleep 5
     ignore_errors: yes
+  - service: name=crond state=started enabled=yes
 
 - name: start hdfs
   vars_files:

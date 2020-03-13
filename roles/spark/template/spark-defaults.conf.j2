@@ -10,8 +10,8 @@ spark.shuffle.service.port       7337
 spark.dynamicAllocation.enabled  true
 spark.dynamicAllocation.initialExecutors   1
 spark.dynamicAllocation.minExecutors   1
-spark.dynamicAllocation.maxExecutors   12
-spark.executor.memory   2g
+spark.dynamicAllocation.maxExecutors   {{ spark_shuffle_max_executor }}
+spark.executor.memory   {{ spark_shuffle_executor_memory }}
 spark.sql.adaptive.enabled   true
 spark.sql.adaptive.shuffle.targetPostShuffleInputSize  128000000
 {% endif %}

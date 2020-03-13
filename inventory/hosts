@@ -32,8 +32,11 @@ zk3.xxx zk_node_id=3 ansible_ssh_host=10.1.2.3
 [tidb]
 tidb-pd1.xxx ansible_ssh_host=10.1.2.1
 
+[hadoop-yarn-node-manager:vars]
+spark_shuffle_max_executor=12
+spark_shuffle_executor_memory=2g
+
 [zookeeper:vars]
-main_zk_node=zk1.xxx
 zk_user=zookeeper
 zk_group=zookeeper
 
