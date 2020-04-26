@@ -65,7 +65,7 @@ hadoop3.xxx ansible_ssh_host=10.1.1.3
 - 如果需要安装 tispark：需要配置主机 tidb
 - 必须配置参数 hdfs_namenode_ha1、hdfs_namenode_ha2，如果hdfs namenode没有配置ha，则配置为系统的namenode主机即可。
 - 必须配置参数 tisconsole_db_url、 tisconsole_db_username、 tisconsole_db_password 为tis console 的sql语句所在的数据库连接信息。
-- 如果需要安装 spark shuffle，要根据内存配置参数 spark_shuffle_max_executor、 spark_shuffle_executor_memory ，以便实现内存的有效利用。在启动 thriftserver 时，会启动一个 ApplicationMaster，消耗2G内存，另外启用一个 Container，消耗（2G + spark_shuffle_executor_memory) 的内存。后续每次启动一个 Container，就消耗 （2G + spark_shuffle_executor_memory) 的内存。内存要满足：yarn_nodemanager_resource_memorymb \* nodemanager机器数量 >= 2G + (2G + spark_shuffle_executor_memory) \* spark_shuffle_max_executor，最好流出一些余量，以免创建Container失败。
+- 如果需要安装 spark shuffle，默认配置的Executor数量为yarn nodemanger机器数量，单个 Executor 的内存为 (yarn nodemanager 内存 \* 0.7。因为默认配置的 yarn 单个Container默认占用其nodemanager 最大内存的 80%，启动Executor时，它可以超出用量 10%，配置的内存 + 超出的用量不能大于 yarn nodemanager 的最大内存，否则无法启动thriftserver。如果有不同的用法，需要修改 `roles/spark/template/spark-defaults.conf.j2` 中的几个参数。在启动 thriftserver 时，会启动一个 ApplicationMaster，消耗2G内存。后续每次启动一个 Container，就消耗 （2G + spark.executor.memory) 的内存。内存要满足：yarn_nodemanager_resource_memorymb \* nodemanager机器数量 >= 2G + (2G + spark.executor.memory) \* spark.dynamicAllocation.maxExecutors。
 
 ## 确保主机可以由中控机ssh免密登陆
 

@@ -8,10 +8,10 @@ spark.jars /opt/app/java/default/lib/{{ spark_thriftserver_jar_file_name }}
 spark.shuffle.service.enabled    true
 spark.shuffle.service.port       7337
 spark.dynamicAllocation.enabled  true
-spark.dynamicAllocation.initialExecutors   1
+spark.dynamicAllocation.initialExecutors   0
 spark.dynamicAllocation.minExecutors   1
-spark.dynamicAllocation.maxExecutors   {{ spark_shuffle_max_executor }}
-spark.executor.memory   {{ spark_shuffle_executor_memory }}
+spark.dynamicAllocation.maxExecutors   {{ groups['hadoop-yarn-node-manager'] | length }}
+spark.executor.memory   {{ (yarn_nodemanager_resource_memorymb*0.7) | int }}m
 spark.sql.adaptive.enabled   true
 spark.sql.adaptive.shuffle.targetPostShuffleInputSize  128000000
 {% endif %}
