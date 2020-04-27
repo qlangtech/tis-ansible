@@ -2,7 +2,7 @@
 tis.xxx ansible_ssh_host=10.1.29.227
 
 [assemble]
-assemble.xxx ansible_ssh_host=10.1.29.64
+build-oversee-soa001.dev.2dfire.info ansible_ssh_host=10.1.24.59
 
 [solr7.6]
 solr1.xxx ansible_ssh_host=10.1.25.214

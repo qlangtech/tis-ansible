@@ -37,7 +37,7 @@
   - name: synchroniz assemble
     synchronize:
        src: /tmp/tis-assemble/
-       dest: /opt/app/spring-boot/tis-assemble
+       dest: "{{app_dir}}/tis-assemble"
        delete: yes
        recursive: yes
     delegate_to: "{{ inventory_hostname }}"
@@ -45,18 +45,18 @@
 
   - name: mkdir tis-web-config
     file:
-     path: /opt/app/spring-boot/tis-assemble/conf/tis-web-config
+     path: "{{app_dir}}/tis-assemble/conf/tis-web-config"
      state: directory
 
   - name: copy hdfs-site-proxy.xml
     template:
      src: template/hdfs-site-proxy.xml.j2
-     dest: /opt/app/spring-boot/tis-assemble/conf/tis-web-config/hdfs-site.xml
+     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/hdfs-site.xml"
 
   - name: copy config.properties
     template:
      src: template/{{item}}.j2
-     dest: /opt/app/spring-boot/tis-assemble/conf/tis-web-config/{{item}}
+     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/{{item}}"
     with_items:
      - "config.properties"
      - "yarn-site.xml"

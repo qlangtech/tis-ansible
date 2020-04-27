@@ -37,6 +37,8 @@
   - include_role:
       name: zookeeper
     when: need_install_zookeeper and release_files.stdout.find('zookeeper-3.4.14.tar.gz') != -1
+  tags:
+    - zk
 
 - name: deploy hadoop
   vars_files:
@@ -50,6 +52,8 @@
   - include_role:
       name: hadoop
     when: need_install_hadoop and release_files.stdout.find('hadoop-2.6.5.tar.gz') != -1
+  tags:
+    - hadoop
 
 - name: deploy spark
   vars_files:
@@ -63,6 +67,8 @@
   - include_role:
       name: spark
     when: need_install_hadoop and need_install_spark and release_files.stdout.find('spark-2.4.4-bin-hadoop2.6.tgz') != -1
+  tags:
+    - spark
 
 - name: deploy tis_console
   vars:
@@ -78,6 +84,8 @@
   - include_role:
       name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
+  tags:
+    - console
    
 - name: deploy assemble
   vars:
@@ -93,6 +101,8 @@
   - include_role:
       name: assemble
     when: release_files.stdout.find('tis-assemble.tar.gz') != -1
+  tags:
+    - assemble
 
 - name: deploy indexbuilder
   vars_files:
@@ -107,7 +117,8 @@
   - include_role:
       name: index-builder
     when: release_files.stdout.find('tis-index-builder.tar.gz') != -1
-    tags: indexbuilder
+  tags:
+   - indexbuilder
 
 
 - name: deploy solr-core
@@ -122,3 +133,5 @@
   - include_role:
       name: solr-core
     when: release_files.stdout.find('solr.tar.gz') != -1
+  tags:
+    - solr

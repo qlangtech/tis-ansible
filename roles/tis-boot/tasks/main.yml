@@ -7,7 +7,7 @@
 
   - file: path={{tis_app_dir}} state=directory
   - file: path={{tis_log_dir}} state=directory owner=tis
-      
+
   - name: copy tis start script
     template:
      src: ./template/{{item}}.j2
@@ -15,18 +15,44 @@
     with_items:
      - "tis"
      - "tis.in.sh"
-  
+
   - debug: var=tis_app_dir
- 
-  
+
   - name: set tis script mode
     file:
      path: "{{tis_app_dir}}/tis"
      mode: '+x'
-    
+
   - name: path owner set
     file:
      path: "{{tis_app_dir}}"
      owner: tis
      group: tis
      recurse: yes
+
+  - name: copy web-start
+    copy:
+      src: "{{tis_release_dir}}/{{item}}"
+      dest: /tmp/
+    with_items:
+      - "web-start.tar.gz"
+
+  - name: delete history tar.gz
+    file:
+      path: /tmp/web-start
+      state: absent
+
+  - name: untar web-start
+    unarchive:
+      src: /tmp/web-start.tar.gz
+      dest: /tmp/
+      remote_src: yes
+
+  - name: synchroniz web-start files
+    synchronize:
+      src: /tmp/web-start/
+      dest: "{{app_dir}}/web-start"
+      delete: yes
+      recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
+
