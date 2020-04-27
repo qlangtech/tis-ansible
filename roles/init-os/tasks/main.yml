@@ -83,10 +83,11 @@
       path: /opt/{{ item }}
       state: directory
       recurse: yes
-      mode: '0755'
+      mode: '0777'
     with_items:
       - app
       - data
+
 
   - name: init hostname
     hostname:

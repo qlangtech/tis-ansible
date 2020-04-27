@@ -15,7 +15,7 @@
     - {name: "solr.tar.gz", when: True}
     - {name: "tis-assemble.tar.gz", when: True}
     - {name: "tis-cluster-status-collect.tar.gz", when: True}
-    - {name: "tis-index-builder-yarn.tar.gz", when: True}
+    - {name: "tis-index-builder.tar.gz", when: True}
     - {name: "tis.tar.gz", when: True}
     - {name: "{{ java_gz_file_name }}", when: True}
     - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }

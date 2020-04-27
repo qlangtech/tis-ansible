@@ -22,6 +22,8 @@
       name: init-os
   - include_role:
       name: jdk
+  tags:
+    - initos
 
 - name: deploy zookeeper
   vars_files:
@@ -101,9 +103,12 @@
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
+    tags: indexbuilder
   - include_role:
       name: index-builder
-    when: release_files.stdout.find('tis-index-builder-yarn.tar.gz') != -1
+    when: release_files.stdout.find('tis-index-builder.tar.gz') != -1
+    tags: indexbuilder
+
 
 - name: deploy solr-core
   hosts: solr7.6

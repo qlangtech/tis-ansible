@@ -3,3 +3,6 @@
 index_builder_data_dir: /opt/data/tis
 sharelib_dir: '{{index_builder_data_dir}}/sharelib/indexbuild7.6'
 index_builder_conf_dir: '{{index_builder_data_dir}}/conf'
+
+hadoop_user: yarn
+hadoop_group: yarn

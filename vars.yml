@@ -1,4 +1,4 @@
-tis_release_dir: '/tmp/tis-release'
+tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 
 app_dir: /opt/app/spring-boot
@@ -19,9 +19,9 @@ need_install_zookeeper: true
 # 4. thriftserver will be deployed when spark shuffle is needed
 # 5. spark master will be deplyed on yarn resource manager and slave on yarn node manager
 need_install_hadoop: true
-need_install_spark: true
+need_install_spark: false
 need_install_tispark: true
-need_install_spark_shuffle: true
+need_install_spark_shuffle: false
 
 # some cross-role variables
 zk_gz_file_name: zookeeper-3.4.14.tar.gz

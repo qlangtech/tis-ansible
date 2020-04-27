@@ -65,7 +65,8 @@
     with_items:
      - "YARN_RESOURCEMANAGER_HEAPSIZE"
      - "YARN_NODEMANAGER_HEAPSIZE"
-
+#TODO 需要创建本地目录并且赋权限给 yarn /opt/data/hadoop/data/nm-local-dir
+#TODO 创建本地目录 /opt/data/plugins
   - name: set owner
     file:
      path: "{{hadoop_dir}}"
