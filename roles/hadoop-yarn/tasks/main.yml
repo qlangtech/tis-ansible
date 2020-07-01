@@ -53,7 +53,7 @@
   - lineinfile: 
      dest: "{{hadoop_cfg_dir}}/hadoop-env.sh"
      regexp: "^export JAVA_HOME"
-     line: "export JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk.x86_64"
+     line: "export JAVA_HOME={{java_home}}"
      state: present
 
   - name: set nodemanager resourcemanager max heap size
@@ -66,7 +66,7 @@
      - "YARN_RESOURCEMANAGER_HEAPSIZE"
      - "YARN_NODEMANAGER_HEAPSIZE"
 #TODO 需要创建本地目录并且赋权限给 yarn /opt/data/hadoop/data/nm-local-dir
-#TODO 创建本地目录 /opt/data/plugins
+#TODO 创建本地目录 /opt/data/tis/plugins
   - name: set owner
     file:
      path: "{{hadoop_dir}}"

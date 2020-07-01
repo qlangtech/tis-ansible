@@ -13,6 +13,7 @@
       name: "{{ basic_packages }}"
     vars:
       basic_packages:
+      - lsof
       - ntp
       - unzip
       - rsync

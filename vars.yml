@@ -1,7 +1,10 @@
 tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
+#tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 
 app_dir: /opt/app/spring-boot
+tis_app_dir: "{{app_dir}}/bin"
+tis_data_dir: "/opt/data/tis"
 
 # yarn容器启动分配的cpu核数，目前为1
 # 大于1没有太大意义，还会导致默认安装的assemble提交任务报错
@@ -19,15 +22,16 @@ need_install_zookeeper: true
 # 4. thriftserver will be deployed when spark shuffle is needed
 # 5. spark master will be deplyed on yarn resource manager and slave on yarn node manager
 need_install_hadoop: true
-need_install_spark: false
-need_install_tispark: true
-need_install_spark_shuffle: false
+need_install_spark: true
+need_install_tispark: false
+need_install_spark_shuffle: true
 
 # some cross-role variables
 zk_gz_file_name: zookeeper-3.4.14.tar.gz
 
 java_gz_file_name: jdk-8u191-linux-x64.tar.gz
 jdk_dir_name: jdk1.8.0_191
+java_home: "/opt/app/java/default"
 
 hadoop_gz_file_name: hadoop-2.6.5.tar.gz
 hadoop_user: hadoop
@@ -37,3 +41,20 @@ spark_scala_gz_file_name: scala-2.11.7.tgz
 spark_gz_file_name: spark-2.4.4-bin-hadoop2.6.tgz
 spark_tispark_jar_file_name: tispark-core-2.1.5-spark_2.4-jar-with-dependencies.jar
 spark_thriftserver_jar_file_name: mysql-connector-java-5.1.48-bin.jar
+
+# tis console db config
+#tisconsole_db_url: common101.my.2dfire-daily.com
+#tisconsole_db_username: tis_console
+#tisconsole_db_password: tis_console@552208
+#tisconsole_db_dbname: tis_console
+
+tisconsole_db_url: 192.168.28.200
+tisconsole_db_username: root
+tisconsole_db_password: 123456
+tisconsole_db_dbname: tis_console
+
+#zk_host: 10.1.21.202:2181,10.1.21.201:2181,10.1.21.200:2181/tis/cloud
+zk_host: 192.168.28.200:2181/tis/cloud
+
+# tis-console ,tis-assemble execute user
+tis_user: root

@@ -2,12 +2,12 @@
 # tasks file for assemble
   - file:
      path: /opt/data/spring-boot
-     owner: tis
+     owner: "{{tis_user}}"
      state: directory
 
   - file:
      path: /opt/data/flume
-     owner: tis
+     owner: "{{tis_user}}"
      state: directory
 
   - name: copy tis-assemble 
@@ -65,7 +65,7 @@
   - name: path owner set
     file:
      path: "{{item}}"
-     owner: tis
+     owner: "{{tis_user}}"
      recurse: yes
     with_items:
      - "/opt/app/spring-boot/tis-assemble"

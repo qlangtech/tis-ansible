@@ -1,7 +1,7 @@
+---
 - name: restart solr
-  command: ./solr restart
+  command: ./tis restart -force
   become: yes
-  become_user: solr
+  become_user: "{{tis_user}}"
   args:
-    chdir: "{{solr_app_dir}}/"
-    
+    chdir: "{{tis_app_dir}}/"

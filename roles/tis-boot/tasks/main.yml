@@ -2,11 +2,11 @@
   - group: name=tis
   - name: add user tis
     user:
-      name: tis
-      group: tis
+      name: "{{tis_user}}"
+      group: "{{tis_user}}"
 
   - file: path={{tis_app_dir}} state=directory
-  - file: path={{tis_log_dir}} state=directory owner=tis
+  - file: path={{tis_log_dir}} state=directory owner={{tis_user}}
 
   - name: copy tis start script
     template:
@@ -26,8 +26,8 @@
   - name: path owner set
     file:
      path: "{{tis_app_dir}}"
-     owner: tis
-     group: tis
+     owner: "{{tis_user}}"
+     group: "{{tis_user}}"
      recurse: yes
 
   - name: copy web-start

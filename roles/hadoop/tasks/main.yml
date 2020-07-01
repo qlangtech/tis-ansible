@@ -24,7 +24,7 @@
       - "Defaults: {{ hadoop_user }}  !requiretty"
 
   # copy hdfs namenode ssh key to datanode
-  - name: fetch main node .ssh key
+  - name: copy hdfs namenode ssh key to datanode
     fetch:
       src: /home/{{ hadoop_user }}/.ssh/id_rsa.pub
       dest: /tmp/.hdfs.{{ inventory_hostname }}.id_rsa.pub
@@ -155,7 +155,7 @@
       create: yes
     with_nested:
       - [ 'hadoop-env.sh', 'yarn-env.sh' ]
-      - [ 'export JAVA_HOME=/opt/app/java/default', 'export HADOOP_HOME=/opt/app/hadoop' ]
+      - [ 'export JAVA_HOME={{java_home}}', 'export HADOOP_HOME=/opt/app/hadoop' ]
   - name: copy template files
     template:
       src: 'template/{{ item }}.j2'

@@ -23,7 +23,7 @@
   - name: synchroniz solr
     synchronize:
      src: /tmp/solr/
-     dest: {{app_dir}}/solr
+     dest: "{{app_dir}}/solr"
      delete: yes
      recursive: yes
     delegate_to: "{{ inventory_hostname }}"

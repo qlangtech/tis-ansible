@@ -4,8 +4,8 @@
     copy:
       src: "{{ tis_release_dir }}/{{ item.name }}"
       dest: "/tmp/{{ item.name }}"
-      owner: root
-      group: root
+      owner: "{{ hadoop_user }}"
+      group: "{{ hadoop_group }}"
       mode: '0644'
     when: item.when
     with_items:
@@ -74,7 +74,7 @@
   - name: install thriftserver jar
     copy:
       src: "{{ tis_release_dir }}/{{ spark_thriftserver_jar_file_name }}"
-      dest: "/opt/app/java/default/lib/{{ spark_thriftserver_jar_file_name }}"
+      dest: "{{java_home}}/lib/{{ spark_thriftserver_jar_file_name }}"
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       mode: '0644'

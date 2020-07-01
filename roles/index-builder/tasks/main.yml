@@ -45,6 +45,7 @@
     file:
       path: "{{sharelib_dir}}"
       owner: "{{hadoop_user}}"
+      mode: '0777'
       group: "{{hadoop_group}}"
       recurse: yes
 

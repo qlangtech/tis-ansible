@@ -6,5 +6,5 @@ hadoop_dir: '{{hadoop_parent_dir}}/{{hadoop_dir_name}}'
 hadoop_cfg_dir: '{{hadoop_parent_dir}}/{{hadoop_dir_name}}/etc/hadoop'
 
 
-hadoop_user: yarn
-hadoop_group: yarn
+#hadoop_user: yarn
+#hadoop_group: yarn

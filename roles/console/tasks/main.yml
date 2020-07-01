@@ -6,6 +6,19 @@
      dest: /tmp/
   with_items:
      - "tis.tar.gz"
+
+
+
+- name: copy plugins
+  copy:
+    src:  "{{tis_data_dir}}/libs/plugins/{{item}}"
+    dest: "{{tis_data_dir}}/libs/plugins/"
+  with_items:
+    - "tis-hdfs.tpi"
+    - "tis-hive-flat-table-builder-plugin.tpi"
+    - "tis-k8s-plugin.tpi"
+    - "twodfire-asyncmsg.tpi"
+
 - name: delete history tis.tar.gz
   file:
       path: /tmp/tis
@@ -24,15 +37,15 @@
   delegate_to: "{{ inventory_hostname }}"
   notify: restart tis-console
   
-- name: copy config.properties
-  template:
-     src: template/hdfs-site-proxy.xml.j2
-     dest: /opt/app/spring-boot/tis/conf/tis-web-config/hdfs-site.xml
+#- name: copy config.properties
+#  template:
+#     src: template/hdfs-site-proxy.xml.j2
+#     dest: /opt/app/spring-boot/tis/conf/tis-web-config/hdfs-site.xml
 
 - name: copy config.properties
   template:
      src: template/{{item}}.j2
-     dest: /opt/app/spring-boot/tis/conf/tis-web-config/{{item}}
+     dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
   with_items:
      - "config.properties"
      - "yarn-site.xml"
@@ -41,6 +54,14 @@
 - name: path owner set
   file:
      path: /opt/app/spring-boot/{{tis_app_name}}
-     owner: tis
-     group: tis
+     owner: "{{tis_user}}"
+     group: "{{tis_user}}"
      recurse: yes
+
+- name: set tis dir mode
+  file:
+    path: "{{tis_data_dir}}"
+    owner: "{{tis_user}}"
+    group: "{{tis_user}}"
+    mode: '0777'
+    recurse: yes

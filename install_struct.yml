@@ -72,7 +72,7 @@
 
 - name: deploy tis_console
   vars:
-    tis_app_name: tis 
+    tis_app_name: tjs
   vars_files:
     - vars.yml
   hosts: tis-console
@@ -85,7 +85,7 @@
       name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
   tags:
-    - console
+    - tjs
    
 - name: deploy assemble
   vars:
@@ -113,7 +113,6 @@
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
-    tags: indexbuilder
   - include_role:
       name: index-builder
     when: release_files.stdout.find('tis-index-builder.tar.gz') != -1
