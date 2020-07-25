@@ -9,7 +9,7 @@ spark.shuffle.service.enabled    true
 spark.shuffle.service.port       7337
 spark.dynamicAllocation.enabled  true
 spark.dynamicAllocation.initialExecutors   0
-spark.dynamicAllocation.minExecutors   1
+spark.dynamicAllocation.minExecutors   0
 spark.dynamicAllocation.maxExecutors   {{ groups['hadoop-yarn-node-manager'] | length }}
 spark.executor.memory   {{ (yarn_nodemanager_resource_memorymb*0.7) | int }}m
 spark.sql.adaptive.enabled   true
