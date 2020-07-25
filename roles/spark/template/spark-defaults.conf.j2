@@ -1,5 +1,5 @@
 {% if need_install_tispark %}
-spark.tispark.pd.addresses {{ groups['tidb'][0] }}:2379
+spark.tispark.pd.addresses {{ tispark_pd_addresses }}:2379
 spark.sql.extensions org.apache.spark.sql.TiExtensions
 {% endif %}
 

@@ -29,9 +29,6 @@ zk1.xxx zk_node_id=1 ansible_ssh_host=10.1.2.1
 zk2.xxx zk_node_id=2 ansible_ssh_host=10.1.2.2
 zk3.xxx zk_node_id=3 ansible_ssh_host=10.1.2.3
 
-[tidb]
-tidb-pd1.xxx ansible_ssh_host=10.1.2.1
-
 [zookeeper:vars]
 zk_user=zookeeper
 zk_group=zookeeper
@@ -41,6 +38,7 @@ ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 git_src=git@github.com:baisui1981/tis.git
 git_branch=master
 runtime=daily
+tispark_pd_addresses=10.1.2.1
 
 tis_online_repository=
 hdfs_namenode_ha1=10.1.21.131
