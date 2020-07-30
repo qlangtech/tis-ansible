@@ -6,6 +6,8 @@
   hosts: localhost      
   roles:
    - role: compile
+  tags:
+    - package
     
 - import_playbook: install_struct.yml
   
