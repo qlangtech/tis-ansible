@@ -11,7 +11,7 @@ tis_data_dir: "/opt/data/tis"
 max_yarn_cpu_cores: 1
 
 # yarn容器启动分配的内存大小,单位M,14336为14G，建议为可用内存 75~90%
-yarn_nodemanager_resource_memorymb: 14336
+yarn_nodemanager_resource_memorymb: 18432
 
 # if need install zookeeper
 need_install_zookeeper: true

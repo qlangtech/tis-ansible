@@ -1,6 +1,6 @@
 ---
 # defaults file for compile
-git_src: git@github.com:qlangtech/tis-solr.git
+git_src: git@code.aliyun.com:qlangtech/tis-solr.git
 src_dir: /opt/data/tiscode/tis
 git_branch: master
 mvn_pkg_name: apache-maven-3.3.3
