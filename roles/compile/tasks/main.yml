@@ -44,7 +44,7 @@
      state: directory
     when: ismvndeploy is failed
 
-  - name: git pull
+  - name: git pull {{git_src}}@{{git_branch}} {{src_dir}}
     git:
      repo: '{{git_src}}'
      dest: '{{src_dir}}'
@@ -63,7 +63,7 @@
     with_lines:
        - find {{src_dir}} -type f -name "*.tar.gz" -printf '%f\n'
   
-  - name: compile and package
+  - name: compile and package {{src_dir}}
     command: ./compile.sh {{runtime}} {{appname}}
     args:
      chdir: "{{src_dir}}"
