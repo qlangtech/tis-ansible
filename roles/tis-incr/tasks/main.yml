@@ -1,5 +1,11 @@
 ---
 # tasks file for compile
+
+- name: create docker context dir {{docker_context_dir}}/{{item.app}}
+    file:
+      path: '{{docker_context_dir}}/{{item.app}}'
+      state: directory
+
   - name: copy {{tis_incr_name}} to docker context dir
     file:
      src: '{{tis_release_dir}}/{{item.tar_name}}'
