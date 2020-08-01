@@ -10,7 +10,7 @@
     file:
      src: '{{tis_release_dir}}/{{item.tar_name}}'
      path: '{{docker_context_dir}}/{{item.app}}/{{item.tar_name}}'
-     state: link
+     state: hard
     with_items:
       - {app : "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
 
