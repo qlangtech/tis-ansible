@@ -21,10 +21,26 @@
   - name : copy Dockerfile to docker context dir {{docker_context_dir}}/{{tis_incr_name}}/
     copy: src="files/Dockerfile" dest="{{docker_context_dir}}/{{tis_incr_name}}/"
 
-  - name : docker image {{tis_incr_name}} build
-    command: docker build -t tis/tis-incr -f ./Dockerfile .
-    args:
-      chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
+ # - name : docker image {{tis_incr_name}} build
+ #   command: docker build -t tis/tis-incr -f ./Dockerfile .
+ #   args:
+ #    chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
+
+  # https://cr.console.aliyun.com/repository/cn-hangzhou/tis/tis-incr/details
+  - name: log into private registry and force re-authorization
+    docker_login:
+      registry: registry.cn-hangzhou.aliyuncs.com
+      username: hi30872750@aliyun.com
+      password: hello1234
+      reauthorize: yes
+
+  - namge : Build and Push docker {{tis_incr_name}}
+    docker_image:
+     build:
+       path: "{{docker_context_dir}}/{{tis_incr_name}}"
+     name: registry.cn-hangzhou.aliyuncs.com/tis/tis-incr
+     push: yes
+     source: build
 
   - name: clean docker context dir {{docker_context_dir}}/{{tis_incr_name}}
     file:
