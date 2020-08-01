@@ -1,5 +1,13 @@
 ---
 # tasks file for compile
+  - name: install certain python modules for docker
+    pip:
+      name: "{{ item.name }}"
+      version: "{{ item.version }}"
+      state: present
+    with_items:
+      - { name: docker, version: 2.0.0 }
+      - { name: docker-py, version: 1.10.6 }
 
   - name: create docker context dir {{docker_context_dir}}/{{tis_incr_name}}
     file:
