@@ -50,6 +50,7 @@
      dest: '{{src_dir}}'
      version: '{{git_branch}}'
      force: yes
+     accept_hostkey: yes
   
   - name: copy compile shell script
     template:
