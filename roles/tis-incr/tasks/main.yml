@@ -1,0 +1,21 @@
+---
+# tasks file for compile
+  - name: copy {{tis_incr_name}} to docker context dir
+    file:
+     path: '{{tis_release_dir}}/{{item.tar_name}}'
+     src: '{{docker_context_dir}}/{{item.app}}/{{item.tar_name}}'
+     state: link
+    with_items:
+      - {app : "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
+
+  - name : copy run.sh to docker context dir
+    template:
+     src: template/run.sh.j2
+     dest: '{{docker_context_dir}}/{{tis_incr_name}}/run.sh'
+
+  - name : docker image {{tis_incr_name}} build
+    command: docker build -t tis/tis-incr -f ./files/Dockerfile .
+    args:
+      chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
+     
+     

@@ -6,6 +6,7 @@
   hosts: localhost      
   roles:
    - role: compile
+   - role: tis-incr
   tags:
     - package
     
