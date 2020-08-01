@@ -1,7 +1,7 @@
 ---
   - name: install pip package
     yum:
-      name: pip
+      name: python-pip
 
 # tasks file for compile
   - name: install certain python modules for docker
