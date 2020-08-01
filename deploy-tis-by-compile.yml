@@ -6,9 +6,17 @@
   hosts: localhost      
   roles:
    - role: compile
-   - role: tis-incr
   tags:
     - package
+
+- name: make tis-incr docker image
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  roles:
+    - role: tis-incr
+  tags:
+    - incr
     
 - import_playbook: install_struct.yml
   
