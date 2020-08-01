@@ -34,13 +34,13 @@
       password: hello1234
       reauthorize: yes
 
-  - namge : Build and Push docker {{tis_incr_name}}
+  - namge: Build and Push docker {{tis_incr_name}}
     docker_image:
-     build:
-       path: "{{docker_context_dir}}/{{tis_incr_name}}"
-     name: registry.cn-hangzhou.aliyuncs.com/tis/tis-incr
-     push: yes
-     source: build
+      build:
+        path: "{{docker_context_dir}}/{{tis_incr_name}}"
+      name: registry.cn-hangzhou.aliyuncs.com/tis/tis-incr
+      push: yes
+      source: build
 
   - name: clean docker context dir {{docker_context_dir}}/{{tis_incr_name}}
     file:
