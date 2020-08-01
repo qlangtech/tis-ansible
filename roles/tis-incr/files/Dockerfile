@@ -15,6 +15,7 @@ RUN INSTALL_PKGS="tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-
     chmod g=u /etc/passwd
 
 ADD tis-incr.tar.gz /opt/tis/
+ADD run.sh /opt/tis/
 
 ENTRYPOINT ["/opt/tis/run.sh"]
 
