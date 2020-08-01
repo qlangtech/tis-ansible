@@ -34,7 +34,7 @@
       password: hello1234
       reauthorize: yes
 
-  - namge: Build and Push docker {{tis_incr_name}}
+  - name: Build and Push docker {{tis_incr_name}}
     docker_image:
       build:
         path: "{{docker_context_dir}}/{{tis_incr_name}}"
