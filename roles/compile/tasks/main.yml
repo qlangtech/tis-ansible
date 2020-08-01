@@ -49,6 +49,7 @@
      repo: '{{git_src}}'
      dest: '{{src_dir}}'
      version: '{{git_branch}}'
+     force: yes
   
   - name: copy compile shell script
     template:
