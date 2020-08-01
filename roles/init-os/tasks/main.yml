@@ -26,7 +26,6 @@
       - iotop
       - iftop
       - wget
-      - pip
 
   - name: enable ntpd service
     service: name=ntpd state=started enabled=yes
