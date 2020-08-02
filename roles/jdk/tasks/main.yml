@@ -1,12 +1,21 @@
 ---
 # task file for install java
   # create directories
+  - name: Download Release Package
+    get_url:
+      url: "{{ release_repository }}/{{ item.name }}"
+      dest: "{{ tis_release_dir }}/{{ item.name }}"
+      force: yes
+    when: item.when
+    with_items:
+      - {name: "{{ java_gz_file_name }}", when: True}
+
   - name: make /opt/app/java directory
-    file:
-      path: /opt/app/java
-      state: directory
-      recurse: yes
-      mode: '0755'
+      file:
+        path: /opt/app/java
+        state: directory
+        recurse: yes
+        mode: '0755'
 
   # copy file and unarchive
   - name: copy java file to host

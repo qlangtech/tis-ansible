@@ -5,6 +5,7 @@
    - vars.yml
   hosts: localhost      
   roles:
+   - role: jdk
    - role: compile
   tags:
     - package
