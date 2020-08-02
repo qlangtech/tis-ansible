@@ -11,11 +11,11 @@
       - {name: "{{ java_gz_file_name }}", when: True}
 
   - name: make /opt/app/java directory
-      file:
-        path: /opt/app/java
-        state: directory
-        recurse: yes
-        mode: '0755'
+    file:
+      path: /opt/app/java
+      state: directory
+      recurse: yes
+      mode: '0755'
 
   # copy file and unarchive
   - name: copy java file to host
