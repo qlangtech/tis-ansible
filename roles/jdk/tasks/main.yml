@@ -46,7 +46,7 @@
   - name: make java version to default
     file:
       src: "/opt/app/java/{{ jdk_dir_name }}"
-      dest: {{java_home}}
+      dest: "{{java_home}}"
       state: link
       force: yes
   - name: make java link to /usr/bin
