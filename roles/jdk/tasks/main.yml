@@ -53,6 +53,7 @@
       dest: "{{java_home}}"
       state: link
       force: yes
+
   - name: make java link to /usr/bin
     file:
       src: "{{java_home}}/bin/java"
@@ -62,7 +63,10 @@
 
   # set environment variable
   - name: set JAVA_HOME and path environment variable
-    copy:
-      src: ./template/jdk.sh
+    template:
+      src: './template/jdk.sh'
       dest: "/etc/profile.d/{{ jdk_dir_name }}.sh"
       mode: '0644'
+
+
+
