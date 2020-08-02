@@ -1,11 +1,15 @@
 ---
 # task file for install java
   # create directories
-  - name: Download Release Package
+  - name: Create {{tis_release_dir}} Dir
+    file:
+      path: "{{tis_release_dir}}"
+      state: directory
+
+  - name: Download JDK Package
     get_url:
       url: "{{ release_repository }}/{{ item.name }}"
       dest: "{{ tis_release_dir }}/{{ item.name }}"
-      force: yes
     when: item.when
     with_items:
       - {name: "{{ java_gz_file_name }}", when: True}
