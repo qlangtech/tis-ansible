@@ -51,7 +51,7 @@
       force: yes
   - name: make java link to /usr/bin
     file:
-      src: {{java_home}}/bin/java
+      src: "{{java_home}}/bin/java"
       dest: /usr/bin/java
       state: link
       force: yes
