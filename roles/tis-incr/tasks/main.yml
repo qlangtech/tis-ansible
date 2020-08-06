@@ -50,7 +50,7 @@
     docker_login:
       registry: registry.cn-hangzhou.aliyuncs.com
       username: hi30872750@aliyun.com
-      password: hello1234
+      password: "{{docker_password}}"
       reauthorize: yes
 
   - name: Build and Push docker {{tis_incr_name}}
