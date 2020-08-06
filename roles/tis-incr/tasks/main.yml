@@ -1,7 +1,14 @@
 ---
-  - name: install pip package
+  - name: install python-setuptools
     yum:
-      name: python-pip
+      name: "{{item}}"
+    with_items:
+      - python-setuptools
+
+  - name: install pip by easy_install
+    easy_install:
+      name: pip
+      state: present
 
 # tasks file for compile
   - name: install certain python modules for docker
