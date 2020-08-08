@@ -33,5 +33,5 @@
 
   - name: assemble ng-tis
     command: npm run ng:serve-aot
-      args:
+    args:
         chdir: "{{ng_tis_src_dir}}"
