@@ -5,7 +5,7 @@
       name: "{{ basic_packages }}"
     vars:
       basic_packages:
-        - nodejs
+        - https://nodejs.org/dist/latest/node-v14.7.0-linux-x64.tar.gz
         - npm
 
   - name: git pull {{ng_tis_git_src}}@{{ng_tis_git_branch}} {{ng_tis_src_dir}}
