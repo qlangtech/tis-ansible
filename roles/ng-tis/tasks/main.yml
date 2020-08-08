@@ -23,7 +23,7 @@
      remote_src: yes
 
 
-# set environment variable
+  # set environment variable
   - name: set nodejs and path environment variable
     template:
       src: './template/nodejs.sh'
