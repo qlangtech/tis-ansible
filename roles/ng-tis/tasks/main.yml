@@ -6,7 +6,7 @@
     vars:
       basic_packages:
         - nodejs
-        - nodejs-npm
+        - npm
 
   - name: git pull {{ng_tis_git_src}}@{{ng_tis_git_branch}} {{ng_tis_src_dir}}
     git:
