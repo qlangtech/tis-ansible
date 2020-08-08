@@ -1,7 +1,7 @@
 ---
   ## 准备使用npm来打包tis-console-ng包
 
-  - name: Download {{node_assemble_tar}}
+  - name: Download {{node_assemble_tar}} to {{ tis_release_dir }}
     get_url:
       url: "{{ release_repository }}/{{ item.name }}"
       dest: "{{ tis_release_dir }}/{{ item.name }}"
@@ -30,6 +30,8 @@
       dest: "/etc/profile.d/{{ node_name }}.sh"
       mode: '0644'
 
+  - name: source /etc/profile
+    shell: source /etc/profile
 
   - name: git pull {{ng_tis_git_src}}@{{ng_tis_git_branch}} {{ng_tis_src_dir}}
     git:
