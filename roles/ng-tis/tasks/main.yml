@@ -30,6 +30,7 @@
       dest: "/etc/profile.d/{{ node_name }}.sh"
       mode: '0644'
 
+  # FIXME 目前来看 执行source并没有让上面的任务生效
   - name: source /etc/profile
     shell: source /etc/profile
 
@@ -56,7 +57,12 @@
       dest: "{{ ng_tis_src_dir }}"
       remote_src: yes
 
-  - name: assemble ng-tis
+  - name: compile/build ng-tis
     command: npm run ng:serve-aot
     args:
         chdir: "{{ng_tis_src_dir}}"
+
+  - name: assemble ng-tis from dir "{{src_root}}/{{ng_tis_app_name}}/dist/" dest {{ tis_release_dir }}
+    archive:
+      path: "{{src_root}}/{{ng_tis_app_name}}/dist/*"
+      dest: "{{ tis_release_dir }}/{{ng_tis_app_name}}.tgz"
