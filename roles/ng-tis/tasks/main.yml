@@ -1,0 +1,37 @@
+---
+  ## 准备使用npm来打包tis-console-ng包
+  - name: install npm
+    yum:
+      name: "{{ basic_packages }}"
+    vars:
+      basic_packages:
+        - nodejs
+        - nodejs-npm
+
+  - name: git pull {{ng_tis_git_src}}@{{ng_tis_git_branch}} {{ng_tis_src_dir}}
+    git:
+      repo: '{{ng_tis_git_src}}'
+      dest: '{{ng_tis_src_dir}}'
+      version: '{{ng_tis_git_branch}}'
+      force: yes
+      accept_hostkey: yes
+
+  - name: Download node-modules
+    get_url:
+      url: "{{ release_repository }}/{{ item.name }}"
+      dest: "{{ ng_tis_src_dir }}/{{ item.name }}"
+      force: no
+    when: item.when
+    with_items:
+      - {name: "{{name_ng_tis_node_modules_tar}}", when: True}
+
+  - name: untar node-modules
+    unarchive:
+      src: '{{ ng_tis_src_dir }}/{{name_ng_tis_node_modules_tar}}'
+      dest: "{{ ng_tis_src_dir }}"
+      remote_src: yes
+
+  - name: assemble ng-tis
+    command: npm run ng:serve-aot
+      args:
+        chdir: "{{ng_tis_src_dir}}"

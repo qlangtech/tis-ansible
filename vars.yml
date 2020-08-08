@@ -5,6 +5,7 @@ release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 app_dir: /opt/app/spring-boot
 tis_app_dir: "{{app_dir}}/bin"
 tis_data_dir: "/opt/data/tis"
+src_root: "/opt/data/tiscode"
 
 # yarn容器启动分配的cpu核数，目前为1
 # 大于1没有太大意义，还会导致默认安装的assemble提交任务报错

@@ -1,12 +1,4 @@
 ---
-- name: install npm
-  yum:
-    name: "{{ basic_packages }}"
-  vars:
-    basic_packages:
-      - nodejs
-      - nodejs-npm
-
 # tasks file for console
 - name: copy tar
   copy:
@@ -15,17 +7,19 @@
   with_items:
      - "tis.tar.gz"
 
-
-
-- name: copy plugins
-  copy:
-    src:  "{{tis_data_dir}}/libs/plugins/{{item}}"
+- name: copy plugins from "{{tis_data_dir}}/libs/plugins"
+  synchronize:
+    src: "{{tis_data_dir}}/libs/plugins/"
     dest: "{{tis_data_dir}}/libs/plugins/"
-  with_items:
-    - "tis-hdfs.tpi"
-    - "tis-hive-flat-table-builder-plugin.tpi"
-    - "tis-k8s-plugin.tpi"
-    - "twodfire-asyncmsg.tpi"
+    delete: yes
+  notify: restart tis-console
+
+#- name: copy plugins from "{{tis_data_dir}}/libs/plugins"
+#  copy:
+#    src:  "{{item}}"
+#    dest: "{{tis_data_dir}}/libs/plugins/"
+#  with_fileglob:
+#    - "{{tis_data_dir}}/libs/plugins/*.tpi"
 
 - name: delete history tis.tar.gz
   file:

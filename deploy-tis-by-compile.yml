@@ -14,7 +14,7 @@
   vars_prompt:
     - name: "docker_password"
       prompt: "docker repository password"
-      private: no
+      private: yes
   vars_files:
     - vars.yml
   hosts: localhost
@@ -22,6 +22,15 @@
     - role: tis-incr
   tags:
     - incr
+
+- name: make ng-tis package
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  roles:
+    - role: ng-tis
+  tags:
+    - ng-tis
     
 - import_playbook: install_struct.yml
   
