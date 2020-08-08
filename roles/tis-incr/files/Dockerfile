@@ -10,6 +10,7 @@ RUN INSTALL_PKGS="tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-
     yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum clean all -y && \
+    mkdir -p /opt/data/tis && chmod -R 777 /opt/data/tis && \
 	mkdir -p /opt/logs && chmod -R 777 /opt/logs && \
     mkdir -p /opt/tis &&  chmod -R a+rwX /opt/tis && \
     chmod g=u /etc/passwd
