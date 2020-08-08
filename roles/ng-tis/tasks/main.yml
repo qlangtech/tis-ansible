@@ -11,16 +11,16 @@
       - {name: "{{node_assemble_tar}}", when: True}
 
    #
-   - name: mkdir {{nodejs_dir}}
-     file:
-       path: '{{nodejs_dir}}'
-       state: directory
+  - name: mkdir {{nodejs_dir}}
+    file:
+     path: '{{nodejs_dir}}'
+     state: directory
 
-   - name: unpackage nodejs
-     unarchive:
-       src: "{{ tis_release_dir }}/{{node_assemble_tar}}"
-       dest: "{{nodejs_dir}}"
-       remote_src: yes
+  - name: unpackage nodejs
+    unarchive:
+     src: "{{ tis_release_dir }}/{{node_assemble_tar}}"
+     dest: "{{nodejs_dir}}"
+     remote_src: yes
 
 
 # set environment variable
