@@ -64,5 +64,6 @@
 
   - name: assemble ng-tis from dir "{{src_root}}/{{ng_tis_app_name}}/dist/" dest {{ tis_release_dir }}
     archive:
-      path: "{{src_root}}/{{ng_tis_app_name}}/dist/*"
+      path: "{{src_root}}/{{ng_tis_app_name}}/dist/{{ng_tis_app_name}}/*"
       dest: "{{ tis_release_dir }}/{{ng_tis_app_name}}.tgz"
+      remove: yes
