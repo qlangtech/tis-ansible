@@ -4,3 +4,12 @@ ng_tis_src_dir: "{{src_root}}/ng-tis"
 ng_tis_git_branch: master
 
 name_ng_tis_node_modules_tar: "tis-console-ng-node-modules.tar"
+
+node_ver: v14.7.0
+node_distro: linux-x64
+node_name: "node-{{node_ver}}-{{node_distro}}"
+
+
+node_assemble_tar: "node-v14.7.0-linux-x64.tar.gz"
+
+nodejs_dir: "/usr/local/lib/nodejs"

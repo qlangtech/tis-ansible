@@ -1,12 +1,35 @@
 ---
   ## 准备使用npm来打包tis-console-ng包
-  - name: install npm
-    yum:
-      name: "{{ basic_packages }}"
-    vars:
-      basic_packages:
-        - https://nodejs.org/dist/latest/node-v14.7.0-linux-x64.tar.gz
-        - npm
+
+  - name: Download {{node_assemble_tar}}
+    get_url:
+      url: "{{ release_repository }}/{{ item.name }}"
+      dest: "{{ tis_release_dir }}/{{ item.name }}"
+      force: no
+    when: item.when
+    with_items:
+      - {name: "{{node_assemble_tar}}", when: True}
+
+   #
+   - name: mkdir {{nodejs_dir}}
+     file:
+       path: '{{nodejs_dir}}'
+       state: directory
+
+   - name: unpackage nodejs
+     unarchive:
+       src: "{{ tis_release_dir }}/{{node_assemble_tar}}"
+       dest: "{{nodejs_dir}}"
+       remote_src: yes
+
+
+# set environment variable
+  - name: set nodejs and path environment variable
+    template:
+      src: './template/nodejs.sh'
+      dest: "/etc/profile.d/{{ node_name }}.sh"
+      mode: '0644'
+
 
   - name: git pull {{ng_tis_git_src}}@{{ng_tis_git_branch}} {{ng_tis_src_dir}}
     git:
