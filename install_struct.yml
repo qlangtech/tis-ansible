@@ -81,15 +81,17 @@
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
-  - name: deploy ng-tis
-    unarchive:
-      src: "{{tis_release_dir}}/{{ng_tis_app_name}}.tgz"
-      dest: "{{app_dir}}/root/"
-      remote_src: no
-    when: release_files.stdout.find('ng-tis.tgz') != -1
+
   - include_role:
       name: console
     when: release_files.stdout.find('tis.tar.gz') != -1
+
+  - name: deploy ng-tis to {{app_dir}}/root/
+    unarchive:
+      src: "{{tis_release_dir}}/{{ng_tis_app_name}}.tgz"
+      dest: "{{app_dir}}/root/webapp"
+      remote_src: no
+    when: release_files.stdout.find('ng-tis.tgz') != -1
   tags:
     - tjs
    
