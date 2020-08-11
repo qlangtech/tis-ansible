@@ -18,7 +18,7 @@
       state: present
     with_items:
       - { name: docker-compose, version: 2.0.0 }
-      #- { name: docker-py, version: 1.10.6 }
+      - { name: docker-py, version: 1.10.6 }
 
   - name: create docker context dir {{docker_context_dir}}/{{tis_incr_name}}
     file:
