@@ -1,3 +1,4 @@
+tis_release_dir_name: tis
 tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com

@@ -27,7 +27,7 @@
 
   - name: copy {{tis_incr_name}} to docker context dir
     copy:
-     src: '{{tis_release_dir}}/{{item.tar_name}}'
+     src: '{{tis_release_dir}}/{{tis_release_dir_name}}/{{item.tar_name}}'
      dest: '{{docker_context_dir}}/{{item.app}}/'
     with_items:
       - {app : "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
