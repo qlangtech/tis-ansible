@@ -85,7 +85,7 @@
   - name: copy to release dir {{tis_release_dir}}/{{app_local_dir_name}}
     copy:
        src: "{{item.split(',')|first}}"
-       dest: '{{tis_release_dir}}/{{app_local_dir_name}}/{{item.split(',')|last}}'
+       dest: "{{tis_release_dir}}/{{app_local_dir_name}}/{{item.split(',')|last}}"
     with_lines:
        - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p,%f\n'
 
