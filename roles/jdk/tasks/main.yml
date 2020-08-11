@@ -6,7 +6,7 @@
       path: "{{tis_release_dir}}"
       state: directory
 
-  - name: Download JDK Package
+  - name: Download JDK Package to local '{{ tis_release_dir }}'
     get_url:
       url: "{{ release_repository }}/{{ item.name }}"
       dest: "{{ tis_release_dir }}/{{ item.name }}"

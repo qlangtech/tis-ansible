@@ -14,7 +14,7 @@
     - vars.yml
   vars:
     app_local_dir_name: tis-plugin
-    git_src: "https://github.com/qlangtech/plugins.git"
+    git_src: "git@github.com:qlangtech/plugins.git"
     target_file_pattern: "*.tpi"
   hosts: localhost
   roles:
