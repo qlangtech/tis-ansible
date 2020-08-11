@@ -60,10 +60,10 @@
  
   - name: clear old package
     file:
-       path: '{{src_dir}}/{{item}}' 
+       path: '{{item}}'
        state: absent
     with_lines:
-       - find {{src_dir}} -type f -name "*.tar.gz" -printf '%f\n'
+       - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p\n'
   
   - name: compile and package {{src_dir}}
     command: ./compile.sh {{runtime}} {{appname}}
@@ -72,22 +72,22 @@
      
   - name: make release dir
     file:
-     path: '{{tis_release_dir}}'
+     path: '{{tis_release_dir}}/{{app_local_dir_name}}'
      state: directory
   
   - name: clear release dir package
     file:
-       path: '{{tis_release_dir}}/{{item}}' 
+       path: '{{tis_release_dir}}/{{app_local_dir_name}}/*'
        state: absent
-    with_lines:
-       - find {{tis_release_dir}} -type f -name "*.tar.gz" -printf '%f\n'
-  
-  - name: copy to release dir
+#    with_lines:
+#       - find {{tis_release_dir}} -type f -name "{{target_file_pattern}}" -printf '%p\n'
+
+  - name: copy to release dir {{tis_release_dir}}/{{app_local_dir_name}}
     copy:
-       src: '{{src_dir}}/{{item}}'
-       dest: '{{tis_release_dir}}/{{item}}'
+       src: '{{item}}'
+       dest: '{{tis_release_dir}}/{{app_local_dir_name}}/{{item}}'
     with_lines:
-       - find {{src_dir}} -type f -name "*.tar.gz" -printf '%f\n'
+       - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p\n'
 
 
      

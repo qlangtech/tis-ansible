@@ -5,10 +5,23 @@
    - vars.yml
   hosts: localhost      
   roles:
-   - role: jdk
    - role: compile
   tags:
-    - package
+    - pkg
+
+- name: compile tis-plugin component tar package
+  vars_files:
+    - vars.yml
+  vars:
+    app_local_dir_name: tis-plugin
+    git_src: "https://github.com/qlangtech/plugins.git"
+    target_file_pattern: "*.tpi"
+  hosts: localhost
+  roles:
+    - role: compile
+  tags:
+    - pkg-plugin
+
 
 - name: make tis-incr docker image
   vars_prompt:
