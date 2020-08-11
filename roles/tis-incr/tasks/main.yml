@@ -46,12 +46,12 @@
  #    chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
 
   # https://cr.console.aliyun.com/repository/cn-hangzhou/tis/tis-incr/details
-  - name: log into private registry and force re-authorization {{docker_password}}
-    docker_login:
-      registry: registry.cn-hangzhou.aliyuncs.com
-      username: hi30872750@aliyun.com
-      password: "{{docker_password}}"
-      reauthorize: yes
+#  - name: log into private registry and force re-authorization {{docker_password}}
+#    docker_login:
+#      registry: registry.cn-hangzhou.aliyuncs.com
+#      username: hi30872750@aliyun.com
+#      password: "{{docker_password}}"
+#      reauthorize: yes
 
   - name: Build and Push docker {{tis_incr_name}}
     docker_image:
