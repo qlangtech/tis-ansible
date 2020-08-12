@@ -20,6 +20,11 @@
      # - { name: docker, version: 2.0.0 }
       - { name: docker-py, version: 1.10.6 }
 
+  - name: clean docker context dir {{docker_context_dir}}/{{tis_incr_name}}
+    file:
+      path: '{{docker_context_dir}}/{{tis_incr_name}}'
+      state: absent
+
   - name: create docker context dir {{docker_context_dir}}/{{tis_incr_name}}
     file:
       path: '{{docker_context_dir}}/{{tis_incr_name}}'
@@ -61,9 +66,6 @@
       push: yes
       source: build
 
-  - name: clean docker context dir {{docker_context_dir}}/{{tis_incr_name}}
-    file:
-      path: '{{docker_context_dir}}/{{tis_incr_name}}'
-      state: absent
+
      
      
