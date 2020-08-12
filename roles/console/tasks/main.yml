@@ -1,8 +1,8 @@
 ---
 # tasks file for console
-- name: git pull {{tis-local-repository_git_repository}}@master '{{tis_data_dir}}/cfg_repo'
+- name: git pull {{tis_local_cfg_git_repository}}@master '{{tis_data_dir}}/cfg_repo'
   git:
-    repo: '{{tis-local-repository_git_repository}}'
+    repo: '{{tis_local_cfg_git_repository}}'
     dest: '{{tis_data_dir}}/cfg_repo'
     version: 'master'
     force: yes
