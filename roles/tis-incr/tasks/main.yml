@@ -64,6 +64,7 @@
         path: "{{docker_context_dir}}/{{tis_incr_name}}"
       name: registry.cn-hangzhou.aliyuncs.com/tis/tis-incr
       push: yes
+      force: yes
       source: build
 
 
