@@ -32,7 +32,7 @@
 
   - name: copy web-start
     copy:
-      src: "{{tis_release_dir}}/{{item}}"
+      src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
       dest: /tmp/
     with_items:
       - "web-start.tar.gz"
