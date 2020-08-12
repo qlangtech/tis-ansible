@@ -2,14 +2,14 @@
 # tasks file for console
 - name: copy tar
   copy:
-     src: "{{tis_release_dir}}/{{item}}"
+     src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
      dest: /tmp/
   with_items:
      - "tis.tar.gz"
 
-- name: copy plugins from "{{tis_data_dir}}/libs/plugins"
+- name: copy plugins from "{{tis_release_dir}}/tis-plugin/"
   synchronize:
-    src: "{{tis_data_dir}}/libs/plugins/"
+    src: "{{tis_release_dir}}/tis-plugin/"
     dest: "{{tis_data_dir}}/libs/plugins/"
     delete: yes
   notify: restart tis-console

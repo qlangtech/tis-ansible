@@ -77,7 +77,7 @@
     - vars.yml
   hosts: tis-console
   tasks:
-  - shell: 'ls {{tis_release_dir}}'
+  - shell: 'ls {{tis_release_dir}}/{{tis_release_dir_name}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
@@ -93,7 +93,7 @@
 
   - name: deploy ng-tis to {{app_dir}}/root/
     unarchive:
-      src: "{{tis_release_dir}}/{{ng_tis_app_name}}.tgz"
+      src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{ng_tis_app_name}}.tgz"
       dest: "{{app_dir}}/root/webapp"
       remote_src: no
     when: release_files.stdout.find('ng-tis.tgz') != -1
