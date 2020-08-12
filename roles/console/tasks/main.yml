@@ -1,5 +1,14 @@
 ---
 # tasks file for console
+- name: git pull {{tis-local-repository_git_repository}}@master '{{tis_data_dir}}/cfg_repo'
+  git:
+    repo: '{{tis-local-repository_git_repository}}'
+    dest: '{{tis_data_dir}}/cfg_repo'
+    version: 'master'
+    force: yes
+    accept_hostkey: yes
+
+
 - name: copy tar
   copy:
      src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
@@ -13,13 +22,6 @@
     dest: "{{tis_data_dir}}/libs/plugins/"
     delete: yes
   notify: restart tis-console
-
-#- name: copy plugins from "{{tis_data_dir}}/libs/plugins"
-#  copy:
-#    src:  "{{item}}"
-#    dest: "{{tis_data_dir}}/libs/plugins/"
-#  with_fileglob:
-#    - "{{tis_data_dir}}/libs/plugins/*.tpi"
 
 - name: delete history tis.tar.gz
   file:
