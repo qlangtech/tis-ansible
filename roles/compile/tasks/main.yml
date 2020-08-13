@@ -84,7 +84,7 @@
 
   - name: clear release dir '{{tis_release_dir}}/{{app_local_dir_name}}'
     file:
-      path: "{{tis_release_dir}}/{{app_local_dir_name}}"
+      path: "{{tis_release_dir}}/{{app_local_dir_name}}/"
       state: absent
 
   - name: copy to release dir {{tis_release_dir}}/{{app_local_dir_name}}
