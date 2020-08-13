@@ -70,10 +70,7 @@
     args:
      chdir: "{{src_dir}}"
      
-  - name: make release dir
-    file:
-     path: '{{tis_release_dir}}/{{app_local_dir_name}}'
-     state: directory
+
   
 #  - name: clear release dir package
 #    file:
@@ -86,6 +83,11 @@
     file:
       path: "{{tis_release_dir}}/{{app_local_dir_name}}/"
       state: absent
+
+  - name: make release dir
+    file:
+      path: '{{tis_release_dir}}/{{app_local_dir_name}}'
+      state: directory
 
   - name: copy to release dir {{tis_release_dir}}/{{app_local_dir_name}}
     copy:
