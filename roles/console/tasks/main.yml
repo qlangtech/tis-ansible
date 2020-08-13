@@ -25,8 +25,9 @@
 
 - name: delete history tis.tar.gz
   file:
-      path: /tmp/tis
-      state: absent
+    path: /tmp/tis
+    state: absent
+
 - name: untar
   unarchive:
      src: /tmp/tis.tar.gz

@@ -26,6 +26,7 @@
     copy:
       src: "{{ local_java_gz_path }}"
       dest: "/tmp/{{ java_gz_file_name }}"
+      remote_src: yes
   - name: delete tmp untar directory
     file:
       path: "/tmp/{{ jdk_dir_name }}"

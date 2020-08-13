@@ -143,3 +143,9 @@ hdfs dfs -chmod -R 777 /
 ```shell
 ansible-galaxy init --init-path=roles taskcenter-worker
 ```
+
+## 远程安装java
+
+``` shell
+ansible all -i "ip,"  -m include_role -a "name=jdk" -e "@vars.yml" -u root
+```
