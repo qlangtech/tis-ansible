@@ -11,14 +11,22 @@
       owner: solr  
       state: directory
   
-  - name: copy solr.xml 
-    copy:
-     src: ./files/solrhome/{{item}}
-     dest: /opt/data/solrhome/
-     owner: solr
+#  - name: copy solr.xml
+#    copy:
+#     src: ./files/solrhome/{{item}}
+#     dest: /opt/data/solrhome/
+#     owner: solr
+#    with_items:
+#     - "solr.xml"
+
+  - name: copy solr.xml to '/opt/data/solrhome/'
+    template:
+      src: './files/solrhome/{{item}}'
+      dest: '/opt/data/solrhome/'
     with_items:
-     - "solr.xml"
-     
+      - "solr.xml"
+
+
   - name: copy app.info
     copy:
      src: ./files/solrhome/{{item}}
