@@ -24,10 +24,10 @@
 
 
 - name: make tis-incr docker image
-  vars_prompt:
-    - name: "docker_password"
-      prompt: "docker repository password"
-      private: yes
+#  vars_prompt:
+#    - name: "docker_password"
+#      prompt: "docker repository password"
+#      private: yes
   vars_files:
     - vars.yml
   hosts: localhost
