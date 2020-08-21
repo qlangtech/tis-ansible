@@ -107,7 +107,7 @@
     - vars.yml
   hosts: assemble
   tasks:
-  - shell: 'ls {{tis_release_dir}}'
+  - shell: 'ls {{tis_release_dir}}/{{tis_release_dir_name}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
@@ -122,7 +122,7 @@
     - vars.yml
   hosts: hadoop-yarn-resource-manager,hadoop-yarn-node-manager
   tasks:
-  - shell: 'ls {{tis_release_dir}}'
+  - shell: 'ls {{tis_release_dir}}/{{tis_release_dir_name}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"
@@ -138,7 +138,7 @@
   vars_files:
     - vars.yml
   tasks:
-  - shell: 'ls {{tis_release_dir}}'
+  - shell: 'ls {{tis_release_dir}}/{{tis_release_dir_name}}'
     ignore_errors: True
     register: release_files
     delegate_to: "localhost"

@@ -9,7 +9,7 @@
      - "tis-index-builder.tar.gz"
   
   - name: copy tis-index-builder package
-    copy: src='{{tis_release_dir}}/tis-index-builder.tar.gz' dest=/tmp/
+    copy: src='{{tis_release_dir}}/{{tis_release_dir_name}}/tis-index-builder.tar.gz' dest=/tmp/
 
   - name: unzip tis-index-builder tar
     unarchive:

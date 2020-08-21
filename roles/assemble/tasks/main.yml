@@ -12,7 +12,7 @@
 
   - name: copy tis-assemble 
     copy:
-     src: "{{tis_release_dir}}/{{item}}"
+     src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
      dest: /tmp/
     with_items:
      - "tis-assemble.tar.gz"
