@@ -8,7 +8,7 @@ app_local_dir_name: "{{tis_release_dir_name}}"
 src_dir: "{{src_root}}/{{app_local_dir_name}}"
 git_branch: master
 target_file_pattern: "*.tar.gz"
-exec_deploy: yes
+exec_deploy: True
 
 
 
