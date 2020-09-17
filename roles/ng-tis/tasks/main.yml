@@ -58,7 +58,8 @@
       remote_src: yes
 
   - name: compile/build ng-tis
-    command: npm run ng:serve-aot
+    #command: npm run ng:serve-aot
+    shell: npm run ng:serve-aot > exec.log
     args:
         chdir: "{{ng_tis_src_dir}}"
 
