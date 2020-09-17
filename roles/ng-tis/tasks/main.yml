@@ -63,7 +63,7 @@
     args:
         chdir: "{{ng_tis_src_dir}}"
 
-  - name: assemble ng-tis from dir "{{src_root}}/{{ng_tis_app_name}}/dist/" dest {{ tis_release_dir }}
+  - name: assemble {{ng_tis_app_name}}.tar.gz from dir "{{src_root}}/{{ng_tis_app_name}}/dist/" dest {{ tis_release_dir }}/tis
     archive:
       path: "{{src_root}}/{{ng_tis_app_name}}/dist/{{ng_tis_app_name}}/*"
       dest: "{{ tis_release_dir }}/tis/{{ng_tis_app_name}}.tar.gz"

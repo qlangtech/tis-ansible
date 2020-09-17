@@ -84,8 +84,10 @@
 
   - name: clear release dir '{{tis_release_dir}}/{{app_local_dir_name}}'
     file:
-      path: "{{tis_release_dir}}/{{app_local_dir_name}}/"
+      path: "{{tis_release_dir}}/{{app_local_dir_name}}/{{item}}"
       state: absent
+    with_lines:
+      - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%f\n'
 
   - name: make release dir
     file:
