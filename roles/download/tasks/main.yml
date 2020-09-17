@@ -2,7 +2,7 @@
 # tasks file for download
 - name: Create Tmp Dir
   file: 
-   path: "{{tis_release_dir}}"
+   path: "{{tis_release_dir}}/{{tis_pkg_version}}"
    state: directory
  
 - name: Download Release Package
