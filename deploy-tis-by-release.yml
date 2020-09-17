@@ -5,6 +5,8 @@
   hosts: localhost
   roles:
    - role: download
+  tags:
+    - always
 
 - import_playbook: install_struct.yml
 
