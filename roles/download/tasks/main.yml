@@ -21,6 +21,7 @@
     - {name: "{{tis_pkg_version}}/web-start.tar.gz", when: True}
     - {name: "{{tis_pkg_version}}/tis-collect.tar.gz", when: True}
     - {name: "{{tis_pkg_version}}/ng-tis.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-incr.tar.gz", when: True}
     - {name: "tis-ibatis.tar.gz", when: True}
     - {name: "{{ java_gz_file_name }}", when: True}
     - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }
