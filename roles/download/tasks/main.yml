@@ -14,7 +14,7 @@
   with_items:
     - {name: "{{tis_pkg_version}}/solr.tar.gz", when: True}
     - {name: "{{tis_pkg_version}}/tis-assemble.tar.gz", when: True}
-    - {name: "{{tis_pkg_version}}/tis-cluster-status-collect.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-collect.tar.gz", when: True}
     - {name: "{{tis_pkg_version}}/tis-index-builder.tar.gz", when: True}
     - {name: "{{tis_pkg_version}}/tis.tar.gz", when: True}
     - {name: "{{tis_pkg_version}}/tis-scala-compiler-dependencies.tar.gz", when: True}
