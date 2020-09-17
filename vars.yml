@@ -3,6 +3,7 @@ tis_release_dir_name: tis
 tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
+tis_pkg_version: saturn-1.0.0-SNAPSHOT
 
 ng_tis_app_name: ng-tis
 app_dir: /opt/app/spring-boot

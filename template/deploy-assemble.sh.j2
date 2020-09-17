@@ -3,7 +3,7 @@
 mvn_bin="{{mvn_home}}/bin/mvn"
 parent_dir=`pwd`
 
-for m in solr-webapp tis-assemble tis-collection-info-collect tis-console tis-index-builder tis-scala-compiler-dependencies tis-web-start
+for m in solr-webapp tis-assemble tis-collection-info-collect tis-console tis-index-builder tis-scala-compiler-dependencies tis-web-start tis-realtime-base
 do
   cd $parent_dir/$m
   echo "start deploy $m"

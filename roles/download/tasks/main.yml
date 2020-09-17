@@ -12,14 +12,15 @@
     force: no
   when: item.when
   with_items:
-    - {name: "solr.tar.gz", when: True}
-    - {name: "tis-assemble.tar.gz", when: True}
-    - {name: "tis-cluster-status-collect.tar.gz", when: True}
-    - {name: "tis-index-builder.tar.gz", when: True}
-    - {name: "tis.tar.gz", when: True}
-    - {name: "tis-scala-compiler-dependencies.tar.gz", when: True}
-    - {name: "web-start.tar.gz", when: True}
-    - {name: "tis-collect.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/solr.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-assemble.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-cluster-status-collect.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-index-builder.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-scala-compiler-dependencies.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/web-start.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/tis-collect.tar.gz", when: True}
+    - {name: "{{tis_pkg_version}}/ng-tis.tar.gz", when: True}
     - {name: "tis-ibatis.tar.gz", when: True}
     - {name: "{{ java_gz_file_name }}", when: True}
     - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }
