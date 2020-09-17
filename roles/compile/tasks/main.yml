@@ -105,6 +105,7 @@
     shell: ./deploy-assemble.sh > exec.log
     args:
       chdir: "{{src_dir}}"
+    when: {{exec_deploy}}
     tags:
       - deploy
 

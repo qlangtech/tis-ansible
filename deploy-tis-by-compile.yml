@@ -22,6 +22,7 @@
   vars_files:
     - vars.yml
   vars:
+    exec_deploy: no
     app_local_dir_name: tis-plugin
     git_src: "git@github.com:qlangtech/plugins.git"
     target_file_pattern: "*.tpi"
