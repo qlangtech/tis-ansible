@@ -104,7 +104,7 @@
   - name: deploy assemble package to remote repository
     shell: ./deploy-assemble.sh > exec.log
     args:
-      chdir: "{{src_dir}}"
+      chdir: "{{tis_release_dir}}/{{app_local_dir_name}}"
     tags:
       - deploy
 
