@@ -9,7 +9,7 @@
   get_url:
     url: "{{ release_repository }}/{{ item.name }}"
     dest: "{{ tis_release_dir }}/{{ item.name }}"
-    force: yes
+    force: no
   when: item.when
   with_items:
     - {name: "solr.tar.gz", when: True}
@@ -17,6 +17,10 @@
     - {name: "tis-cluster-status-collect.tar.gz", when: True}
     - {name: "tis-index-builder.tar.gz", when: True}
     - {name: "tis.tar.gz", when: True}
+    - {name: "tis-scala-compiler-dependencies.tar.gz", when: True}
+    - {name: "web-start.tar.gz", when: True}
+    - {name: "tis-collect.tar.gz", when: True}
+    - {name: "tis-ibatis.tar.gz", when: True}
     - {name: "{{ java_gz_file_name }}", when: True}
     - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }
     - {name: "{{ hadoop_gz_file_name }}", when: "{{ need_install_hadoop }}" }

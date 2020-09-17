@@ -54,10 +54,13 @@
   
   - name: copy compile shell script
     template:
-     src: template/compile.sh.j2
-     dest: '{{src_dir}}/compile.sh'
+     src: template/{{item}}.j2
+     dest: '{{src_dir}}/{{item}}'
      mode: u+rwx
- 
+    with_items:
+      - compile.sh
+      - deploy-assemble.sh
+
   - name: clear old package
     file:
        path: '{{item}}'
@@ -96,6 +99,12 @@
     with_lines:
        - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p,%f\n'
 
+  - name: deploy assemble package to remote repository
+    shell: ./deploy-assemble.sh > exec.log
+    args:
+      chdir: "{{src_dir}}"
+    tags:
+      - deploy
 
      
      

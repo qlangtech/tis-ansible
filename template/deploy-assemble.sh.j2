@@ -1,0 +1,10 @@
+#!/bin/bash
+
+mvn_bin="{{mvn_home}}/bin/mvn"
+
+for m in solr-webapp tis-assemble tis-collection-info-collect tis-console tis-index-builder tis-scala-compiler-dependencies tis-web-start
+do
+  cd $m
+  echo "start deploy $m"
+  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.2:put -Drelease_dir={{tis_release_dir}}
+done

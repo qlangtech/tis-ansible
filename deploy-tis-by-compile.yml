@@ -1,5 +1,14 @@
 ---
 
+- name: make ng-tis package
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  roles:
+    - role: ng-tis
+  tags:
+    - ng-tis
+
 - name: compile tis src tar package
   vars_files:
    - vars.yml
@@ -36,14 +45,7 @@
   tags:
     - incr
 
-- name: make ng-tis package
-  vars_files:
-    - vars.yml
-  hosts: localhost
-  roles:
-    - role: ng-tis
-  tags:
-    - ng-tis
+
     
 - import_playbook: install_struct.yml
   
