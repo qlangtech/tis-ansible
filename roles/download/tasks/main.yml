@@ -30,7 +30,7 @@
     dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{ item }}"
     state: link
   with_lines:
-    - find {{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}} -type f -name "{{target_file_pattern}}" -printf '%f\n'
+    - find {{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}} -type f -name "*" -printf '%f\n'
 
 
 - name: Download Base Release Package to {{ tis_release_dir }}
