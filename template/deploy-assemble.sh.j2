@@ -7,6 +7,6 @@ for m in solr-webapp tis-assemble tis-collection-info-collect tis-console tis-in
 do
   cd $parent_dir/$m
   echo "start deploy $m"
-  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.2:put -Drelease_dir={{tis_release_dir}}/tis
+  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.2:put -Drelease_dir={{tis_release_dir}}/tis -Dappname=all
   echo "success deploy $m"
 done

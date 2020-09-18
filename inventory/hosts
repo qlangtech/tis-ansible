@@ -50,8 +50,6 @@ zk_group=zookeeper
 
 [all:vars]
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-#git_src=git@github.com:baisui1981/tis.git
-#git_branch=master
 runtime=daily
 ansible_ssh_user='root'
 

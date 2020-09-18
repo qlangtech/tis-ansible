@@ -6,6 +6,7 @@ git_src: https://code.aliyun.com/qlangtech/tis-solr.git
 app_local_dir_name: "{{tis_release_dir_name}}"
 #example: /opt/data/tiscode/tis
 src_dir: "{{src_root}}/{{app_local_dir_name}}"
+
 git_branch: master
 target_file_pattern: "*.tar.gz"
 exec_deploy: True
