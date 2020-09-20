@@ -1,5 +1,7 @@
 tis_local_cfg_git_repository: git@github.com:qlangtech/tis-local-repository.git
 tis_release_dir_name: tis
+tis_plugin_release_dir_name: tis-plugin
+
 tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com

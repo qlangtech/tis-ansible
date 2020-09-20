@@ -61,7 +61,7 @@
       - compile.sh
       - deploy-assemble.sh
 
-  - name: clear old package
+  - name: clean old package
     file:
        path: '{{item}}'
        state: absent
@@ -94,13 +94,14 @@
       state: directory
 
   - name: copy to release dir {{tis_release_dir}}/{{app_local_dir_name}}
-    copy:
+    file:
        src: "{{item.split(',')|first}}"
        dest: "{{tis_release_dir}}/{{app_local_dir_name}}/{{item.split(',')|last}}"
+       state: link
     with_lines:
        - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p,%f\n'
 
-  - name: deploy assemble package to remote repository
+  - name: deploy assemble of '{{app_local_dir_name}}' package '{{tisasm_put_mojo}}' to remote repository
     shell: ./deploy-assemble.sh > exec.log
     args:
       chdir: "{{src_dir}}"

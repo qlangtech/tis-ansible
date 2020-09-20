@@ -11,19 +11,26 @@
 
 - name: compile tis src tar package
   vars_files:
-   - vars.yml
-  hosts: localhost      
+    - vars.yml
+  hosts: localhost
   roles:
-   - role: compile
+    - role: compile
   tags:
     - pkg
+
+- name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
+  shell: 'find {{src_root}}/{{tis_plugin_release_dir_name}} -type d -name "*-plugin" -printf "%f "'
+    ignore_errors: True
+    register: plugin_dirs
+    delegate_to: "localhost"
 
 - name: compile tis-plugin component tar package
   vars_files:
     - vars.yml
   vars:
-    exec_deploy: False
-    app_local_dir_name: tis-plugin
+    tisasm_put_mojo: plugin_dirs
+    exec_deploy: True
+    app_local_dir_name: "{{tis_plugin_release_dir_name}}"
     git_src: "git@github.com:qlangtech/plugins.git"
     target_file_pattern: "*.tpi"
   hosts: localhost
@@ -34,10 +41,10 @@
 
 
 - name: make tis-incr docker image
-#  vars_prompt:
-#    - name: "docker_password"
-#      prompt: "docker repository password"
-#      private: yes
+  #  vars_prompt:
+  #    - name: "docker_password"
+  #      prompt: "docker repository password"
+  #      private: yes
   vars_files:
     - vars.yml
   hosts: localhost
@@ -47,7 +54,7 @@
     - incr
 
 
-    
+
 - import_playbook: install_struct.yml
   
 
