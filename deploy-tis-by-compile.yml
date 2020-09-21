@@ -51,10 +51,12 @@
       ignore_errors: True
       register: plugin_dirs
       delegate_to: "localhost"
+    - debug:
+        msg: "registed param plugin_dirs: {{plugin_dirs.stdout}}"
     - include_role:
         name: compile
       vars:
-        tisasm_put_mojo: '{{plugin_dirs}}'
+        tisasm_put_mojo: '{{plugin_dirs.stdout}}'
   tags:
     - pkg-plugin
 
