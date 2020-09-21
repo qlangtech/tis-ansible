@@ -152,5 +152,10 @@ ansible all -i "ip,"  -m include_role -a "name=jdk" -e "@vars.yml" -u root
 
 ## 向仓库中部署构件
 ```
-ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,deploy -i ./inventory/hosts
+ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,deploy 
+```
+
+## 通过编译向本地安装
+```
+ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
 ```
