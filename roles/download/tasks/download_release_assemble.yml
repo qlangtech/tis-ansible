@@ -1,0 +1,27 @@
+---
+- name: Download tis Release Package to {{ tis_release_dir }}/{{tis_release_dir_name}}
+  get_url:
+    url: "{{ release_repository }}/{{tis_pkg_version}}/{{ item.name }}"
+    dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}/{{ item.name }}"
+    #If yes and dest is not a directory, will download the file every time and replace the file if the contents change
+    force: yes
+  when: item.when
+  with_items:
+    - {name: "solr.tar.gz", when: True}
+    - {name: "tis-assemble.tar.gz", when: True}
+    - {name: "tis-collect.tar.gz", when: True}
+    - {name: "tis-index-builder.tar.gz", when: True}
+    - {name: "tis.tar.gz", when: True}
+    - {name: "{{tis_scala_compiler_dependencies_gz_file_name}}", when: True}
+    - {name: "web-start.tar.gz", when: True}
+    - {name: "tis-collect.tar.gz", when: True}
+    - {name: "ng-tis.tar.gz", when: True}
+    - {name: "tis-incr.tar.gz", when: True}
+
+- name: make soft link for '{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}'
+  file:
+    src: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}/{{ item }}"
+    dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{ item }}"
+    state: link
+  with_lines:
+    - find {{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}} -type f -name "*" -printf '%f\n'

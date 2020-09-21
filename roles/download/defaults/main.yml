@@ -1,2 +1,4 @@
 ---
 # defaults file for download
+shall_download_plugins: yes
+download_release_assemble: yes

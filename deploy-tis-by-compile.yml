@@ -15,6 +15,12 @@
       with_items:
         - '{{tis_release_dir_name}}'
         - '{{tis_plugin_release_dir_name}}'
+    - name: download system dependencies
+      include_role:
+        name: download
+      vars:
+        - shall_download_plugins: no
+        - download_release_assemble: no
   tags: always
 
 - name: make ng-tis package
