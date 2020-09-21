@@ -47,7 +47,7 @@
   hosts: localhost
   tasks:
     - name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
-      shell: "find {{src_root}}/{{tis_plugin_release_dir_name}} -type d -name '*-plugin' -printf '%f '"
+      shell: "find {{src_root}}/{{tis_plugin_release_dir_name}}/* -maxdepth 1 -type d -name '*-plugin' -printf '%f '"
       ignore_errors: True
       register: plugin_dirs
       delegate_to: "localhost"
