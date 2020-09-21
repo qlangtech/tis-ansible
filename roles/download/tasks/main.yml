@@ -9,12 +9,12 @@
     - "{{tis_plugin_release_dir_name}}"
 
 - name: include download_plugins.yml
-  import_playbook: download_plugins.yml
+  import_tasks: download_plugins.yml
   when: shall_download_plugins
 
 
 - name: include download_release_assemble.yml
-  import_playbook: download_release_assemble.yml
+  import_tasks: download_release_assemble.yml
   when: shall_download_release_assemble
 
 - name: Download Base Release Package to {{ tis_release_dir }}
