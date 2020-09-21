@@ -20,7 +20,7 @@
         name: download
       vars:
         - shall_download_plugins: no
-        - download_release_assemble: no
+        - shall_download_release_assemble: no
   tags: always
 
 - name: make ng-tis package

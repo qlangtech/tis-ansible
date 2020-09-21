@@ -15,7 +15,7 @@
 
 - name: include download_release_assemble.yml
   import_playbook: download_release_assemble.yml
-  when: download_release_assemble
+  when: shall_download_release_assemble
 
 - name: Download Base Release Package to {{ tis_release_dir }}
   get_url:
