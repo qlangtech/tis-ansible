@@ -8,10 +8,13 @@
       file:
         path: "{{src_root}}"
         state: directory
-    - name: init release dir:'{{ tis_release_dir }}'
+    - name: init release dir:'{{ tis_release_dir }}/{{tis_release_dir_name}}'
       file:
-        path: "{{ tis_release_dir }}"
+        path: "{{ tis_release_dir }}/{{item}}"
         state: directory
+      with_items:
+        - tis_release_dir_name
+        - tis_plugin_release_dir_name
   tags: always
 
 - name: make ng-tis package
