@@ -52,7 +52,7 @@
      force: yes
      accept_hostkey: yes
 
-  - name: copy compile shell script
+  - name: copy compile shell script to '{{src_dir}}'
     template:
      src: template/{{item}}.j2
      dest: '{{src_dir}}/{{item}}'

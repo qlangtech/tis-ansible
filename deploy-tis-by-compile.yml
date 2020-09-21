@@ -40,7 +40,6 @@
   vars_files:
     - vars.yml
   vars:
-    tisasm_put_mojo: '{{plugin_dirs}}'
     exec_deploy: True
     app_local_dir_name: "{{tis_plugin_release_dir_name}}"
     git_src: "git@github.com:qlangtech/plugins.git"
@@ -52,8 +51,10 @@
       ignore_errors: True
       register: plugin_dirs
       delegate_to: "localhost"
-  roles:
-    - role: compile
+    - include_role:
+        name: compile
+      vars:
+        tisasm_put_mojo: '{{plugin_dirs}}'
   tags:
     - pkg-plugin
 
