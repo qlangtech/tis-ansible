@@ -12,7 +12,7 @@
 
 - name: install tis-ibatis dependencies
   unarchive:
-    src: {{ tis_release_dir }}/{{tis_ibatis_gz_file_name}}
+    src: "{{ tis_release_dir }}/{{tis_ibatis_gz_file_name}}"
     dest: "{{tis_data_dir}}/libs/tis-ibatis/"
 
 - name: clean {{tis_scala_compiler_dependencies_dir_name}}
@@ -22,7 +22,7 @@
 
 - name: install {{tis_scala_compiler_dependencies_dir_name}}
   unarchive:
-    src: {{ tis_release_dir }}/{{tis_scala_compiler_dependencies_gz_file_name}}
+    src: "{{ tis_release_dir }}/{{tis_scala_compiler_dependencies_gz_file_name}}"
     dest: "{{tis_data_dir}}/libs/"
 
 - name: git pull {{tis_local_cfg_git_repository}}@master '{{tis_data_dir}}/cfg_repo'
@@ -62,7 +62,7 @@
 - name: synchroniz tis
   synchronize:
      src: /tmp/tis/
-     dest: /opt/app/spring-boot/{{tis_app_name}}
+     dest: "/opt/app/spring-boot/{{tis_app_name}}"
      delete: yes
      recursive: yes
   delegate_to: "{{ inventory_hostname }}"
@@ -75,7 +75,7 @@
 
 - name: copy config.properties
   template:
-     src: template/{{item}}.j2
+     src: "template/{{item}}.j2"
      dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
   with_items:
      - "config.properties"
