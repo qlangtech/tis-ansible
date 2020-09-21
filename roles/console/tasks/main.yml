@@ -22,7 +22,7 @@
 
 - name: install {{tis_scala_compiler_dependencies_dir_name}}
   unarchive:
-    src: "{{ tis_release_dir }}/{{tis_scala_compiler_dependencies_gz_file_name}}"
+    src: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_scala_compiler_dependencies_gz_file_name}}"
     dest: "{{tis_data_dir}}/libs/"
 
 - name: git pull {{tis_local_cfg_git_repository}}@master '{{tis_data_dir}}/cfg_repo'
