@@ -13,8 +13,8 @@
         path: "{{ tis_release_dir }}/{{item}}"
         state: directory
       with_items:
-        - tis_release_dir_name
-        - tis_plugin_release_dir_name
+        - '{{tis_release_dir_name}}'
+        - '{{tis_plugin_release_dir_name}}'
   tags: always
 
 - name: make ng-tis package
