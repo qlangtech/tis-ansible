@@ -12,6 +12,13 @@
       state: present
       create: yes
     with_inventory_hostnames: all
+  - name: download system dependencies
+    include_role:
+      name: download
+      apply:
+        tags:
+          - sys-dep
+  tags: always
 
 - name: init os
   vars_files:

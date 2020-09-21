@@ -71,3 +71,5 @@
     - {name: "{{ spark_gz_file_name }}", when: "{{ need_install_hadoop and need_install_spark }}" }
     - {name: "{{ spark_tispark_jar_file_name }}", when: "{{ need_install_hadoop and need_install_spark and need_install_tispark }}" }
     - {name: "{{ spark_thriftserver_jar_file_name }}", when: "{{ need_install_hadoop and need_install_spark and need_install_spark_shuffle }}" }
+  tags:
+    - sys-dep
