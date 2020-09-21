@@ -51,7 +51,7 @@
     delegate_to: "localhost"
   - include_role:
       name: hadoop
-    when: need_install_hadoop and release_files.stdout.find('hadoop-2.6.5.tar.gz') != -1
+    when: need_install_hadoop and release_files.stdout.find( hadoop_gz_file_name ) != -1
   tags:
     - hadoop
 

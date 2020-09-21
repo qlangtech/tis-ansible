@@ -2,7 +2,8 @@ tis_local_cfg_git_repository: git@github.com:qlangtech/tis-local-repository.git
 tis_release_dir_name: tis
 tis_plugin_release_dir_name: tis-plugin
 
-tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
+tis_release_dir: '/tmp/tis'
+#tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 tis_pkg_version: saturn-1.0.0-SNAPSHOT
@@ -32,6 +33,10 @@ need_install_hadoop: true
 need_install_spark: true
 need_install_tispark: false
 need_install_spark_shuffle: true
+
+tis_ibatis_gz_file_name: tis-ibatis.tar.gz
+tis_scala_compiler_dependencies_dir_name: tis-scala-compiler-dependencies
+tis_scala_compiler_dependencies_gz_file_name: "{{tis_scala_compiler_dependencies_dir_name}}.tar.gz"
 
 # some cross-role variables
 zk_gz_file_name: zookeeper-3.4.14.tar.gz

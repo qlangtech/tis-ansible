@@ -1,4 +1,18 @@
 ---
+- name: init compile
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+    - name: init source code dir:'{{src_root}}'
+      file:
+        path: "{{src_root}}"
+        state: directory
+    - name: init release dir:'{{ tis_release_dir }}'
+      file:
+        path: "{{ tis_release_dir }}"
+        state: directory
+  tags: always
 
 - name: make ng-tis package
   vars_files:
@@ -18,11 +32,7 @@
   tags:
     - pkg
 
-- name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
-  shell: 'find {{src_root}}/{{tis_plugin_release_dir_name}} -type d -name "*-plugin" -printf "%f "'
-    ignore_errors: True
-    register: plugin_dirs
-    delegate_to: "localhost"
+
 
 - name: compile tis-plugin component tar package
   vars_files:
@@ -34,6 +44,12 @@
     git_src: "git@github.com:qlangtech/plugins.git"
     target_file_pattern: "*.tpi"
   hosts: localhost
+  tasks:
+    - name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
+      shell: "find {{src_root}}/{{tis_plugin_release_dir_name}} -type d -name '*-plugin' -printf '%f '"
+      ignore_errors: True
+      register: plugin_dirs
+      delegate_to: "localhost"
   roles:
     - role: compile
   tags:

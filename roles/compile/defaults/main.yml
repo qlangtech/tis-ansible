@@ -4,7 +4,6 @@
 
 git_src: https://code.aliyun.com/qlangtech/tis-solr.git
 app_local_dir_name: "{{tis_release_dir_name}}"
-#example: /opt/data/tiscode/tis
 src_dir: "{{src_root}}/{{app_local_dir_name}}"
 tisasm_put_mojo: "solr-webapp tis-assemble tis-collection-info-collect tis-console tis-index-builder tis-scala-compiler-dependencies tis-web-start tis-realtime-base"
 git_branch: master

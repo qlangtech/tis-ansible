@@ -40,7 +40,7 @@
     - {name: "tis-collect.tar.gz", when: True}
     - {name: "tis-index-builder.tar.gz", when: True}
     - {name: "tis.tar.gz", when: True}
-    - {name: "tis-scala-compiler-dependencies.tar.gz", when: True}
+    - {name: "{{tis_scala_compiler_dependencies_gz_file_name}}", when: True}
     - {name: "web-start.tar.gz", when: True}
     - {name: "tis-collect.tar.gz", when: True}
     - {name: "ng-tis.tar.gz", when: True}
@@ -63,7 +63,7 @@
     force: yes
   when: item.when
   with_items:
-    - {name: "tis-ibatis.tar.gz", when: True}
+    - {name: "{{tis_ibatis_gz_file_name}}", when: True}
     - {name: "{{ java_gz_file_name }}", when: True}
     - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }
     - {name: "{{ hadoop_gz_file_name }}", when: "{{ need_install_hadoop }}" }
