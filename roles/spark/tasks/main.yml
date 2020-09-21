@@ -21,14 +21,15 @@
       mode: '0755'
     with_items:
       - /opt/app/scala-2.11.7
-      - /opt/app/spark-2.4.4-bin-hadoop2.6
+      - '/opt/app/{{spark_file_name}}'
+
   - name: delete tmp untar directory
     file: 
       path: "/tmp/{{ item }}"
       state: absent
     with_items:
       - scala-2.11.7
-      - spark-2.4.4-bin-hadoop2.6
+      - '{{spark_file_name}}'
   - name: untar gzip files
     unarchive:
       src: "/tmp/{{ item }}"
@@ -39,6 +40,12 @@
     with_items:
       - "{{ spark_scala_gz_file_name }}"
       - "{{ spark_gz_file_name }}"
+
+  - name: copy {{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}
+    copy:
+      src: '{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}'
+      dest: '/tmp/{{spark_file_name}}/jars/'
+
   - name: sychronize files
     synchronize:
       src: "/tmp/{{ item }}/"
@@ -46,7 +53,7 @@
       recursive: yes
     with_items:
       - scala-2.11.7
-      - spark-2.4.4-bin-hadoop2.6
+      - '{{spark_file_name}}'
     delegate_to: "{{ inventory_hostname }}"
 
   # link to scala and spark

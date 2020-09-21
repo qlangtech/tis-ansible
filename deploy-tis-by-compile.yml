@@ -79,6 +79,7 @@
     - role: tis-incr
   tags:
     - incr
+    - deploy
 
 
 

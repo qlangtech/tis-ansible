@@ -50,9 +50,12 @@ hadoop_user: hadoop
 hadoop_group: hadoop
 
 spark_scala_gz_file_name: scala-2.11.7.tgz
-spark_gz_file_name: spark-2.4.4-bin-hadoop2.6.tgz
+spark_file_name: spark-2.4.4-bin-hadoop2.6
+spark_gz_file_name: '{{spark_file_name}}.tgz'
 spark_tispark_jar_file_name: tispark-core-2.1.5-spark_2.4-jar-with-dependencies.jar
 spark_thriftserver_jar_file_name: mysql-connector-java-5.1.48-bin.jar
+# 为了获得spark执行进度用
+tis_spark_hive_server_extends_jar_file_name: tis-spark-hive-server-extends.jar
 
 # tis console db config
 #tisconsole_db_url: common101.my.2dfire-daily.com
