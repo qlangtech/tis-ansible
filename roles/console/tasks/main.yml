@@ -45,6 +45,7 @@
   synchronize:
     src: "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/"
     dest: "{{tis_data_dir}}/libs/plugins/"
+    copy_links: yes
     delete: yes
   notify: restart tis-console
 
