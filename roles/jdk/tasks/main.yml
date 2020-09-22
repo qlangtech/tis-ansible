@@ -5,15 +5,15 @@
     file:
       path: "{{tis_release_dir}}"
       state: directory
-
-  - name: Download JDK Package to local '{{ tis_release_dir }}'
-    get_url:
-      url: "{{ release_repository }}/{{ item.name }}"
-      dest: "{{ tis_release_dir }}/{{ item.name }}"
-      force: no
-    when: item.when
-    with_items:
-      - {name: "{{ java_gz_file_name }}", when: True}
+# has been execute in download role
+#  - name: Download JDK Package to local '{{ tis_release_dir }}'
+#    get_url:
+#      url: "{{ release_repository }}/{{ item.name }}"
+#      dest: "{{ tis_release_dir }}/{{ item.name }}"
+#      force: no
+#    when: item.when
+#    with_items:
+#      - {name: "{{ java_gz_file_name }}", when: True}
 
   - name: make /opt/app/java directory
     file:
