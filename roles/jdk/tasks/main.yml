@@ -10,6 +10,7 @@
     get_url:
       url: "{{ release_repository }}/{{ item.name }}"
       dest: "{{ tis_release_dir }}/{{ item.name }}"
+      force: no
     when: item.when
     with_items:
       - {name: "{{ java_gz_file_name }}", when: True}
