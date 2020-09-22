@@ -41,10 +41,11 @@
       - "{{ spark_scala_gz_file_name }}"
       - "{{ spark_gz_file_name }}"
 
-  - name: copy {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}
+  - name: unarchive {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_tar_file_name}}
     unarchive:
-      src: '{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}'
+      src: '{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_tar_file_name}}'
       dest: '/tmp/{{spark_file_name}}/jars/'
+    when: need_install_hadoop and need_install_spark
 
   - name: sychronize files
     synchronize:
@@ -86,6 +87,7 @@
       group: "{{ hadoop_group }}"
       mode: '0644'
     when: need_install_hadoop and need_install_spark and need_install_spark_shuffle
+
   - name: install spark-shuffle jar
     file:
       src: /opt/app/spark/yarn/spark-2.4.4-yarn-shuffle.jar
