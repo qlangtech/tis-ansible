@@ -66,7 +66,7 @@
        path: '{{item}}'
        state: absent
     with_lines:
-       - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p\n'
+       - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p\n'
   
   - name: compile and package {{src_dir}}
     shell: ./compile.sh {{runtime}} {{appname}} > exec.log
@@ -79,14 +79,14 @@
 #       path: '{{tis_release_dir}}/{{app_local_dir_name}}/*'
 #       state: absent
 #    with_lines:
-#       - find {{tis_release_dir}} -type f -name "{{target_file_pattern}}" -printf '%p\n'
+#       - find {{tis_release_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p\n'
 
   - name: clear release dir '{{tis_release_dir}}/{{app_local_dir_name}}'
     file:
       path: "{{tis_release_dir}}/{{app_local_dir_name}}/{{item}}"
       state: absent
     with_lines:
-      - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%f\n'
+      - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%f\n'
 
   - name: make release dir
     file:
@@ -99,7 +99,7 @@
        dest: "{{tis_release_dir}}/{{app_local_dir_name}}/{{item.split(',')|last}}"
        state: link
     with_lines:
-       - find {{src_dir}} -type f -name "{{target_file_pattern}}" -printf '%p,%f\n'
+       - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p,%f\n'
 
   - name: deploy assemble of '{{app_local_dir_name}}' package '{{tisasm_put_mojo}}' to remote repository
     shell: ./deploy-assemble.sh > exec.log

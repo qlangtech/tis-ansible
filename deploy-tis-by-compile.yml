@@ -49,7 +49,7 @@
     exec_deploy: True
     app_local_dir_name: "{{tis_plugin_release_dir_name}}"
     git_src: "git@github.com:qlangtech/plugins.git"
-    target_file_pattern: "*.tpi"
+    target_file_pattern: ".*\.(tpi|tar\.gz)$"
   hosts: localhost
   tasks:
 #    - name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}

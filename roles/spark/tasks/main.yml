@@ -41,9 +41,9 @@
       - "{{ spark_scala_gz_file_name }}"
       - "{{ spark_gz_file_name }}"
 
-  - name: copy {{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}
-    copy:
-      src: '{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}'
+  - name: copy {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}
+    unarchive:
+      src: '{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_jar_file_name}}'
       dest: '/tmp/{{spark_file_name}}/jars/'
 
   - name: sychronize files
