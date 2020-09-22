@@ -1,7 +1,7 @@
 ---
 - name: Download tis Release Package to {{ tis_release_dir }}/{{tis_release_dir_name}}
   get_url:
-    url: "{{ release_repository }}/{{tis_pkg_version}}/{{ item.name }}"
+    url: "{{ release_repository }}/{{tis_pkg_version}}/{{tis_release_dir_name}}/{{ item.name }}"
     dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}/{{ item.name }}"
     #If yes and dest is not a directory, will download the file every time and replace the file if the contents change
     force: yes
