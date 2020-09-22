@@ -94,10 +94,10 @@
 
   - name: deploy ng-tis to {{app_dir}}/root/
     unarchive:
-      src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{ng_tis_app_name}}.tgz"
+      src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{ng_tis_app_tar_file_name}}"
       dest: "{{app_dir}}/root/webapp"
       remote_src: no
-    when: release_files.stdout.find('ng-tis.tgz') != -1
+    when: release_files.stdout.find(ng_tis_app_tar_file_name) != -1
   tags:
     - tjs
    

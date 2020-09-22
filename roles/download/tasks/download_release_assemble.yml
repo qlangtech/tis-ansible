@@ -16,7 +16,7 @@
     - {name: "{{tis_spark_hive_server_extends_jar_file_name}}", when: need_install_hadoop and need_install_spark}
     - {name: "web-start.tar.gz", when: True}
     - {name: "tis-collect.tar.gz", when: True}
-    - {name: "ng-tis.tar.gz", when: True}
+    - {name: "{{ng_tis_app_tar_file_name}}", when: True}
     - {name: "tis-incr.tar.gz", when: True}
 
 - name: make soft link for '{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}'
