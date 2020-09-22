@@ -13,7 +13,6 @@
     - {name: "tis-index-builder.tar.gz", when: True}
     - {name: "tis.tar.gz", when: True}
     - {name: "{{tis_scala_compiler_dependencies_gz_file_name}}", when: need_install_hadoop and need_install_spark}
-    - {name: "{{tis_spark_hive_server_extends_tar_file_name}}", when: need_install_hadoop and need_install_spark}
     - {name: "web-start.tar.gz", when: True}
     - {name: "tis-collect.tar.gz", when: True}
     - {name: "{{ng_tis_app_tar_file_name}}", when: True}
