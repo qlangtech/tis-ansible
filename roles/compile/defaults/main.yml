@@ -1,6 +1,6 @@
 ---
 # defaults file for compile
-git_src: git@code.aliyun.com:qlangtech/tis-solr.git
+git_src: https://github.com/qlangtech/tis-solr.git
 
 #git_src: https://code.aliyun.com/qlangtech/tis-solr.git
 app_local_dir_name: "{{tis_release_dir_name}}"
