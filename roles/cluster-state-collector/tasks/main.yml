@@ -49,7 +49,6 @@
      dest: "{{app_dir}}/tis-collect/conf/tis-web-config/{{item}}"
     with_items:
      - "config.properties"
-    notify: restart collect
 
   - name: path owner set
     file:
