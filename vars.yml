@@ -8,6 +8,7 @@ tis_release_dir: '/tmp/release'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 tis_pkg_version: saturn-1.0.0-SNAPSHOT
 
+need_install_tis_collect: true;
 ng_tis_app_name: ng-tis
 ng_tis_app_tar_file_name: '{{ng_tis_app_name}}.tar.gz'
 app_dir: /opt/app/spring-boot

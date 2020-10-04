@@ -14,7 +14,7 @@
     - {name: "tis.tar.gz", when: True}
     - {name: "{{tis_scala_compiler_dependencies_gz_file_name}}", when: need_install_hadoop and need_install_spark}
     - {name: "web-start.tar.gz", when: True}
-    - {name: "tis-collect.tar.gz", when: True}
+    - {name: "tis-collect.tar.gz", when: need_install_tis_collect}
     - {name: "{{ng_tis_app_tar_file_name}}", when: True}
     - {name: "tis-incr.tar.gz", when: True}
 
