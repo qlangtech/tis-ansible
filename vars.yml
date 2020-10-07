@@ -59,11 +59,6 @@ spark_thriftserver_jar_file_name: mysql-connector-java-5.1.48-bin.jar
 # 为了获得spark执行进度用
 tis_spark_hive_server_extends_tar_file_name: tis-spark-hive-server-extends.tar.gz
 
-# tis console db config
-#tisconsole_db_url: common101.my.2dfire-daily.com
-#tisconsole_db_username: tis_console
-#tisconsole_db_password: tis_console@552208
-#tisconsole_db_dbname: tis_console
 
 tisconsole_db_url: 192.168.28.200
 tisconsole_db_username: root
