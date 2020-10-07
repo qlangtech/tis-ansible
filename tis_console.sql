@@ -447,7 +447,7 @@ CREATE TABLE `work_flow_publish_history` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-
+DROP TABLE IF EXISTS `datasource_db`;
 CREATE TABLE `datasource_db` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -457,7 +457,7 @@ CREATE TABLE `datasource_db` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 
-
+DROP TABLE IF EXISTS `datasource_table`;
 CREATE TABLE `datasource_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
