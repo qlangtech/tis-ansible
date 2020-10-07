@@ -52,15 +52,16 @@ CREATE TABLE `application` (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `is_auto_deploy` char(1) NOT NULL DEFAULT 'N' COMMENT '自动部署',
+  `work_flow_id` int(11) DEFAULT NULL,
   `dpt_id` int(11) NOT NULL COMMENT 'dpt_id',
   `dpt_name` varchar(50) DEFAULT NULL COMMENT 'dpt_name',
   `full_build_cron_time` varchar(50) DEFAULT 'full_build_cron_time',
+  `last_process_time` datetime DEFAULT NULL,
   PRIMARY KEY (`app_id`),
   UNIQUE KEY `application_idx_projname_delete` (`project_name`),
   KEY `fk_ref2` (`dpt_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='应用信息';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 
 
@@ -78,7 +79,7 @@ CREATE TABLE `cluster_snapshot` (
   `app_id` bigint(20) NOT NULL comment 'app_id',
   PRIMARY KEY (`id`),
   UNIQUE KEY `cluster_snapshot_idx_projname_delete` (`app_id`,`data_type`,`gmt_create`)
-) ENGINE=MEMORY  DEFAULT CHARSET=utf8 MAX_ROWS=100000000;
+) ENGINE=MEMORY  DEFAULT CHARSET=utf8mb4 MAX_ROWS=100000000;
 
 
 --
@@ -142,6 +143,24 @@ CREATE TABLE `nums` (
   `a` int(11) NOT NULL comment 'a'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+insert into nums(a) values(1);
+insert  into nums
+select a + 1 from nums;
+insert  into nums
+select a + 2 from nums;
+insert  into nums
+select a + 4 from nums;
+insert  into nums
+select a + 8 from nums;
+insert  into nums
+select a + 16 from nums;
+insert  into nums
+select a + 32 from nums;
+insert  into nums
+select a + 64 from nums;
+insert  into nums
+select a + 128 from nums;
 
 --
 -- Table structure for table `operation_log`
@@ -335,6 +354,8 @@ CREATE TABLE `usr_dpt_relation` (
 -- usr_id,dpt_id,dpt_name,create_time,update_time,user_name,real_name,pass_word,r_id,extra_dpt_relation)
 -- values('d84d8eafba5b436295e28153189b997a',-1,'none',now(),now(),'admin','Admin','e10adc3949ba59abbe56e057f20f883e',-1,'N');
 
+
+
 --
 -- Table structure for table `work_flow`
 --
@@ -425,4 +446,27 @@ CREATE TABLE `work_flow_publish_history` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+
+CREATE TABLE `datasource_db` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `sync_online` tinyint(4) NOT NULL DEFAULT '0',
+  `create_time` datetime DEFAULT NULL,
+  `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE `datasource_table` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `table_logic_name` varchar(50) NOT NULL,
+  `db_id` int(11) NOT NULL,
+  `sync_online` tinyint(4) NOT NULL DEFAULT '0',
+  `git_tag` varchar(50) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 
