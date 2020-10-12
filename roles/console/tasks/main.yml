@@ -32,7 +32,13 @@
     version: 'master'
     force: yes
     accept_hostkey: yes
+  when: tis_local_cfg_git_repository_install
 
+- name: init {{tis_data_dir}}/cfg_repo
+  file:
+    path: '{{tis_data_dir}}/cfg_repo'
+    state: directory
+  when: not tis_local_cfg_git_repository_install
 
 - name: copy tar
   copy:
