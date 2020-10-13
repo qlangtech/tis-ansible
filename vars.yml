@@ -64,7 +64,7 @@ tis_spark_hive_server_extends_tar_file_name: tis-spark-hive-server-extends.tar.g
 tisconsole_db_url: 192.168.28.200
 tisconsole_db_username: root
 tisconsole_db_password: 123456
-tisconsole_db_dbname: tis_console
+tisconsole_db_dbname: tis_console2
 
 #zk_host: 10.1.21.202:2181,10.1.21.201:2181,10.1.21.200:2181/tis/cloud
 zk_host: "{% set IP_ARR=[] %}{% for host in groups['zookeeper'] %}{% if IP_ARR.insert(loop.index,hostvars[host]['ansible_ssh_host']) %}{% endif %}{% endfor %}{{IP_ARR|join(',')}}:2181/tis/cloud"
