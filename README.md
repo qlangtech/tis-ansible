@@ -159,3 +159,8 @@ ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,deploy
 ```
 ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
 ```
+
+## 通过Release本地安装
+```
+ansible-playbook ./deploy-tis-by-release.yml --tags initos,zk,hadoop,spark,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
+```

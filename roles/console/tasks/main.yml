@@ -91,7 +91,7 @@
 
 - name: path owner set
   file:
-     path: /opt/app/spring-boot/{{tis_app_name}}
+     path: '/opt/app/spring-boot/{{tis_app_name}}'
      owner: "{{tis_user}}"
      group: "{{tis_user}}"
      recurse: yes
@@ -103,3 +103,14 @@
     group: "{{tis_user}}"
     mode: '0777'
     recurse: yes
+
+- name: register file 'system_initialized_token' exist
+  shell: 'ls {{ tis_data_dir }}/system_initialized_token'
+  ignore_errors: True
+  register: system_initialized_token_exist
+
+- name: initialize tis data
+  shell: java -classpath ./lib/*;./conf; com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
+  args:
+    chdir: "/opt/app/spring-boot/{{tis_app_name}}"
+  when: system_initialized_token_exist | failed
