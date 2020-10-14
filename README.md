@@ -157,9 +157,9 @@ ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,deploy
 
 ## 通过编译向本地安装
 ```
-ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
+ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,tjs,assemble,indexbuilder,solr --skip-tags=deploy -i ./inventory/hosts
 ```
-
+注意：不需要向仓库中部署需要添加`--skip-tags=deploy`参数
 ## 通过Release本地安装
 ```
 ansible-playbook ./deploy-tis-by-release.yml --tags initos,zk,hadoop,spark,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
