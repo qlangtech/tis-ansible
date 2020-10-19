@@ -53,7 +53,7 @@
     - "com.qlangtech.tis.offline.FlatTableBuilder.xml"
     - "com.qlangtech.tis.offline.IndexBuilderTriggerFactory.xml"
     - "com.qlangtech.tis.offline.TableDumpFactory.xml"
-    - "com.qlangtech.tis.offline.IncrStreamFactory.xml"
+    - "com.qlangtech.tis.plugin.incr.IncrStreamFactory.xml"
 
 - name: copy tar
   copy:
