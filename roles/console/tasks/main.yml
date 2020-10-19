@@ -42,7 +42,7 @@
 
 - name: copy plugin config file
   template:
-    src: "./template/plugin_cfg/{{item}}.j2"
+    src: "plugin_cfg/{{item}}.j2"
     dest: "{{tis_data_dir}}/cfg_repo/{{item}}"
     force: no
     mode: '0644'
