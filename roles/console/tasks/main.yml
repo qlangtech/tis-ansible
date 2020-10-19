@@ -40,6 +40,21 @@
     state: directory
   when: not tis_local_cfg_git_repository_install
 
+- name: copy plugin config file
+  template:
+    src: "./template/plugin_cfg/{{item}}.j2"
+    dest: "{{tis_data_dir}}/cfg_repo/{{item}}"
+    force: no
+    mode: '0644'
+  when: not tis_local_cfg_git_repository_install
+  with_items:
+    - "global/global_config.xml"
+    - "com.qlangtech.tis.offline.FileSystemFactory.xml"
+    - "com.qlangtech.tis.offline.FlatTableBuilder.xml"
+    - "com.qlangtech.tis.offline.IndexBuilderTriggerFactory.xml"
+    - "com.qlangtech.tis.offline.TableDumpFactory.xml"
+    - "com.qlangtech.tis.offline.IncrStreamFactory.xml"
+
 - name: copy tar
   copy:
      src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
