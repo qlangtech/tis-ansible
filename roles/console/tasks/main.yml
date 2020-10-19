@@ -116,7 +116,7 @@
     path: "{{tis_data_dir}}"
     owner: "{{tis_user}}"
     group: "{{tis_user}}"
-    mode: '0777'
+    mode: '0644'
     recurse: yes
 
 - name: register file 'system_initialized_token' exist

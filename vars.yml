@@ -70,7 +70,7 @@ tisconsole_db_dbname: tis_console2
 zk_host: "{% set IP_ARR=[] %}{% for host in groups['zookeeper'] %}{% if IP_ARR.insert(loop.index,hostvars[host]['ansible_ssh_host']) %}{% endif %}{% endfor %}{{IP_ARR|join(',')}}:2181/tis/cloud"
 
 
-hadoop_yarn_resource_manager_host: hostvars[groups['hadoop-yarn-resource-manager'][0]]['ansible_ssh_host']
+hadoop_yarn_resource_manager_host: "{{hostvars[groups['hadoop-yarn-resource-manager'][0]]['ansible_ssh_host']}}"
 
 # tis-console ,tis-assemble execute user
 tis_user: root
