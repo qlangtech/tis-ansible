@@ -57,10 +57,10 @@
 
 - name: copy tar
   copy:
-     src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
-     dest: /tmp/
+    src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{item}}"
+    dest: /tmp/
   with_items:
-     - "tis.tar.gz"
+    - "tis.tar.gz"
 
 - name: copy plugins from "{{tis_release_dir}}/tis-plugin/"
   synchronize:
@@ -77,16 +77,16 @@
 
 - name: untar tis.tar.gz
   unarchive:
-     src: /tmp/tis.tar.gz
-     dest: /tmp/
-     remote_src: yes
+    src: /tmp/tis.tar.gz
+    dest: /tmp/
+    remote_src: yes
 
 - name: synchroniz tis
   synchronize:
-     src: /tmp/tis/
-     dest: "/opt/app/spring-boot/{{tis_app_name}}"
-     delete: yes
-     recursive: yes
+    src: /tmp/tis/
+    dest: "/opt/app/spring-boot/{{tis_app_name}}"
+    delete: yes
+    recursive: yes
   delegate_to: "{{ inventory_hostname }}"
   notify: restart tis-console
 
@@ -97,19 +97,19 @@
 
 - name: copy config.properties
   template:
-     src: "template/{{item}}.j2"
-     dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
+    src: "template/{{item}}.j2"
+    dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
   with_items:
-     - "config.properties"
-     - "yarn-site.xml"
+    - "config.properties"
+    - "yarn-site.xml"
   notify: restart tis-console
 
 - name: path owner set
   file:
-     path: '/opt/app/spring-boot/{{tis_app_name}}'
-     owner: "{{tis_user}}"
-     group: "{{tis_user}}"
-     recurse: yes
+    path: '/opt/app/spring-boot/{{tis_app_name}}'
+    owner: "{{tis_user}}"
+    group: "{{tis_user}}"
+    recurse: yes
 
 - name: set tis dir mode
   file:
@@ -131,10 +131,7 @@
 
 - name: initialize tis data
   #shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
-  shell: |
-    java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console.sql
-    rm -f /tmp/tis_console.sql
-    exit 0
+  shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console.sql
   run_once: true
   args:
     chdir: "/opt/app/spring-boot/{{tis_app_name}}"
