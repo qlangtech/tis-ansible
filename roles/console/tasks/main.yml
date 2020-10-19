@@ -34,9 +34,9 @@
     accept_hostkey: yes
   when: tis_local_cfg_git_repository_install
 
-- name: init {{tis_data_dir}}/cfg_repo
+- name: init {{tis_data_dir}}/cfg_repo/global
   file:
-    path: '{{tis_data_dir}}/cfg_repo'
+    path: '{{tis_data_dir}}/cfg_repo/global'
     state: directory
   when: not tis_local_cfg_git_repository_install
 
