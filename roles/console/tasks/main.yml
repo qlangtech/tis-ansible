@@ -36,19 +36,20 @@
 
 - name: init {{tis_data_dir}}/cfg_repo/global
   file:
-    path: '{{tis_data_dir}}/cfg_repo/global'
+    path: '{{tis_data_dir}}/cfg_repo/tis_plugin_config/global'
     state: directory
   when: not tis_local_cfg_git_repository_install
 
 - name: copy plugin config file
   template:
     src: "plugin_cfg/{{item}}.j2"
-    dest: "{{tis_data_dir}}/cfg_repo/{{item}}"
+    dest: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/{{item}}"
     force: no
     mode: '0644'
   when: not tis_local_cfg_git_repository_install
   with_items:
     - "global/global_config.xml"
+    - "com.qlangtech.tis.config.ParamsConfig.xml"
     - "com.qlangtech.tis.offline.FileSystemFactory.xml"
     - "com.qlangtech.tis.offline.FlatTableBuilder.xml"
     - "com.qlangtech.tis.offline.IndexBuilderTriggerFactory.xml"
