@@ -4,17 +4,6 @@
 -- ------------------------------------------------------
 -- Server version   5.5.37
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
 --
 -- Table structure for table `app_trigger_job_relation`
 --
@@ -29,7 +18,7 @@ CREATE TABLE `app_trigger_job_relation` (
   `job_id` bigint(20) NOT NULL comment 'job_id',
   `crontab` varchar(20) NOT NULL comment 'crontab',
   `gmt_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'gmt_create',
-  `gmt_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' comment 'gmt_modified',
+  `gmt_modified` datetime NOT NULL COMMENT 'gmt_modified',
   `project_name` varchar(40) NOT NULL comment 'project_name',
   `is_stop` char(1) NOT NULL DEFAULT 'Y' comment 'is_stop',
   PRIMARY KEY (`at_id`),
@@ -338,7 +327,7 @@ CREATE TABLE `usr_dpt_relation` (
   `dpt_id` bigint(20) NOT NULL comment 'dpt_id',
   `dpt_name` varchar(100) NOT NULL comment 'dpt_name',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'create_time',
-  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' comment 'update_time',
+  `update_time` datetime NOT NULL COMMENT 'update_time',
   `user_name` varchar(100) NOT NULL comment 'user_name',
   `real_name` varchar(32) DEFAULT NULL comment 'real_name',
   `pass_word` varchar(32) DEFAULT NULL comment 'password',
