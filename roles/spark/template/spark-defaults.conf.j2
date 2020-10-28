@@ -12,6 +12,9 @@ spark.dynamicAllocation.initialExecutors   0
 spark.dynamicAllocation.minExecutors   0
 spark.dynamicAllocation.maxExecutors   {{ groups['hadoop-yarn-node-manager'] | length }}
 spark.executor.memory   {{ (yarn_nodemanager_resource_memorymb*0.7) | int }}m
+spark.driver.memory 6g
+spark.executor.extraJavaOptions -XX:-UseGCOverheadLimit
+spark.driver.extraJavaOptions -XX:-UseGCOverheadLimit
 spark.sql.adaptive.enabled   true
 spark.sql.adaptive.shuffle.targetPostShuffleInputSize  128000000
 {% endif %}
