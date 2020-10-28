@@ -45,7 +45,7 @@ need_install_spark_shuffle: true
 inventory/hosts 文件示例如下，为了自动生成 hosts 文件，请在主机名后通过 ansible_ssh_host 指定IP，指定IP如下：
 
 ```file
-[solr7.6]
+[solr]
 solr1.xxx ansible_ssh_host=10.33.9.192
 solr2.xxx ansible_ssh_host=10.33.9.193
 
@@ -55,7 +55,7 @@ hadoop2.xxx ansible_ssh_host=10.1.1.2
 hadoop3.xxx ansible_ssh_host=10.1.1.3
 ```
 
-上面例子中 solr7.6 为一组主机，solr1.xxx 为单个主机，下面的操作都会指定一组主机或单个主机。
+上面例子中 `solr` 为一组主机，solr1.xxx 为单个主机，下面的操作都会指定一组主机或单个主机。
 
 **注意**：上面例子中的主机不全，需要根据实际安装的组件，配置全部的主机和参数：
 
@@ -63,7 +63,7 @@ hadoop3.xxx ansible_ssh_host=10.1.1.3
 - 如果要安装 hadoop：需要配置主机 hadoop-hdfs-namenode、hadoop-hdfs-datanode；
 - 如果需要安装zookeeper：需要配置主机 zookeeper
 - 如果需要安装 tispark：需要配置主机 tidb
-- 必须配置参数 hdfs_namenode_ha1、hdfs_namenode_ha2，如果hdfs namenode没有配置ha，则配置为系统的namenode主机即可。
+- 必须配置参数 如果hdfs namenode没有配置ha，则配置为系统的namenode主机即可。
 - 必须配置参数 tisconsole_db_url、 tisconsole_db_username、 tisconsole_db_password 为tis console 的sql语句所在的数据库连接信息。
 - 如果需要安装 spark shuffle，要根据内存配置参数 spark_shuffle_max_executor、 spark_shuffle_executor_memory ，以便实现内存的有效利用。在启动 thriftserver 时，会启动一个 ApplicationMaster，消耗2G内存，另外启用一个 Container，消耗（2G + spark_shuffle_executor_memory) 的内存。后续每次启动一个 Container，就消耗 （2G + spark_shuffle_executor_memory) 的内存。内存要满足：yarn_nodemanager_resource_memorymb \* nodemanager机器数量 >= 2G + (2G + spark_shuffle_executor_memory) \* spark_shuffle_max_executor，最好流出一些余量，以免创建Container失败。
 
@@ -72,14 +72,14 @@ hadoop3.xxx ansible_ssh_host=10.1.1.3
 如果在ansible中控机没有做过 ssh-copy-id 到其它需要安装的主机，可以通过 ssh-keygen 先在中控机生成一个可以，使用下面的命令可以通过 `copy_root_sshkey.yml` 辅助拷贝到其它主机，注意如果需要一组或多组主机拷贝，则要确保一组主机有相同的root密码：
 
 ```shell
-ansible solr7.6,hadoop-hdfs-datanode -m authorized_key -a "user=root key='{{ lookup('file', '/root/.ssh/id_rsa.pub') }}'" -k
+ansible solr,hadoop-hdfs-datanode -m authorized_key -a "user=root key='{{ lookup('file', '/root/.ssh/id_rsa.pub') }}'" -k
 ansible solr1.xxx -m authorized_key -a "user=root key='{{ lookup('file', '/root/.ssh/id_rsa.pub') }}'" -k
 ```
 
 然后可以通过下面的方式验证是否实现了免密登陆，可以一次性测试多组主机：
 
 ```shell
-ansible solr7.6,hadoop-hdfs-datanode -m ping
+ansible solr,hadoop-hdfs-datanode -m ping
 ansible solr1.xxx -m ping
 ```
 
@@ -128,7 +128,7 @@ mysqldump -d -uxx -pxxx -h127.0.0.1  tis_console > tis_console.sql
 3.重启solr服务,注意要加上'--become'才能得到sudo权限
 
 ```file
-ansible solr7.6 -i ./inventory/hosts -m service --become  -a "name=spring-boot state=restarted"
+ansible solr -i ./inventory/hosts -m service --become  -a "name=spring-boot state=restarted"
 ```
 
 4.在第一次进行全量构建时，可能会因为hdfs的权限导致tag文件无法写入，需要在 hdfs 的机器上进行下面的设置：

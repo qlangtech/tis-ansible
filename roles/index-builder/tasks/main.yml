@@ -22,17 +22,17 @@
   
   - file: state=directory path='{{index_builder_conf_dir}}/tis-web-config' 
   
-  - name: copy config files
-    template:
-      src: 'template/hdfs-site-proxy.xml.j2'
-      dest: '{{index_builder_conf_dir}}/tis-web-config/hdfs-site.xml'
+#  - name: copy config files
+#    template:
+#      src: 'template/hdfs-site-proxy.xml.j2'
+#      dest: '{{index_builder_conf_dir}}/tis-web-config/hdfs-site.xml'
 
   - name: copy config files
     template:
       src: 'template/{{item.name}}.j2'
       dest: '{{index_builder_conf_dir}}/tis-web-config/{{item.name}}'
     with_items:
-      - {name: "yarn-site.xml"}
+    #  - {name: "yarn-site.xml"}
       - {name: "config.properties"}
       
   - name: synchronize jars in tis-index-builder

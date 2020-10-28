@@ -35,10 +35,10 @@
      state: directory
      owner: solr
 
-  - name: copy config.properties
-    template:
-     src: template/hdfs-site-proxy.xml.j2
-     dest: "{{solr_app_dir}}/conf/tis-web-config/hdfs-site.xml"
+#  - name: copy config.properties
+#    template:
+#     src: template/hdfs-site-proxy.xml.j2
+#     dest: "{{solr_app_dir}}/conf/tis-web-config/hdfs-site.xml"
 
   - name: copy config.properties
     template:

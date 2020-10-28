@@ -17,7 +17,7 @@
 - name: init os
   vars_files:
     - vars.yml
-  hosts: tis-console,assemble,solr7.6,hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager,zookeeper
+  hosts: tis-console,assemble,solr,hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager,zookeeper
   tasks:
   - include_role:
       name: init-os
@@ -140,7 +140,7 @@
    - indexbuilder
 
 - name: install solr-core
-  hosts: solr7.6
+  hosts: solr
   vars_files:
     - vars.yml
   tasks:

@@ -4,8 +4,8 @@
     url: "{{ release_repository }}/{{tis_pkg_version}}/{{tis_release_dir_name}}/{{ item.name }}"
     dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}/{{ item.name }}"
     #If yes and dest is not a directory, will download the file every time and replace the file if the contents change
-    force: yes
-  when: item.when
+    force: no
+  when: item.when and shall_download_release_assemble
   with_items:
     - {name: "solr.tar.gz", when: True}
     - {name: "tis-assemble.tar.gz", when: True}
@@ -23,5 +23,6 @@
     src: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}/{{ item }}"
     dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{ item }}"
     state: link
+  when: shall_download_release_assemble
   with_lines:
     - find {{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}} -type f -name "*" -printf '%f\n'

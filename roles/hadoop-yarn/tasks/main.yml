@@ -36,10 +36,10 @@
       path: '{{hadoop_cfg_dir}}'
       state: directory
 
-  - name: copy config files
-    template:
-      src: template/hdfs-site-proxy.xml.j2
-      dest: '{{hadoop_cfg_dir}}/hdfs-site.xml'
+#  - name: copy config files
+#    template:
+#      src: template/hdfs-site-proxy.xml.j2
+#      dest: '{{hadoop_cfg_dir}}/hdfs-site.xml'
 
   - name: copy config files
     template:

@@ -14,7 +14,7 @@
 - name: stop solr
   vars_files:
     - vars.yml
-  hosts: solr7.6
+  hosts: solr
   tasks:
   - command: ./solr stop -p 8080
     become: yes

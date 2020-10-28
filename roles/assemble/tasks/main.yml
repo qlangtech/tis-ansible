@@ -48,10 +48,10 @@
      path: "{{app_dir}}/tis-assemble/conf/tis-web-config"
      state: directory
 
-  - name: copy hdfs-site-proxy.xml
-    template:
-     src: template/hdfs-site-proxy.xml.j2
-     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/hdfs-site.xml"
+#  - name: copy hdfs-site-proxy.xml
+#    template:
+#     src: template/hdfs-site-proxy.xml.j2
+#     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/hdfs-site.xml"
 
   - name: copy config.properties
     template:
@@ -59,7 +59,7 @@
      dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/{{item}}"
     with_items:
      - "config.properties"
-     - "yarn-site.xml"
+   #  - "yarn-site.xml"
     notify: restart assemble
 
   - name: path owner set

@@ -65,7 +65,7 @@
 - name: start tis
   vars_files:
     - vars.yml
-  hosts: solr7.6,tis-console,assemble
+  hosts: solr,tis-console,assemble
   tasks:
   - command: ./tis restart -force
     become: yes

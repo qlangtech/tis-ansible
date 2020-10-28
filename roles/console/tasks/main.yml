@@ -102,7 +102,7 @@
     dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
   with_items:
     - "config.properties"
-    - "yarn-site.xml"
+ #   - "yarn-site.xml"
   notify: restart tis-console
 
 - name: path owner set
@@ -117,7 +117,7 @@
     path: "{{tis_data_dir}}"
     owner: "{{tis_user}}"
     group: "{{tis_user}}"
-    mode: '0644'
+    mode: '0777'
     recurse: yes
 
 - name: register file 'system_initialized_token' exist
