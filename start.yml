@@ -13,6 +13,8 @@
   - command: sleep 5
     ignore_errors: yes
   - service: name=crond state=started enabled=yes
+  tags:
+    - zk
 
 - name: start hdfs
   vars_files:

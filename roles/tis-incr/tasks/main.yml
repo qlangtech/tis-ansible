@@ -37,7 +37,7 @@
     with_items:
       - {app : "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
 
-  - name : copy run.sh to docker context dir
+  - name : copy {{tis_pkg_version}} to docker context dir
     template:
      src: template/run.sh.j2
      dest: '{{docker_context_dir}}/{{tis_incr_name}}/run.sh'
