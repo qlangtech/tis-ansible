@@ -450,7 +450,6 @@ DROP TABLE IF EXISTS `datasource_table`;
 CREATE TABLE `datasource_table` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `table_logic_name` varchar(50) NOT NULL,
   `db_id` int(11) NOT NULL,
   `sync_online` tinyint(4) NOT NULL DEFAULT '0',
   `git_tag` varchar(50) DEFAULT NULL,
