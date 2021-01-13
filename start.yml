@@ -76,6 +76,8 @@
       chdir: "{{tis_app_dir}}/"
   - command: sleep 10
     ignore_errors: yes
+  tags:
+    - tjs
 
 # must start console first
 #- name: start tis-console

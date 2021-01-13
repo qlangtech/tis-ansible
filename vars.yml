@@ -7,7 +7,7 @@ tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
-tis_pkg_version: 2.0.0
+tis_pkg_version: 2.1.0
 
 need_install_tis_collect: true;
 ng_tis_app_name: ng-tis
@@ -62,6 +62,7 @@ tis_spark_hive_server_extends_tar_file_name: tis-spark-hive-server-extends.tar.g
 
 
 tisconsole_db_url: 192.168.28.200
+tisconsole_db_port: 3306
 tisconsole_db_username: root
 tisconsole_db_password: 123456
 tisconsole_db_dbname: tis_console
