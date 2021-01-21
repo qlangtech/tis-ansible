@@ -1,6 +1,16 @@
 # 使用方法
 
-## 介绍
+## 通过编译向本地安装
+```
+ansible-playbook ./deploy-tis-by-compile.yml --tags initos,zk,hadoop,spark,pkg,pkg-plugin,ng-tis,tjs,assemble,indexbuilder,solr --skip-tags=deploy -i ./inventory/hosts
+```
+注意：不需要向仓库中部署需要添加`--skip-tags=deploy`参数
+## 通过Release本地安装
+```
+ansible-playbook ./deploy-tis-by-release.yml --tags initos,zk,hadoop,spark,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
+```
+
+## Spark安装介绍
 
 该脚本集成了下面一些功能：
 
@@ -155,12 +165,4 @@ ansible all -i "ip,"  -m include_role -a "name=jdk" -e "@vars.yml" -u root
 ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,deploy 
 ```
 
-## 通过编译向本地安装
-```
-ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,tjs,assemble,indexbuilder,solr --skip-tags=deploy -i ./inventory/hosts
-```
-注意：不需要向仓库中部署需要添加`--skip-tags=deploy`参数
-## 通过Release本地安装
-```
-ansible-playbook ./deploy-tis-by-release.yml --tags initos,zk,hadoop,spark,tjs,assemble,indexbuilder,solr -i ./inventory/hosts
-```
+
