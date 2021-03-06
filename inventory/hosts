@@ -4,7 +4,7 @@
 #build-oversee-soa001.dev.2dfire.info ansible_ssh_host=10.1.24.59
 
 [assemble]
-192.168.28.200 ansible_ssh_host=192.168.28.200
+192.168.28.202 ansible_ssh_host=192.168.28.202
 #build-oversee-soa001.dev.2dfire.info ansible_ssh_host=10.1.24.59
 
 [solr]

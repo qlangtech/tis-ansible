@@ -15,6 +15,7 @@
     - {name: "tis-ds-mysql-plugin.tpi", when: True}
     - {name: "tis-ds-tidb-plugin.tpi", when: True}
     - {name: "tis-kafka-plugin.tpi", when: True}
+    - {name: "tis-solr-plugin.tpi", when: True}
     - {name: "{{tis_spark_hive_server_extends_tar_file_name}}", when: need_install_hadoop and need_install_spark}
 
 - name: make soft link for '{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_pkg_version}}'

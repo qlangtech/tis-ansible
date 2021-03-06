@@ -91,10 +91,10 @@
       - data
 
 
-  - name: init hostname
-    hostname:
-      name: "{{ inventory_hostname }}"
-      use: redhat
+ # - name: init hostname
+ #   hostname:
+ #     name: "{{ inventory_hostname }}"
+ #     use: redhat
 
   # use with_inventory_hostnames to set all hosts to /etc/hosts
   - name: set hosts file
