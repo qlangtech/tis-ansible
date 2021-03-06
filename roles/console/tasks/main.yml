@@ -96,13 +96,17 @@
 #     src: template/hdfs-site-proxy.xml.j2
 #     dest: /opt/app/spring-boot/tis/conf/tis-web-config/hdfs-site.xml
 
+- file:
+    path: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config"
+    state: directory
+
 - name: copy config.properties
   template:
     src: "template/{{item}}.j2"
     dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
   with_items:
     - "config.properties"
- #   - "yarn-site.xml"
+  #   - "yarn-site.xml"
   notify: restart tis-console
 
 - name: path owner set
