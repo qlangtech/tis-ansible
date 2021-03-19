@@ -1,3 +1,8 @@
+- name: 'create ng-tis dir {{app_dir}}/root/'
+  file:
+    path: '{{app_dir}}/root/'
+    state: directory
+
 - name: 'deploy ng-tis to {{app_dir}}/root/'
   unarchive:
     src: "{{tis_release_dir}}/{{tis_release_dir_name}}/{{ng_tis_app_tar_file_name}}"
