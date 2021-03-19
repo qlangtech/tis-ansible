@@ -129,8 +129,8 @@
   ignore_errors: True
   register: system_initialized_token_exist
 
-- name: cp file 'tis_console.sql'
-  copy: src="tis_console.sql" dest=/tmp/
+- name: cp file 'tis_console_{{tis_database_type}}.sql'
+  copy: src="tis_console_{{tis_database_type}}.sql" dest=/tmp/
   run_once: true
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
 
