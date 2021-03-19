@@ -89,6 +89,8 @@
         shall_exec_restart: no
         uber_pkg: yes
     - include: install_ng_tis.yml
+      vars:
+        app_dir: '{{uber_pkg_dir}}'
   tags:
     - uber
 
