@@ -75,8 +75,11 @@
         name: console
       vars:
         app_dir: '/tmp/uber_pkg'
-        tis_data_dir: '{{app_dir}}/data'
+        data_dir_name: 'data'
+        tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
         tis_database_type: 'derby'
+        tisconsole_db_dbname: 'tis_console_db'
+        uber_pkg: yes
   tags:
     - uber
 
