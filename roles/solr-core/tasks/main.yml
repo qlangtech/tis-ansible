@@ -18,22 +18,24 @@
       dest: /tmp/
       remote_src: yes
  
-  - file: path=/opt/app/spring-boot/solr state=directory
+  - file:
+     path: "{{solr_app_dir}}"
+     state: directory
   
   - name: synchroniz solr
     synchronize:
      src: /tmp/solr/
-     dest: "{{app_dir}}/solr"
+     dest: "{{solr_app_dir}}"
      delete: yes
      recursive: yes
     delegate_to: "{{ inventory_hostname }}"
     notify: restart solr
   
-  - name: create log dir
-    file: 
-     path: "{{solr_log_dir}}"
-     state: directory
-     owner: solr
+#  - name: create log dir
+#    file:
+#     path: "{{solr_log_dir}}"
+#     state: directory
+#     owner: solr
 
 #  - name: copy config.properties
 #    template:
@@ -48,20 +50,20 @@
      - "config.properties"
     notify: restart solr
     
-  - name: copy solr start script
-    template:
-     src: ./template/{{item}}.j2
-     dest: "{{solr_app_dir}}/{{item}}"
-    with_items:
-     - "solr"
-     - "solr.in.sh"
-    notify: restart solr
+#  - name: copy solr start script
+#    template:
+#     src: ./template/{{item}}.j2
+#     dest: "{{solr_app_dir}}/{{item}}"
+#    with_items:
+#     - "solr"
+#     - "solr.in.sh"
+#    notify: restart solr
   
-  - name: set solr script mode
-    file:
-     path: "{{solr_app_dir}}/solr"
-     mode: '+x'
-    notify: restart solr
+#  - name: set solr script mode
+#    file:
+#     path: "{{solr_app_dir}}/solr"
+#     mode: '+x'
+#    notify: restart solr
     
   - name: path owner set
     file:

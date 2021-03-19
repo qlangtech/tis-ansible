@@ -2,7 +2,9 @@ tis_local_cfg_git_repository: git@github.com:qlangtech/tis-local-repository.git
 tis_local_cfg_git_repository_install: false
 tis_release_dir_name: tis
 tis_plugin_release_dir_name: tis-plugin
-tis_database_type: mysql
+
+# need to restart server when some app script changed
+shall_exec_restart: yes
 
 tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
@@ -13,9 +15,6 @@ tis_pkg_version: 2.2.0
 need_install_tis_collect: true;
 ng_tis_app_name: ng-tis
 ng_tis_app_tar_file_name: '{{ng_tis_app_name}}.tar.gz'
-app_dir: /opt/app/spring-boot
-tis_app_dir: "{{app_dir}}/bin"
-tis_data_dir: "/opt/data/tis"
 src_root: "/opt/data/tiscode"
 
 # yarn容器启动分配的cpu核数，目前为1
@@ -62,11 +61,7 @@ spark_thriftserver_jar_file_name: mysql-connector-java-5.1.48-bin.jar
 tis_spark_hive_server_extends_tar_file_name: tis-spark-hive-server-extends.tar.gz
 
 
-tisconsole_db_url: 192.168.28.200
-tisconsole_db_port: 3306
-tisconsole_db_username: root
-tisconsole_db_password: 123456
-tisconsole_db_dbname: tis_console
+
 
 #zk_host: 10.1.21.202:2181,10.1.21.201:2181,10.1.21.200:2181/tis/cloud
 zk_host: "{% set IP_ARR=[] %}{% for host in groups['zookeeper'] %}{% if IP_ARR.insert(loop.index,hostvars[host]['ansible_ssh_host']) %}{% endif %}{% endfor %}{{IP_ARR|join(',')}}:2181/tis/cloud"

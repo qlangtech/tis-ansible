@@ -11,7 +11,7 @@
     <str name="hostContext">${hostContext:solr}</str>
 
     <bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
-      <str name="zkHost">{{zk_host}}</str>
+    <str name="zkHost">{{zk_host}}</str>
     <int name="zkClientTimeout">${zkClientTimeout:30000}</int>
     <int name="distribUpdateSoTimeout">${distribUpdateSoTimeout:600000}</int>
     <int name="distribUpdateConnTimeout">${distribUpdateConnTimeout:60000}</int>

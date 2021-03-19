@@ -3,5 +3,3 @@
 tis_app_name: tjs
 # tis database can be depend on mysql or derby
 tis_database_type: mysql
-# need to restart server
-shall_exec_restart: yes

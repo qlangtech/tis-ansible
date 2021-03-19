@@ -1,0 +1,11 @@
+# vars relevant with deploy process
+app_dir: /opt/app/spring-boot
+tis_app_dir: "{{app_dir}}/bin"
+tis_data_dir: "/opt/data/tis"
+
+
+tisconsole_db_url: 192.168.28.200
+tisconsole_db_port: 3306
+tisconsole_db_username: root
+tisconsole_db_password: 123456
+tisconsole_db_dbname: tis_console

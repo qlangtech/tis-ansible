@@ -2,6 +2,7 @@
 - name: restart assemble
   command: ./tis restart -force
   become: yes
+  when: shall_exec_restart
   become_user: "{{tis_user}}"
   args:
     chdir: "{{tis_app_dir}}/"

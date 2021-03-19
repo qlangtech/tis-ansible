@@ -70,27 +70,25 @@
   vars_files:
     - vars.yml
   vars:
-    uber_pkg_dir: '/tmp/uber_pkg'
+    app_dir: '/tmp/uber_pkg'
+    data_dir_name: 'data'
+    relative_root_dir: '../'
+    tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
+    tis_database_type: 'derby'
+    tisconsole_db_dbname: 'tis_console_db'
+    shall_exec_restart: no
+    uber_pkg: yes
   hosts: localhost
   tasks:
     - name: 'clean the targetDir {{uber_pkg_dir}}'
       file:
-        path: '{{uber_pkg_dir}}'
+        path: '{{app_dir}}'
         state: absent
     - include_role:
+        name: solr-core
+    - include_role:
         name: console
-      vars:
-        app_dir: '{{uber_pkg_dir}}'
-        data_dir_name: 'data'
-        relative_root_dir: '../'
-        tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
-        tis_database_type: 'derby'
-        tisconsole_db_dbname: 'tis_console_db'
-        shall_exec_restart: no
-        uber_pkg: yes
     - include: install_ng_tis.yml
-      vars:
-        app_dir: '{{uber_pkg_dir}}'
   tags:
     - uber
 
