@@ -6,5 +6,5 @@ if ! [ -z "$isrunning" ]
 then
   exit 0
 fi
-cd /opt/app/zookeeper-3.4.14/bin
+cd {{zk_install_dir}}/bin
 ./zkServer.sh start

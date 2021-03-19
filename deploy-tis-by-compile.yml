@@ -52,19 +52,33 @@
     target_file_pattern: .*\.(tpi|tar\.gz)$
   hosts: localhost
   tasks:
-#    - name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
-#      shell: "find {{src_root}}/{{tis_plugin_release_dir_name}}/* -maxdepth 1 -type d -name '*-plugin' -printf '%f '"
-#      ignore_errors: True
-#      register: plugin_dirs
-#      delegate_to: "localhost"
-#    - debug:
-#        msg: "registed param plugin_dirs: {{plugin_dirs.stdout}}"
+    #    - name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
+    #      shell: "find {{src_root}}/{{tis_plugin_release_dir_name}}/* -maxdepth 1 -type d -name '*-plugin' -printf '%f '"
+    #      ignore_errors: True
+    #      register: plugin_dirs
+    #      delegate_to: "localhost"
+    #    - debug:
+    #        msg: "registed param plugin_dirs: {{plugin_dirs.stdout}}"
     - include_role:
         name: compile
       vars:
         tisasm_put_mojo: 'tis-local-dump-build tis-solr-plugin tis-aliyun-fs-plugin tis-asyncmsg-rocketmq-plugin tis-hdfs-plugin tis-hive-flat-table-builder-plugin tis-k8s-plugin tis-spark-hive-server-extends tis-ds-mysql-plugin tis-ds-tidb-plugin tis-kafka-plugin'
   tags:
     - pkg-plugin
+
+- name: build Uber package
+  vars_files:
+    - vars.yml
+  vars:
+    tis_data_dir: '/tmp/uber_pkg/data'
+    app_dir: '/tmp/uber_pkg'
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: console
+  tags:
+    - uber
+
 
 
 - name: make tis-incr docker image

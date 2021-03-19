@@ -5,7 +5,7 @@
   become_user: zookeeper
   ignore_errors: yes
   args:
-    chdir: "/opt/app/zookeeper-3.4.14/bin"
+    chdir: "{{zk_install_dir}}/bin"
 - name: sleep 5
   command: sleep 5
   ignore_errors: yes

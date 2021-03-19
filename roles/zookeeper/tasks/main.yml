@@ -22,8 +22,8 @@
       group: "{{ zk_group }}"
       mode: '0755'
     with_items:
-      - /opt/app/zookeeper-3.4.14
-      - /opt/data/zookeeper
+      - "{{zk_install_dir}}"
+      - "/opt/data/zookeeper"
 
   # copy gzip file and unarchive
   - name: copy zookeeper file to host
@@ -47,7 +47,7 @@
   - name: synchroniz tis
     synchronize:
       src: /tmp/zookeeper-3.4.14/
-      dest: /opt/app/zookeeper-3.4.14
+      dest: {{zk_install_dir}}
       recursive: yes
     delegate_to: "{{ inventory_hostname }}"
     notify: restart zookeeper
@@ -56,7 +56,7 @@
   - name: copy config file
     template:
       src: 'template/{{item.name}}.j2'
-      dest: '/opt/app/zookeeper-3.4.14/conf/{{ item.name }}'
+      dest: '{{zk_install_dir}}/conf/{{ item.name }}'
       owner: "{{ zk_user }}"
       group: "{{ zk_group }}"
       mode: '0644'
