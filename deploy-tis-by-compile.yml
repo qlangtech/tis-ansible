@@ -69,13 +69,14 @@
 - name: build Uber package
   vars_files:
     - vars.yml
-  vars:
-    tis_data_dir: '/tmp/uber_pkg/data'
-    app_dir: '/tmp/uber_pkg'
   hosts: localhost
   tasks:
     - include_role:
         name: console
+      vars:
+        tis_data_dir: '/tmp/uber_pkg/data'
+        app_dir: '/tmp/uber_pkg'
+
   tags:
     - uber
 
