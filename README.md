@@ -127,7 +127,7 @@ ansible-playbook ./start-yarn-and-thriftserver.yml
 
 ```shell
 # the option '-d' means nodata just table struct
-mysqldump -d -uxx -pxxx -h127.0.0.1  tis_console > tis_console.sql
+mysqldump -d -uxx -pxxx -h127.0.0.1  tis_console > tis_console_mysql.sql
 ```
 
 在启动tis后，可以通过 tis.xx:8080 通过web访问系统，需要初始化几个值：
