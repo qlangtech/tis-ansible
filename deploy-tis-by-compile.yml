@@ -74,9 +74,9 @@
     - include_role:
         name: console
       vars:
-        tis_data_dir: '/tmp/uber_pkg/data'
         app_dir: '/tmp/uber_pkg'
-
+        tis_data_dir: '{{app_dir}}/data'
+        tis_database_type: 'derby'
   tags:
     - uber
 

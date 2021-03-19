@@ -103,7 +103,7 @@
 - name: copy config.properties
   template:
     src: "template/{{item}}.j2"
-    dest: "/opt/app/spring-boot/{{tis_app_name}}/conf/tis-web-config/{{item}}"
+    dest: "{{app_dir}}/{{tis_app_name}}/conf/tis-web-config/{{item}}"
   with_items:
     - "config.properties"
   #   - "yarn-site.xml"

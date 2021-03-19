@@ -2,6 +2,7 @@ tis_local_cfg_git_repository: git@github.com:qlangtech/tis-local-repository.git
 tis_local_cfg_git_repository_install: false
 tis_release_dir_name: tis
 tis_plugin_release_dir_name: tis-plugin
+tis_database_type: mysql
 
 tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
