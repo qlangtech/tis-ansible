@@ -2,9 +2,9 @@ project.name=TIS
 
 runtime={{runtime}}
 
-tis.datasource.type={{tis_database_type}}
+tis.datasource.type={{tisconsole_db_type}}
 tis.datasource.dbname={{tisconsole_db_dbname}}
-{% if tis_database_type == 'mysql' %}
+{% if tisconsole_db_type == 'mysql' %}
 tis.datasource.url={{tisconsole_db_url}}
 tis.datasource.port={{tisconsole_db_port}}
 tis.datasource.username={{tisconsole_db_username}}

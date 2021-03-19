@@ -75,7 +75,7 @@
     data_dir_name: 'data'
     relative_root_dir: '../'
     tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
-    tis_database_type: 'derby'
+    tisconsole_db_type: 'derby'
     tisconsole_db_dbname: 'tis_console_db'
     shall_exec_restart: no
     uber_pkg: yes
