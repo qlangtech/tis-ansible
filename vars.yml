@@ -3,8 +3,7 @@ tis_local_cfg_git_repository_install: false
 tis_release_dir_name: tis
 tis_plugin_release_dir_name: tis-plugin
 
-# need to restart server when some app script changed
-shall_exec_restart: yes
+
 
 tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
