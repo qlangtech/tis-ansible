@@ -71,6 +71,7 @@
     - vars.yml
   vars:
     app_dir: '/tmp/uber_pkg'
+    tis_app_dir: "{{app_dir}}/bin"
     data_dir_name: 'data'
     relative_root_dir: '../'
     tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
