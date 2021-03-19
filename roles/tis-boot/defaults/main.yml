@@ -1,4 +1,5 @@
-tis_log_dir: "/opt/logs/tis"
+tis_log_dir_name: "logs"
+tis_log_dir: "/opt/{{tis_log_dir_name}}/tis"
 
 tis_java_mem: "-Xms2G -Xmx3G"
 

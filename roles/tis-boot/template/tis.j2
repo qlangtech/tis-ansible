@@ -1845,6 +1845,10 @@ if [ -z "$DEFAULT_CONFDIR" ]; then
   DEFAULT_CONFDIR="$SOLR_SERVER_DIR/solr/configsets/_default/conf"
 fi
 
+{% if uber_pkg %}
+  {% set tis_log_dir = './'+ tis_log_dir_name %}
+{% endif %}
+
 SOLR_LOGS_DIR="{{tis_log_dir}}"
 
 # This is quite hacky, but examples rely on a different log4j2.xml
