@@ -88,6 +88,7 @@
         tisconsole_db_dbname: 'tis_console_db'
         shall_exec_restart: no
         uber_pkg: yes
+    - include: install_ng_tis.yml
   tags:
     - uber
 
