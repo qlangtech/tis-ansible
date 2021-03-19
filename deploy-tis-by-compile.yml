@@ -69,16 +69,23 @@
 - name: build Uber package
   vars_files:
     - vars.yml
+  vars:
+    uber_pkg_dir: '/tmp/uber_pkg'
   hosts: localhost
   tasks:
+    - name: 'clean the targetDir {{uber_pkg_dir}}'
+      file:
+        path: '{{uber_pkg_dir}}'
+        state: absent
     - include_role:
         name: console
       vars:
-        app_dir: '/tmp/uber_pkg'
+        app_dir: '{{uber_pkg_dir}}'
         data_dir_name: 'data'
         tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
         tis_database_type: 'derby'
         tisconsole_db_dbname: 'tis_console_db'
+        shall_exec_restart: no
         uber_pkg: yes
   tags:
     - uber
