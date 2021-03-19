@@ -136,7 +136,7 @@
 
 - name: initialize tis data
   #shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
-  shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tis_database_type}}.sql {{tis_database_type}}
+  shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tis_database_type}}.sql {{tis_database_type}}
   run_once: true
   args:
     chdir: "{{app_dir}}/{{tis_app_name}}"
