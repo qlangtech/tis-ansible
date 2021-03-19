@@ -1,5 +1,5 @@
-
-ng_tis_git_src: "https://github.com/qlangtech/ng-tis.git"
+#ng_tis_git_src: "https://github.com/qlangtech/ng-tis.git"
+ng_tis_git_src: "git@github.com:qlangtech/ng-tis.git"
 ng_tis_src_dir: "{{src_root}}/{{ng_tis_app_name}}"
 ng_tis_git_branch: master
 
