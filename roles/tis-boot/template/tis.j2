@@ -1846,7 +1846,7 @@ if [ -z "$DEFAULT_CONFDIR" ]; then
 fi
 
 {% if uber_pkg %}
-  {% set tis_log_dir = './'+ tis_log_dir_name %}
+  {% set tis_log_dir = relative_root_dir + tis_log_dir_name %}
 {% endif %}
 
 SOLR_LOGS_DIR="{{tis_log_dir}}"

@@ -82,8 +82,8 @@ SOLR_JAVA_MEM="{{tis_java_mem}}"
 #SOLR_OPTS="$SOLR_OPTS -Dsolr.clustering.enabled=true"
 
 {% if uber_pkg %}
-  {% set app_dir = './' %}
-  {% set tis_data_dir = './'+ data_dir_name %}
+  {% set app_dir = relative_root_dir %}
+  {% set tis_data_dir = relative_root_dir + data_dir_name %}
 {% endif %}
 
 
