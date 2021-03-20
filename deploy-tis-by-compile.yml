@@ -86,6 +86,8 @@
         path: '{{app_dir}}'
         state: absent
     - include_role:
+        name: assemble
+    - include_role:
         name: solr-core
     - include_role:
         name: console

@@ -1,6 +1,7 @@
 ####################################
 #vars relevant with deploy process
 ####################################
+uber_pkg: no
 app_dir: /opt/app/spring-boot
 tis_app_dir: "{{app_dir}}/bin"
 tis_data_dir: "/opt/data/tis"

@@ -17,11 +17,11 @@
     with_items:
      - "tis-assemble.tar.gz"
 
-  - name: copy assemble.properties
-    copy:
-     src: "./files/assemble.properties"
-     dest: /opt/data/spring-boot/
-     force: no
+#  - name: copy assemble.properties
+#    copy:
+#     src: "./files/assemble.properties"
+#     dest: /opt/data/spring-boot/
+#     force: no
   - name: delete history tar.gz
     file:
       path: /tmp/tis-assemble
@@ -53,6 +53,14 @@
 #     src: template/hdfs-site-proxy.xml.j2
 #     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/hdfs-site.xml"
 
+  - name: copy flume.properties
+    template:
+      src: {{item}}.j2
+      dest: "{{app_dir}}/tis-assemble/conf/{{item}}"
+    with_items:
+      - "flume.properties"
+    notify: restart assemble
+
   - name: copy config.properties
     template:
      src: template/{{item}}.j2
@@ -68,5 +76,5 @@
      owner: "{{tis_user}}"
      recurse: yes
     with_items:
-     - "/opt/app/spring-boot/tis-assemble"
+     - "{{app_dir}}/tis-assemble"
      - "/opt/data/spring-boot"
