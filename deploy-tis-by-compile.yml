@@ -80,6 +80,8 @@
     tisconsole_db_dbname: 'tis_console_db'
     shall_exec_restart: no
     uber_pkg: yes
+    zk_user: tis
+    zk_group: tis
   hosts: localhost
   tasks:
     - name: 'clean the targetDir {{uber_pkg_dir}}'
