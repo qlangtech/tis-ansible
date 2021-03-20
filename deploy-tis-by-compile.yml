@@ -91,6 +91,8 @@
         state: absent
     - include_role:
         name: zookeeper
+      vars:
+        relative_root_dir: '../../'
     - include_role:
         name: assemble
     - include_role:
