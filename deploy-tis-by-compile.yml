@@ -82,6 +82,7 @@
     uber_pkg: yes
     zk_user: tis
     zk_group: tis
+    zk_node_id: 1
   hosts: localhost
   tasks:
     - name: 'clean the targetDir {{uber_pkg_dir}}'
