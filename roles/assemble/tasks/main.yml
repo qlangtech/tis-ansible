@@ -55,7 +55,7 @@
 
   - name: copy flume.properties
     template:
-      src: {{item}}.j2
+      src: '{{item}}.j2'
       dest: "{{app_dir}}/tis-assemble/conf/{{item}}"
     with_items:
       - "flume.properties"
@@ -63,7 +63,7 @@
 
   - name: copy config.properties
     template:
-     src: template/{{item}}.j2
+     src: 'template/{{item}}.j2'
      dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/{{item}}"
     with_items:
      - "config.properties"
