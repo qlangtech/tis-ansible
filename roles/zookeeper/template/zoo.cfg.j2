@@ -8,7 +8,7 @@ initLimit=5
 syncLimit=2
 
 {% if uber_pkg %}
- server.zk_node_id=127.0.0.1:2888:3888
+ server.{{zk_node_id}}=127.0.0.1:2888:3888
 {% else %}
  {% for item in groups['zookeeper'] %}
  server.{{ hostvars[item]['zk_node_id'] }}={{ item }}:2888:3888
