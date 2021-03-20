@@ -11,15 +11,15 @@ tis.datasource.username={{tisconsole_db_username}}
 tis.datasource.password={{tisconsole_db_password}}
 {% endif %}
 
-
-
-
-
-
+{% if uber_pkg %}
+zk.host=127.0.0.1
+assemble.host=127.0.0.1
+tis.host=127.0.0.1
+{% else %}
 zk.host={{zk_host}}
-
-
-
 assemble.host={{groups['assemble'][0]}}
 tis.host={{groups['tis-console'][0]}}
-yarn.resource.manager.host={{groups['hadoop-yarn-resource-manager'][0]}}
+{% endif %}
+
+
+
