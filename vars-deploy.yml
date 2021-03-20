@@ -1,4 +1,6 @@
-# vars relevant with deploy process
+####################################
+#vars relevant with deploy process
+####################################
 app_dir: /opt/app/spring-boot
 tis_app_dir: "{{app_dir}}/bin"
 tis_data_dir: "/opt/data/tis"
