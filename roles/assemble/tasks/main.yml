@@ -1,12 +1,12 @@
 ---
 # tasks file for assemble
-  - file:
-     path: /opt/data/spring-boot
-     owner: "{{tis_user}}"
-     state: directory
+#  - file:
+#     path: /opt/data/spring-boot
+#     owner: "{{tis_user}}"
+#     state: directory
 
   - file:
-     path: /opt/data/flume
+     path: '{{tis_data_dir}}/flume'
      owner: "{{tis_user}}"
      state: directory
 

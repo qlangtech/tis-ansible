@@ -23,7 +23,7 @@
       mode: '0755'
     with_items:
       - "{{zk_install_dir}}"
-      - "/opt/data/zookeeper"
+      - "{{tis_data_dir}}/zookeeper"
 
   # copy gzip file and unarchive
   - name: copy zookeeper file to host
@@ -66,7 +66,7 @@
   - name: write id file
     template:
       src: 'template/{{item.name}}.j2'
-      dest: '/opt/data/zookeeper/{{ item.name }}'
+      dest: '{{tis_data_dir}}/zookeeper/{{ item.name }}'
       owner: "{{ zk_user }}"
       group: "{{ zk_group }}"
       mode: '0755'
@@ -80,5 +80,6 @@
     cron:
       name: 'zkDaemon'
       minute: '*/1'
-      job: '/opt/data/zookeeper/daemon_zk.sh'
+      job: '{{tis_data_dir}}/zookeeper/daemon_zk.sh'
       user: "{{ zk_user }}"
+    when: not uber_pkg

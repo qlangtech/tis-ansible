@@ -71,6 +71,7 @@
     - vars.yml
   vars:
     app_dir: '/tmp/uber_pkg'
+    zk_parent_dir: '{{app_dir}}'
     tis_app_dir: "{{app_dir}}/bin"
     data_dir_name: 'data'
     relative_root_dir: '../'
@@ -85,6 +86,8 @@
       file:
         path: '{{app_dir}}'
         state: absent
+    - include_role:
+        name: zookeeper
     - include_role:
         name: assemble
     - include_role:

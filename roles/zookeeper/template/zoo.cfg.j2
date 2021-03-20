@@ -1,5 +1,8 @@
 tickTime=2000
-dataDir=/opt/data/zookeeper
+{% if uber_pkg %}
+  {% set tis_data_dir = relative_root_dir + data_dir_name %}
+{% endif %}
+dataDir={{tis_data_dir}}/zookeeper
 clientPort=2181
 initLimit=5
 syncLimit=2
