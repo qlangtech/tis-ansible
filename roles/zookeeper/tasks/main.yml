@@ -47,7 +47,7 @@
   - name: synchroniz tis
     synchronize:
       src: /tmp/zookeeper-3.4.14/
-      dest: {{zk_install_dir}}
+      dest: '{{zk_install_dir}}'
       recursive: yes
     delegate_to: "{{ inventory_hostname }}"
     notify: restart zookeeper
