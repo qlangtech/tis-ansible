@@ -94,13 +94,15 @@
         name: zookeeper
       vars:
         relative_root_dir: '../../'
-        shall_exec_restart: yes
+    - name: start zookeeper
+      command: "./zkServer.sh start"
+      ignore_errors: yes
+      args:
+        chdir: "{{zk_parent_dir}}/{{zk_dir_name}}/bin"
     - include_role:
         name: console
     - name: shutdown zookeeper
       command: "./zkServer.sh stop"
-      become: yes
-      become_user: zookeeper
       ignore_errors: yes
       args:
         chdir: "{{zk_parent_dir}}/{{zk_dir_name}}/bin"
