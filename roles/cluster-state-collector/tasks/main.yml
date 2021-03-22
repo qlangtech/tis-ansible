@@ -1,14 +1,14 @@
 ---
 # tasks file for collector
-  - file:
-     path: /opt/data/spring-boot
-     owner: "{{tis_user}}"
-     state: directory
+#  - file:
+#     path: /opt/data/spring-boot
+#     owner: "{{tis_user}}"
+#     state: directory
 
-  - file:
-     path: /opt/data/flume
-     owner: "{{tis_user}}"
-     state: directory
+#  - file:
+#     path: /opt/data/flume
+#     owner: "{{tis_user}}"
+#     state: directory
 
   - name: copy tis-collect
     copy:
@@ -56,5 +56,5 @@
      owner: "{{tis_user}}"
      recurse: yes
     with_items:
-     - "/opt/app/spring-boot/tis-collect"
-     - "/opt/data/spring-boot"
+     - "{{app_dir}}/tis-collect"
+ #    - "/opt/data/spring-boot"
