@@ -99,8 +99,8 @@
       ignore_errors: false
       args:
         chdir: "{{zk_parent_dir}}/{{zk_dir_name}}/bin"
-    - name: sleep 5
-      command: sleep 5
+    - name: sleep 10 sec
+      command: sleep 10
       ignore_errors: yes
     - include_role:
         name: console
