@@ -96,9 +96,12 @@
         relative_root_dir: '../../'
     - name: start zookeeper
       command: "./zkServer.sh start"
-      ignore_errors: yes
+      ignore_errors: false
       args:
         chdir: "{{zk_parent_dir}}/{{zk_dir_name}}/bin"
+    - name: sleep 5
+      command: sleep 5
+      ignore_errors: yes
     - include_role:
         name: console
     - name: shutdown zookeeper
@@ -112,6 +115,11 @@
         name: cluster-state-collector
     - include_role:
         name: solr-core
+    - name: arrange jars
+      shell: 'java -classpath ../web-start/lib/*:./lib/*:./conf  com.qlangtech.tis.runtime.module.action.SysInitializeArrangeJars {{app_dir}}'
+      run_once: true
+      args:
+        chdir: "{{app_dir}}/tjs"
     - include: install_ng_tis.yml
   tags:
     - uber
