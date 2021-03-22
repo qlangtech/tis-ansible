@@ -72,6 +72,7 @@
   vars:
     app_dir: '/tmp/uber_pkg'
     zk_parent_dir: '{{app_dir}}'
+    zk_dir_name: 'zookeeper'
     tis_app_dir: "{{app_dir}}/bin"
     data_dir_name: 'data'
     relative_root_dir: '../'
@@ -93,14 +94,22 @@
         name: zookeeper
       vars:
         relative_root_dir: '../../'
+        shall_exec_restart: yes
+    - include_role:
+        name: console
+    - name: shutdown zookeeper
+      command: "./zkServer.sh stop"
+      become: yes
+      become_user: zookeeper
+      ignore_errors: yes
+      args:
+        chdir: "{{zk_parent_dir}}/{{zk_dir_name}}/bin"
     - include_role:
         name: assemble
     - include_role:
         name: cluster-state-collector
     - include_role:
         name: solr-core
-    - include_role:
-        name: console
     - include: install_ng_tis.yml
   tags:
     - uber
