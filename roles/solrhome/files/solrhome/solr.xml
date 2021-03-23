@@ -12,7 +12,7 @@
 
     <bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
 {% if uber_pkg %}
-  set  zk_host='127.0.0.1:2181/tis/cloud'
+ {% set  zk_host='127.0.0.1:2181/tis/cloud' %}
 {% endif %}
     <str name="zkHost">{{zk_host}}</str>
     <int name="zkClientTimeout">${zkClientTimeout:30000}</int>
