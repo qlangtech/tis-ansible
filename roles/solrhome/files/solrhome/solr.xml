@@ -2,13 +2,13 @@
 <!--
 {% if uber_pkg %}
 {% set  zk_host='127.0.0.1:2181/tis/cloud' %}
-{% set tis_data_dir = relative_root_dir + data_dir_name %}
 {% endif %}
 -->
 <solr>
 
  <str name="adminHandler">org.apache.solr.handler.admin.TisCoreAdminHandler</str>
- <str name="solrDataHome">{{tis_data_dir}}/solrhome</str>
+ <!--relative to solrhome-->
+ <str name="solrDataHome">.</str>
   <solrcloud>
 
     <str name="host">${host:}</str>
