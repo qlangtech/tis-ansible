@@ -2121,7 +2121,7 @@ function launch_solr() {
 
     {% set tis_app_launch_main = '-jar ' + tis_app_name + '.jar' %}
     {% if uber_pkg %}
-      {% set tis_app_launch_main = '-classpath ' + relative_root_dir  + tis_app_name+ '/lib/*:' + relative_root_dir + tis_app_name+ '/conf:'+relative_root_dir + tis_app_name + '.jar com.qlangtech.tis.web.start.TisApp' %}
+      {% set tis_app_launch_main = '-classpath ' + relative_root_dir  + tis_app_name+ '/lib/*:' + relative_root_dir + tis_app_name+ '/conf:'+relative_root_dir + tis_app_name + '/' + tis_app_name + '.jar com.qlangtech.tis.web.start.TisApp' %}
     {% endif %}
 
   if [ "$run_in_foreground" == "true" ]; then
