@@ -7,7 +7,7 @@
       group: solr
   
   - file:
-      path: /opt/data/solrhome
+      path: '{{tis_data_dir}}/solrhome'
       owner: solr  
       state: directory
   
@@ -22,15 +22,15 @@
   - name: copy solr.xml to '/opt/data/solrhome/'
     template:
       src: './files/solrhome/{{item}}'
-      dest: '/opt/data/solrhome/'
+      dest: '{{tis_data_dir}}/solrhome/'
     with_items:
       - "solr.xml"
 
 
-  - name: copy app.info
-    copy:
-     src: ./files/solrhome/{{item}}
-     dest: /opt/app/
-     owner: solr
-    with_items:
-     - "app.info"
+#  - name: copy app.info
+#    copy:
+#     src: ./files/solrhome/{{item}}
+#     dest: /opt/app/
+#     owner: solr
+#    with_items:
+#     - "app.info"
