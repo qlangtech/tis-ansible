@@ -17,14 +17,14 @@ fi
 
 # Action functions
 start() {
-  sh ./zookeeper/bin/zkServer.sh start
+  sh ../zookeeper/bin/zkServer.sh start
   sleep 3
-  ./bin/tis start -force
+  ./tis start -force
 }
 
 stop() {
-  sh ./zookeeper/bin/zkServer.sh stop
-  ./bin/tis stop
+  sh ../zookeeper/bin/zkServer.sh stop
+  ./tis stop
 }
 
 

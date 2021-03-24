@@ -70,7 +70,7 @@
   vars_files:
     - vars.yml
   vars:
-    app_dir: '/tmp/uber_pkg'
+    app_dir: '/tmp/tis-uber'
     zk_parent_dir: '{{app_dir}}'
     zk_dir_name: 'zookeeper'
     tis_app_dir: "{{app_dir}}/bin"
@@ -118,7 +118,7 @@
     - name: set launch script
       template:
         src: "template/{{item}}.j2"
-        dest: "{{app_dir}}/{{item}}"
+        dest: "{{app_dir}}/bin/{{item}}"
         force: no
         mode: '766'
       with_items:
