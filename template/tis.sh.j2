@@ -2,6 +2,7 @@
 
 # Initialize variables that cannot be provided by a .conf file
 WORKING_DIR="$(pwd)"
+echo "workdir:$WORKING_DIR"
 
 # Set up defaults
 [[ -z "$MODE" ]] && MODE="service" # modes are "auto", "service" or "run"
@@ -16,13 +17,13 @@ fi
 
 # Action functions
 start() {
-  sh ./zookeeper/bin/zkServer.sh start
+  sh ../zookeeper/bin/zkServer.sh start
   sleep 3
   ./tis start -force
 }
 
 stop() {
-  sh ./zookeeper/bin/zkServer.sh stop
+  sh ../zookeeper/bin/zkServer.sh stop
   ./tis stop
 }
 
