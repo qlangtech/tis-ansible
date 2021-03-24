@@ -87,7 +87,7 @@
     zk_node_id: 1
   hosts: localhost
   tasks:
-    - name: 'clean the targetDir {{uber_pkg_dir}}'
+    - name: 'clean the targetDir {{app_dir}}'
       file:
         path: '{{app_dir}}'
         state: absent
