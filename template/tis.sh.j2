@@ -2,7 +2,11 @@
 
 # Initialize variables that cannot be provided by a .conf file
 WORKING_DIR="$(pwd)"
-echo "workdir:$WORKING_DIR"
+TISBIN="${BASH_SOURCE-$0}"
+TISBIN="$(dirname "${TISBIN}")"
+TISBINDIR="$(cd "${TISBIN}"; pwd)"
+
+cd $TISBINDIR
 
 # Set up defaults
 [[ -z "$MODE" ]] && MODE="service" # modes are "auto", "service" or "run"
