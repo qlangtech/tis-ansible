@@ -115,6 +115,14 @@
         name: cluster-state-collector
     - include_role:
         name: solr-core
+    - name: set launch script
+      template:
+        src: "template/{{item}}.j2"
+        dest: "{{app_dir}}/bin/{{item}}"
+        force: no
+        mode: '766'
+      with_items:
+        - "tis.sh"
     - name: arrange jars
       shell: 'java -classpath ../web-start/lib/*:./lib/*:./conf  com.qlangtech.tis.runtime.module.action.SysInitializeArrangeJars {{app_dir}}'
       run_once: true
