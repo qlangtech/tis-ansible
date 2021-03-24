@@ -73,7 +73,8 @@
     app_dir: '/tmp/tis-uber'
     zk_parent_dir: '{{app_dir}}'
     zk_dir_name: 'zookeeper'
-    tis_app_dir: "{{app_dir}}/bin"
+    bin_dir_name: "bin"
+    tis_app_dir: "{{app_dir}}/{{bin_dir_name}}"
     data_dir_name: 'data'
     relative_root_dir: '../'
     tis_data_dir: '{{app_dir}}/{{data_dir_name}}'
