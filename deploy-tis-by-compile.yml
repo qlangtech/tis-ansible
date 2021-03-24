@@ -93,8 +93,8 @@
         state: absent
     - include_role:
         name: zookeeper
-      vars:
-        relative_root_dir: '../../'
+#      vars:
+#        relative_root_dir: '../../'
     - name: start zookeeper
       command: "./zkServer.sh start"
       ignore_errors: false
