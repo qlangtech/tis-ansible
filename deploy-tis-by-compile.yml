@@ -112,8 +112,8 @@
         chdir: "{{zk_parent_dir}}/{{zk_dir_name}}"
     - include_role:
         name: assemble
-    - include_role:
-        name: cluster-state-collector
+#    - include_role:
+#        name: cluster-state-collector
     - include_role:
         name: solr-core
     - name: set launch script
