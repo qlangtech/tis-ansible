@@ -19,7 +19,7 @@
 #    with_items:
 #     - "solr.xml"
 
-  - name: copy solr.xml to '/opt/data/solrhome/'
+  - name: copy solr.xml to '{{tis_data_dir}}/solrhome/'
     template:
       src: './files/solrhome/{{item}}'
       dest: '{{tis_data_dir}}/solrhome/'

@@ -2,6 +2,7 @@
 - name: start zookeeper
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: zookeeper
   tasks:
   - command: ./zkServer.sh start
@@ -19,6 +20,7 @@
 - name: start hdfs
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: hadoop-hdfs-namenode
   tasks:
   - command: ./start-dfs.sh
@@ -33,6 +35,7 @@
 - name: start yarn
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: hadoop-yarn-resource-manager
   tasks:
   - command: ./start-yarn.sh
@@ -47,6 +50,7 @@
 - name: start thriftserver
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: hadoop-yarn-resource-manager
   tasks:
   - command: ./start-thriftserver.sh --master yarn --deploy-mode client --name thriftserver --driver-java-options "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=8101"
@@ -67,6 +71,7 @@
 - name: start tis
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: solr,tis-console,assemble
   tasks:
   - command: ./tis restart -force
