@@ -13,7 +13,7 @@ exec_deploy: True
 
 
 
-mvn_pkg_name: apache-maven-3.3.3
+mvn_pkg_name: apache-maven-3.8.1
 mvn_parent_dir: /opt/app
 mvn_home: '{{mvn_parent_dir}}/{{mvn_pkg_name}}'
 appname: all
