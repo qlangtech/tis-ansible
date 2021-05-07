@@ -42,8 +42,13 @@
      src: template/run.sh.j2
      dest: '{{docker_context_dir}}/{{tis_incr_name}}/run.sh'
 
+#  - name : copy Dockerfile to docker context dir {{docker_context_dir}}/{{tis_incr_name}}/
+#    copy: src="files/Dockerfile" dest="{{docker_context_dir}}/{{tis_incr_name}}/"
+
   - name : copy Dockerfile to docker context dir {{docker_context_dir}}/{{tis_incr_name}}/
-    copy: src="files/Dockerfile" dest="{{docker_context_dir}}/{{tis_incr_name}}/"
+    template:
+      src: './files/Dockerfile.j2'
+      dest: '{{docker_context_dir}}/{{tis_incr_name}}/'
 
  # - name : docker image {{tis_incr_name}} build
  #   command: docker build -t tis/tis-incr -f ./Dockerfile .

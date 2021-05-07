@@ -154,6 +154,21 @@
     - incr
 #   - deploy
 
+- name: make DataX docker image
+  #  vars_prompt:
+  #    - name: "docker_password"
+  #      prompt: "docker repository password"
+  #      private: yes
+  vars_files:
+    - vars.yml
+  vars:
+    tis_incr_name: 'tis-datax-executor'
+  hosts: localhost
+  roles:
+    - role: tis-incr
+  tags:
+    - incr
+
 
 
 - import_playbook: install_struct.yml
