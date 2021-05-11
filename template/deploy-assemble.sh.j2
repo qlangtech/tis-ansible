@@ -7,6 +7,6 @@ for m in {{tisasm_put_mojo}}
 do
   cd $parent_dir/$m
   echo "start deploy $m"
-  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.2:put -Drelease_dir={{tis_release_dir}}/tis -Dappname=all
+  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.3:put -Drelease_dir={{tis_release_dir}}/tis -Dappname=all
   echo "success deploy $m"
 done
