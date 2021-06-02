@@ -13,7 +13,8 @@ RUN INSTALL_PKGS="tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-
     mkdir -p /opt/data/tis && chmod -R 777 /opt/data/tis && \
 	mkdir -p /opt/logs && chmod -R 777 /opt/logs && \
     mkdir -p /opt/tis &&  chmod -R a+rwX /opt/tis && \
-    chmod g=u /etc/passwd
+    chmod g=u /etc/passwd && \
+    /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
 ADD {{tis_incr_tar_name}} /opt/tis/
 ADD run.sh /opt/tis/
