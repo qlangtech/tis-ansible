@@ -364,6 +364,8 @@ CREATE TABLE `work_flow_build_history` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   `end_phase` smallint DEFAULT NULL ,
+  `last_ver` smallint DEFAULT 0 ,
+  `asyn_sub_task_status` clob
   PRIMARY KEY (`id`)
 ) ;
 

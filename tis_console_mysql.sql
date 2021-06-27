@@ -389,6 +389,8 @@ CREATE TABLE `work_flow_build_history` (
   `create_time` datetime DEFAULT NULL comment 'create_time',
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
   `end_phase` tinyint(4) DEFAULT NULL comment 'end_phase',
+  `last_ver` smallint(4) DEFAULT 0 comment 'last_ver',
+  `asyn_sub_task_status` text COMMENT 'asyn_sub_task_status'
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -405,7 +407,7 @@ CREATE TABLE `work_flow_build_phase` (
   `work_flow_build_history_id` int(11) DEFAULT NULL comment 'work_flow_build_history_id' ,
   `phase` tinyint(4) DEFAULT NULL COMMENT 'phase index',
   `result` tinyint(1) DEFAULT NULL comment 'result',
-  `phase_info` text COMMENT 'phase status' comment 'phase_info',
+  `phase_info` text COMMENT 'phase status',
   `create_time` datetime DEFAULT NULL comment 'create_time',
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
   PRIMARY KEY (`id`)
