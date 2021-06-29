@@ -55,6 +55,7 @@
     - "com.qlangtech.tis.offline.IndexBuilderTriggerFactory.xml"
     - "com.qlangtech.tis.offline.TableDumpFactory.xml"
     - "com.qlangtech.tis.plugin.incr.IncrStreamFactory.xml"
+    - "com.qlangtech.tis.plugin.k8s.K8sImage.xml"
 
 - name: copy tar
   copy:
