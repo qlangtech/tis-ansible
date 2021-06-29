@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS `application`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `application` (
   `app_id` bigint NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) ,
-  `app_type` tinyint not null default 1,
+  `app_type` smallint not null default 1,
   `project_name` varchar(40) NOT NULL ,
   `recept` varchar(30) NOT NULL ,
   `manager` varchar(30) DEFAULT NULL ,
