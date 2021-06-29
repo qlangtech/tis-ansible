@@ -390,7 +390,7 @@ CREATE TABLE `work_flow_build_history` (
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
   `end_phase` tinyint(4) DEFAULT NULL comment 'end_phase',
   `last_ver` smallint(4) DEFAULT 0 comment 'last_ver',
-  `asyn_sub_task_status` text COMMENT 'asyn_sub_task_status'
+  `asyn_sub_task_status` text COMMENT 'asyn_sub_task_status',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
