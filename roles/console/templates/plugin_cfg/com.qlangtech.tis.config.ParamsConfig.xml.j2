@@ -31,7 +31,7 @@ users:
             <schedulerAddress>{{ hadoop_yarn_resource_manager_host }}:8030</schedulerAddress>
         </com.qlangtech.tis.config.yarn.YarnConfig>
 {% endif %}
-    </com.qlangtech.tis.config.yarn.YarnConfig>
+
     <com.qlangtech.tis.plugin.datax.DataXGlobalConfig plugin="tis-datax-common-plugin@{{tis_pkg_version}}">
       <name>datax-global-config</name>
       <channel>3</channel>
@@ -56,7 +56,7 @@ users:
         ]
     }
 }
-</template>
+    </template>
     </com.qlangtech.tis.plugin.datax.DataXGlobalConfig>
     </plugins>
 </com.qlangtech.tis.plugin.PluginStore>
