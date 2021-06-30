@@ -135,7 +135,7 @@
   run_once: true
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
 
-- name: initialize tis data
+- name: "initialize tis data in dir:{{app_dir}}/{{tis_app_name}}"
   #shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
   shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
   run_once: true
