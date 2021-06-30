@@ -2,9 +2,9 @@
 
 mvn_bin="{{mvn_home}}/bin/mvn"
 echo $mvn_bin
-echo "runtime:$1"
+#echo "runtime:$1"
 echo "path:`pwd`"
 
-$mvn_bin clean install -Dmaven.test.skip=true -Pbase -Dappname=$2 -U
+$mvn_bin clean install -Dmaven.test.skip=true -Pbase -Dappname=$1 -U
 
 

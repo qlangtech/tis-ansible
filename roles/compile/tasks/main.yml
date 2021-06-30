@@ -69,7 +69,7 @@
        - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p\n'
   
   - name: compile and package {{src_dir}}
-    shell: ./compile.sh {{runtime}} {{appname}} > exec.log
+    shell: ./compile.sh {{appname}} > exec.log
     args:
      chdir: "{{src_dir}}"
 
