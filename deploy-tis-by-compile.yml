@@ -95,7 +95,7 @@
         name: zookeeper
 #      vars:
 #        relative_root_dir: '../../'
-    - name: start zookeeper
+    - name: "start zookeeper in {{zk_parent_dir}}/{{zk_dir_name}}"
       command: "./bin/zkServer.sh start"
       ignore_errors: false
       args:
