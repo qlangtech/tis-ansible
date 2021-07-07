@@ -17,8 +17,8 @@ assemble.host=127.0.0.1
 tis.host=127.0.0.1
 {% else %}
 zk.host={{zk_host}}
-assemble.host={{groups['assemble'][0]}}
-tis.host={{groups['tis-console'][0]}}
+assemble.host={{ hostvars[groups['assemble'][0]].ansible_ssh_host}}
+tis.host={{ hostvars[groups['tis-console'][0]].ansible_ssh_host}}
 {% endif %}
 
 
