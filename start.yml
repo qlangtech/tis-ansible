@@ -31,6 +31,8 @@
       chdir: "/opt/app/hadoop/sbin"
   - command: sleep 15
     ignore_errors: yes
+  tags:
+    - hdfs
 
 - name: start yarn
   vars_files:

@@ -62,7 +62,7 @@
     - include_role:
         name: compile
       vars:
-        tisasm_put_mojo: 'tis-datax-common-plugin tis-local-dump-build tis-solr-plugin tis-aliyun-fs-plugin tis-asyncmsg-rocketmq-plugin tis-hdfs-plugin tis-hive-flat-table-builder-plugin tis-k8s-plugin tis-spark-hive-server-extends tis-ds-mysql-plugin tis-ds-tidb-plugin tis-kafka-plugin'
+        tisasm_put_mojo: 'tis-datax-common-plugin tis-local-dump-build tis-solr-plugin tis-aliyun-fs-plugin tis-asyncmsg-rocketmq-plugin tis-hive-flat-table-builder-plugin tis-k8s-plugin tis-spark-hive-server-extends tis-ds-mysql-plugin tis-ds-tidb-plugin tis-kafka-plugin'
   tags:
     - pkg-plugin
 
