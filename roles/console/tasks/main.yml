@@ -77,7 +77,7 @@
   copy:
     src: "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/{{item}}.tpi"
     dest: "{{tis_data_dir}}/libs/plugins/"
-  when: uber_pkg
+  when: uber_pkg and tisasm_put_mojo
   with_items: "{{tisasm_put_mojo.split(' ')}}"
 
 - name: delete history tis.tar.gz
