@@ -78,7 +78,7 @@
     src: "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/{{item}}.tpi"
     dest: "{{tis_data_dir}}/libs/plugins/"
   when: uber_pkg
-  with_items: uber_attach_plugins
+  with_items: "{{uber_attach_plugins}}"
 
 - name: delete history tis.tar.gz
   file:
