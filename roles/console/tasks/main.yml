@@ -70,7 +70,15 @@
     dest: "{{tis_data_dir}}/libs/plugins/"
     copy_links: yes
     delete: yes
+  when: not uber_pkg
   notify: restart tis-console
+
+- name: "copy plugins from {{tis_release_dir}}/{{tis_plugin_release_dir_name}}/ when in uber_pkg model"
+  copy:
+    src: "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/{{item}}.tpi"
+    dest: "{{tis_data_dir}}/libs/plugins/"
+  when: uber_pkg
+  with_items: "{{tisasm_put_mojo.split(' ')}}"
 
 - name: delete history tis.tar.gz
   file:

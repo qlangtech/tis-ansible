@@ -131,7 +131,7 @@
       args:
         chdir: "{{app_dir}}/tjs"
     - include: install_ng_tis.yml
-    - name: "archive uber package"
+    - name: "archive uber package,target dir:{{ tis_release_dir }}"
       archive:
         path: "{{app_dir}}"
         dest: "{{ tis_release_dir }}/tis-uber.tar.gz"
