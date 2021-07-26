@@ -42,20 +42,20 @@
 
 - name: copy plugin config file
   template:
-    src: "plugin_cfg/{{item}}.j2"
-    dest: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/{{item}}"
+    src: "plugin_cfg/{{item.name}}.j2"
+    dest: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/{{item.name}}"
     force: no
     mode: '0644'
-  when: not tis_local_cfg_git_repository_install
+  when: not tis_local_cfg_git_repository_install and item.when
   with_items:
-    - "global/global_config.xml"
-    - "com.qlangtech.tis.config.ParamsConfig.xml"
-    - "com.qlangtech.tis.offline.FileSystemFactory.xml"
-    - "com.qlangtech.tis.offline.FlatTableBuilder.xml"
-    - "com.qlangtech.tis.offline.IndexBuilderTriggerFactory.xml"
-    - "com.qlangtech.tis.offline.TableDumpFactory.xml"
-    - "com.qlangtech.tis.plugin.incr.IncrStreamFactory.xml"
-    - "com.qlangtech.tis.plugin.k8s.K8sImage.xml"
+    - {name: "global/global_config.xml", when: "{{not uber_pkg}}"}
+    - {name: "com.qlangtech.tis.config.ParamsConfig.xml", when: True}
+    - {name: "com.qlangtech.tis.offline.FileSystemFactory.xml", when: "{{not uber_pkg}}"}
+    - {name: "com.qlangtech.tis.offline.FlatTableBuilder.xml", when: "{{not uber_pkg}}"}
+    - {name: "com.qlangtech.tis.offline.IndexBuilderTriggerFactory.xml", when: "{{not uber_pkg}}"}
+    - {name: "com.qlangtech.tis.offline.TableDumpFactory.xml", when: "{{not uber_pkg}}"}
+    - {name: "com.qlangtech.tis.plugin.incr.IncrStreamFactory.xml", when: "{{not uber_pkg}}"}
+    - {name: "com.qlangtech.tis.plugin.k8s.K8sImage.xml", when: True}
 
 - name: copy tar
   copy:

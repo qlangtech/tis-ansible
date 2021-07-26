@@ -148,6 +148,20 @@ su - hadoop
 hdfs dfs -chmod -R 777 /
 ```
 
+# 执行例子
+
+## 编译
+
+1. 编译打包`datax-docker`
+   
+   ``` shell script
+   ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,datax-docker --skip-tags=deploy -i ./inventory/hosts
+   ```
+2. 编译打包`uber`执行包
+   ``` shell script
+   ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,uber --skip-tags=deploy -i ./inventory/hosts
+   ```
+
 ## 向ansible脚本中新添加一个role
 
 ```shell
