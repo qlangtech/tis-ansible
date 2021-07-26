@@ -61,9 +61,9 @@
     #        msg: "registed param plugin_dirs: {{plugin_dirs.stdout}}"
     - include_role:
         name: compile
-      vars:
+#      vars:
 #       tisasm_put_mojo: 'tis-k8s-plugin tis-datax-common-plugin tis-local-dump-build tis-solr-plugin tis-aliyun-fs-plugin tis-asyncmsg-rocketmq-plugin tis-hive-flat-table-builder-plugin tis-spark-hive-server-extends tis-ds-mysql-plugin tis-ds-tidb-plugin tis-kafka-plugin'
-        tisasm_put_mojo: 'tis-k8s-plugin tis-datax-common-plugin'
+#        tisasm_put_mojo: 'tis-k8s-plugin tis-datax-common-plugin'
   tags:
     - pkg-plugin
 
@@ -83,6 +83,9 @@
     tisconsole_db_dbname: 'tis_console_db'
     shall_exec_restart: no
     uber_pkg: yes
+    uber_attach_plugins:
+      - "tis-k8s-plugin"
+      - "tis-datax-common-plugin"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
