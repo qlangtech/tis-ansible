@@ -3,6 +3,7 @@
   vars_files:
     - vars.yml
     - vars-deploy.yml
+    - roles/zookeeper/defaults/main.yml
   hosts: zookeeper
   tasks:
   - command: ./zkServer.sh start

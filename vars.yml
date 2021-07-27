@@ -43,7 +43,7 @@ tis_scala_compiler_dependencies_gz_file_name: "{{tis_scala_compiler_dependencies
 # some cross-role variables
 zk_gz_file_name: zookeeper-3.4.14.tar.gz
 #zk_parent_dir: "/opt/app"
-zk_dir_name: "zookeeper-3.4.14"
+#zk_dir_name: "zookeeper-3.4.14"
 #zk_install_dir: "{{zk_parent_dir}}/{{zk_dir_name}}"
 
 java_gz_file_name: jdk-8u191-linux-x64.tar.gz
