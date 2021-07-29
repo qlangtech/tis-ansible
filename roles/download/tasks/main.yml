@@ -20,7 +20,7 @@
   import_tasks: download_release_assemble.yml
   when: shall_download_release_assemble
 
-- name: Download Base Release Package to {{ tis_release_dir }}
+- name: "Download Base Release from {{ release_repository }} Package to {{ tis_release_dir }}"
   get_url:
     url: "{{ release_repository }}/{{ item.name }}"
     dest: "{{ tis_release_dir }}/{{ item.name }}"
