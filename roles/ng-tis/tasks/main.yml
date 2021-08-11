@@ -59,13 +59,19 @@
 
   - name: compile/build ng-tis
     #command: npm run ng:serve-aot
-    shell: npm run ng:serve-aot > exec.log
+    shell: npm run ng:serve-aot > exec.log && npm run build:elements >> exec.log
     args:
         chdir: "{{ng_tis_src_dir}}"
 
+  - name: "copy dist elements"
+    copy:
+      src: "{{ng_tis_src_dir}}/dist/elements/elements.js"
+      dest: "{{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/"
+
+
   - name: assemble {{ng_tis_app_tar_file_name}} from dir "{{src_root}}/{{ng_tis_app_name}}/dist/" dest {{ tis_release_dir }}/tis
     archive:
-      path: "{{src_root}}/{{ng_tis_app_name}}/dist/{{ng_tis_app_name}}/*"
+      path: "{{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/*"
       dest: "{{ tis_release_dir }}/tis/{{ng_tis_app_tar_file_name}}"
       remove: yes
 
