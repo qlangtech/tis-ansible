@@ -65,7 +65,7 @@
 
   - name: "copy dist elements"
     copy:
-      src: "{{ng_tis_src_dir}}/dist/elements/elements.js"
+      src: "{{ng_tis_src_dir}}/dist/elements"
       dest: "{{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/"
 
 
