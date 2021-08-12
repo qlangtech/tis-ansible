@@ -63,10 +63,12 @@
     args:
         chdir: "{{ng_tis_src_dir}}"
 
-  - name: "copy dist elements"
-    copy:
+  - name: "copy dist elements from:{{ng_tis_src_dir}}/dist/elements to:{{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/"
+    synchronize:
       src: "{{ng_tis_src_dir}}/dist/elements"
       dest: "{{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/"
+      recursive: yes
+    delegate_to: "{{ inventory_hostname }}"
 
 
   - name: assemble {{ng_tis_app_tar_file_name}} from dir "{{src_root}}/{{ng_tis_app_name}}/dist/" dest {{ tis_release_dir }}/tis
