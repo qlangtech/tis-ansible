@@ -21,6 +21,9 @@
       vars:
         - shall_download_plugins: no
         - shall_download_release_assemble: no
+    - name: include install_console_dependencies.yml
+      # this is used for TestCase
+      import_tasks: roles/console/tasks/install_console_dependencies.yml
   tags: always
 
 - name: make ng-tis package
