@@ -82,6 +82,8 @@ SOLR_TIP=`dirname "$SOLR_SCRIPT"`/..
 SOLR_TIP=`cd "$SOLR_TIP"; pwd`
 DEFAULT_SERVER_DIR="$SOLR_TIP/{{tis_app_name}}"
 
+export TIS_HOME="$SOLR_TIP"
+
 echo "SOLR_TIP:$SOLR_TIP,DEFAULT_SERVER_DIR:$DEFAULT_SERVER_DIR" >debug.log
 
 # baisui add hard code 

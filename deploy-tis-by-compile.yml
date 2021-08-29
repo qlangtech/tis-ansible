@@ -2,6 +2,7 @@
 - name: init compile
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: localhost
   tasks:
     - name: init source code dir:'{{src_root}}'
