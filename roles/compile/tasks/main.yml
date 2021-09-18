@@ -4,7 +4,7 @@
     shell: ls {{mvn_home}}/conf/settings.xml
     ignore_errors: True
     register: ismvndeploy
-    
+
   - name: make {{mvn_local_repo}} {{mvn_home}}
     file:
      path: "{{item}}"
@@ -13,31 +13,31 @@
      - "{{mvn_local_repo}}"
      - "{{mvn_home}}"
     when: ismvndeploy is failed
-  
+
   - name: deploy maven builder
     unarchive:
       src: '{{release_repository}}/{{mvn_zip_package_name}}'
       dest: '{{mvn_parent_dir}}'
       remote_src: yes
     when: ismvndeploy is failed
-  
+
   - name: make sh mvn mode
     file:
      path: "{{mvn_home}}/bin/mvn"
      mode: u+rwx
     when: ismvndeploy is failed
-  
+
   - name: make log dir
     file:
      path: "{{mvn_home}}/conf/logging"
      state: directory
     when: ismvndeploy is failed
-       
+
   - template:
      src: template/settings.xml.j2
      dest: '{{mvn_home}}/conf/settings.xml'
     when: ismvndeploy is failed
-   
+
   - name: mkdir
     file:
      path: "{{src_dir}}"
@@ -67,11 +67,12 @@
        state: absent
     with_lines:
        - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p\n'
-  
+
   - name: compile and package {{src_dir}}
     shell: ./compile.sh {{appname}} > exec.log
     args:
      chdir: "{{src_dir}}"
+
 
 
 #  - name: clear release dir package

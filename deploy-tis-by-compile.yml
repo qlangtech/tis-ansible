@@ -22,9 +22,6 @@
       vars:
         - shall_download_plugins: no
         - shall_download_release_assemble: no
-    - name: include install_console_dependencies.yml
-      # this is used for TestCase
-      import_tasks: roles/console/tasks/install_console_dependencies.yml
   tags: always
 
 - name: make ng-tis package
@@ -39,9 +36,14 @@
 - name: compile tis src tar package
   vars_files:
     - vars.yml
+    - vars-deploy.yml
   hosts: localhost
-  roles:
-    - role: compile
+  tasks:
+    - include_role:
+        name: compile
+    - name: include install_console_dependencies.yml
+        # this is used for TestCase
+      import_tasks: roles/console/tasks/install_console_dependencies.yml
   tags:
     - pkg
 
@@ -123,8 +125,8 @@
         name: assemble
 #    - include_role:
 #        name: cluster-state-collector
-    - include_role:
-        name: solr-core
+#    - include_role:
+#        name: solr-core
     - name: set launch script
       template:
         src: "template/{{item}}.j2"
