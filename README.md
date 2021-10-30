@@ -67,6 +67,10 @@ hadoop3.xxx ansible_ssh_host=10.1.1.3
 - 必须配置参数 tisconsole_db_url、 tisconsole_db_username、 tisconsole_db_password 为tis console 的sql语句所在的数据库连接信息。
 - 如果需要安装 spark shuffle，默认配置的Executor数量为yarn nodemanger机器数量，单个 Executor 的内存为 (yarn nodemanager 内存 \* 0.7。因为默认配置的 yarn 单个Container默认占用其nodemanager 最大内存的 80%，启动Executor时，它可以超出用量 10%，配置的内存 + 超出的用量不能大于 yarn nodemanager 的最大内存，否则无法启动thriftserver。如果有不同的用法，需要修改 `roles/spark/template/spark-defaults.conf.j2` 中的几个参数。在启动 thriftserver 时，会启动一个 ApplicationMaster，消耗2G内存。后续每次启动一个 Container，就消耗 （2G + spark.executor.memory) 的内存。内存要满足：yarn_nodemanager_resource_memorymb \* nodemanager机器数量 >= 2G + (2G + spark.executor.memory) \* spark.dynamicAllocation.maxExecutors。
 
+### 其它配置
+
+**修改solr的内存大小**：在 tis-ansible 中修改 `roles/solr-core/defaults/main.yml` 中的 `solr_java_mem`，建议配置为机器内存的一半，并将Xms、Xmx配置为一样的大小。
+
 ## 确保主机可以由中控机ssh免密登陆
 
 如果在ansible中控机没有做过 ssh-copy-id 到其它需要安装的主机，可以通过 ssh-keygen 先在中控机生成一个可以，使用下面的命令可以通过 `copy_root_sshkey.yml` 辅助拷贝到其它主机，注意如果需要一组或多组主机拷贝，则要确保一组主机有相同的root密码：
