@@ -37,17 +37,17 @@
     with_items:
       - {app : "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
 
-  - name : copy {{tis_pkg_version}} to docker context dir
+  - name : "copy {{entrypoint_shell_name}}.j2 to docker context dir"
     template:
-     src: template/run.sh.j2
-     dest: '{{docker_context_dir}}/{{tis_incr_name}}/run.sh'
+     src: "{{entrypoint_shell_name}}.j2"
+     dest: '{{docker_context_dir}}/{{tis_incr_name}}/{{entrypoint_shell_name}}'
 
 #  - name : copy Dockerfile to docker context dir {{docker_context_dir}}/{{tis_incr_name}}/
 #    copy: src="files/Dockerfile" dest="{{docker_context_dir}}/{{tis_incr_name}}/"
 
-  - name : copy Dockerfile to docker context dir {{docker_context_dir}}/{{tis_incr_name}}/
+  - name : copy {{docker_file_template}} to docker context dir {{docker_context_dir}}/{{tis_incr_name}}/
     template:
-      src: './files/Dockerfile.j2'
+      src: './files/{{docker_file_template}}'
       dest: '{{docker_context_dir}}/{{tis_incr_name}}/Dockerfile'
 
  # - name : docker image {{tis_incr_name}} build
@@ -63,15 +63,15 @@
 #      password: "{{docker_password}}"
 #      reauthorize: yes
 
-  - name: Build and Push docker {{tis_incr_name}}
+  - name: "Build and Push docker {{tis_incr_name}}-{{tis_pkg_version}}"
     docker_image:
       build:
         path: "{{docker_context_dir}}/{{tis_incr_name}}"
-      name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}"
+      name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}-{{tis_pkg_version}}"
+   #   tag: "{{tis_pkg_version}}"
       push: yes
       force: yes
       source: build
 
 
-     
-     
+

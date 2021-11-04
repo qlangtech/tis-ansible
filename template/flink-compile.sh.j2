@@ -4,6 +4,6 @@ mvn_bin="{{mvn_home}}/bin/mvn"
 echo $mvn_bin
 echo "path:`pwd`"
 
-$mvn_bin clean install -Dmaven.test.skip=true -Pbase -Dappname=$1 -U
+$mvn_bin clean compile package -DskipTests=true -Dfast -Dscala-2.11
 
 

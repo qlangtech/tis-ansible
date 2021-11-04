@@ -1,5 +1,5 @@
 ---
-# tasks file for compile  
+# tasks file for compile
   - name: judge maven is deployed
     shell: ls {{mvn_home}}/conf/settings.xml
     ignore_errors: True
@@ -58,8 +58,8 @@
      dest: '{{src_dir}}/{{item}}'
      mode: u+rwx
     with_items:
-      - compile.sh
-      - deploy-assemble.sh
+      - "{{script_prefix}}compile.sh"
+      - "{{script_prefix}}deploy-assemble.sh"
 
   - name: clean old package
     file:
@@ -69,11 +69,9 @@
        - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p\n'
 
   - name: compile and package {{src_dir}}
-    shell: ./compile.sh {{appname}} > exec.log
+    shell: ./{{script_prefix}}compile.sh {{appname}} > exec.log
     args:
      chdir: "{{src_dir}}"
-
-
 
 #  - name: clear release dir package
 #    file:
@@ -103,12 +101,11 @@
        - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p,%f\n'
 
   - name: deploy assemble of '{{src_dir}}' package  to remote repository
-    shell: ./deploy-assemble.sh > exec.log
+    shell: ./{{script_prefix}}deploy-assemble.sh > exec.log
     args:
       chdir: "{{src_dir}}"
     when: exec_deploy
     tags:
       - deploy
 
-     
-     
+

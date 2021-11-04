@@ -58,20 +58,45 @@
     target_file_pattern: .*\.(tpi|tar\.gz)$
   hosts: localhost
   tasks:
-    #    - name: register plugin_dirs in {{src_root}}/{{tis_plugin_release_dir_name}}
-    #      shell: "find {{src_root}}/{{tis_plugin_release_dir_name}}/* -maxdepth 1 -type d -name '*-plugin' -printf '%f '"
-    #      ignore_errors: True
-    #      register: plugin_dirs
-    #      delegate_to: "localhost"
-    #    - debug:
-    #        msg: "registed param plugin_dirs: {{plugin_dirs.stdout}}"
     - include_role:
         name: compile
-#      vars:
-#       tisasm_put_mojo: 'tis-k8s-plugin tis-datax-common-plugin tis-local-dump-build tis-solr-plugin tis-aliyun-fs-plugin tis-asyncmsg-rocketmq-plugin tis-hive-flat-table-builder-plugin tis-spark-hive-server-extends tis-ds-mysql-plugin tis-ds-tidb-plugin tis-kafka-plugin'
-#        tisasm_put_mojo: 'tis-k8s-plugin tis-datax-common-plugin'
   tags:
     - pkg-plugin
+
+- name: package flink component tar package and deploy docker image to hub
+  vars_files:
+    - vars.yml
+  vars:
+    exec_deploy: False
+    flink_extends_dist_jar_path: "{{src_root}}/{{tis_plugin_release_dir_name}}/tis-incr/tis-flink-extends/target/tis-flink-extends-dist-{{tis_pkg_version}}.jar"
+    app_local_dir_name: "flink"
+    script_prefix: "{{app_local_dir_name}}-"
+    git_src: "git@github.com:qlangtech/flink.git"
+    git_branch: "tis-1.13.1"
+    target_file_pattern: .*\.(tpi|tar\.gz)$
+    tis_incr_name: "{{app_local_dir_name}}"
+    tis_incr_tar_name: "{{app_local_dir_name}}-{{git_branch}}-bin.tar.gz"
+    docker_file_template: "{{app_local_dir_name}}_Dockerfile.j2"
+    entrypoint_shell_name: "docker-entrypoint.sh"
+  hosts: localhost
+  tasks:
+#    - name: "register '{{flink_extends_dist_jar_path}}' status"
+#      stat:
+#       path: "{{flink_extends_dist_jar_path}}"
+#      register: extends_dist_file_status
+#    - assert:
+#        that: extends_dist_file_status.stat.exists
+#        fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
+#    - include_role:
+#        name: compile
+    - include_role:
+        name: flink
+    # make flink docker image
+    - include_role:
+        name: tis-incr
+  tags:
+    - flink-docker
+
 
 - name: build Uber package
   vars_files:
@@ -183,5 +208,5 @@
 
 
 - import_playbook: install_struct.yml
-  
+
 

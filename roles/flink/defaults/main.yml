@@ -1,0 +1,7 @@
+#app_local_dir_name: "{{tis_release_dir_name}}"
+
+flink_dist_dir: "{{src_dir}}/flink-dist/target/flink-{{git_branch}}-bin/flink-{{git_branch}}"
+src_dir: "{{src_root}}/{{app_local_dir_name}}"
+
+
+

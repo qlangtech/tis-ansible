@@ -1,0 +1,11 @@
+---
+- name: "copy {{flink_extends_dist_jar_path}} to flink/lib"
+  copy:
+    src: "{{flink_extends_dist_jar_path}}"
+    dest: "{{ flink_dist_dir }}/lib/"
+
+- name: "archive flink package source: {{flink_dist_dir}},target dir:{{ tis_release_dir }}/{{tis_release_dir_name}}"
+  archive:
+    path: "{{ flink_dist_dir }}/"
+    dest: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_incr_tar_name}}"
+    remove: no
