@@ -67,7 +67,7 @@
   with_items:
     - "tis.tar.gz"
 
-- name: copy plugins from "{{tis_release_dir}}/tis-plugin/"
+- name: copy plugins from "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/"
   synchronize:
     src: "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/"
     dest: "{{tis_data_dir}}/libs/plugins/"
