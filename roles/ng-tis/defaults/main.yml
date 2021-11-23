@@ -5,7 +5,7 @@ ng_tis_git_branch: v3.1.0
 
 name_ng_tis_node_modules_tar: "tis-console-ng-node-modules.tar.gz"
 
-node_ver: v14.7.0
+node_ver: v16.13.0
 node_distro: linux-x64
 node_name: "node-{{node_ver}}-{{node_distro}}"
 
