@@ -1,7 +1,7 @@
 #ng_tis_git_src: "https://github.com/qlangtech/ng-tis.git"
 ng_tis_git_src: "git@github.com:qlangtech/ng-tis.git"
 ng_tis_src_dir: "{{src_root}}/{{ng_tis_app_name}}"
-ng_tis_git_branch: v3.1.0
+ng_tis_git_branch: "master"
 
 name_ng_tis_node_modules_tar: "tis-console-ng-node-modules.tar.gz"
 
