@@ -9,7 +9,7 @@ tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
-tis_pkg_version: 3.2.0
+tis_pkg_version: 3.3.0
 
 need_install_tis_collect: true;
 ng_tis_app_name: ng-tis
