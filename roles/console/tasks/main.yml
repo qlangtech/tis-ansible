@@ -60,6 +60,9 @@
     - {name: "com.qlangtech.tis.plugin.k8s.K8sImage.xml", when: True}
 
 - name: "copy com.qlangtech.tis.config.ParamsConfig.xml file"
+  file:
+    path: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/params-cfg/{{item.pluginDesc}}"
+    state: directory
   template:
     src: "plugin_cfg/com.qlangtech.tis.config.ParamsConfig.xml.{{item.pluginDesc}}.j2"
     dest: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/params-cfg/{{item.pluginDesc}}/com.qlangtech.tis.config.ParamsConfig.xml"
