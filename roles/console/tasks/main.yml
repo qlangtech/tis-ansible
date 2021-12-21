@@ -59,20 +59,21 @@
     - {name: "com.qlangtech.tis.plugin.incr.IncrStreamFactory.xml", when: "{{not uber_pkg}}"}
     - {name: "com.qlangtech.tis.plugin.k8s.K8sImage.xml", when: True}
 
-- name: "copy com.qlangtech.tis.config.ParamsConfig.xml file"
+- name: "mkdir of com.qlangtech.tis.config.ParamsConfig.xml file"
   file:
     path: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/params-cfg/{{item.pluginDesc}}"
     state: directory
+  when: not tis_local_cfg_git_repository_install and item.when
+  with_items: params_cfg_types
+
+- name: "copy com.qlangtech.tis.config.ParamsConfig.xml file"
   template:
     src: "plugin_cfg/com.qlangtech.tis.config.ParamsConfig.xml.{{item.pluginDesc}}.j2"
     dest: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/params-cfg/{{item.pluginDesc}}/com.qlangtech.tis.config.ParamsConfig.xml"
     force: no
     mode: '0644'
   when: not tis_local_cfg_git_repository_install and item.when
-  with_items:
-    - {pluginDesc: "k8s", when: True}
-    - {pluginDesc: "yarn", when: True}
-    - {pluginDesc: "DataX-global", when: True}
+  with_items: params_cfg_types
 
 - name: copy tar
   copy:
