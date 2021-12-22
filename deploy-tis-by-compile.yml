@@ -117,7 +117,7 @@
     uber_attach_plugins:
       - "tis-k8s-plugin"
       - "tis-datax-common-plugin"
-      - "tis-local-dump-build"
+    #  - "tis-local-dump-build"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1

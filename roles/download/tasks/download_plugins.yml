@@ -15,7 +15,7 @@
     - {name: "tis-ds-tidb-plugin.tpi", when: True}
     - {name: "tis-kafka-plugin.tpi", when: True}
     - {name: "tis-solr-plugin.tpi", when: True}
-    - {name: "tis-local-dump-build.tpi", when: True}
+   # - {name: "tis-local-dump-build.tpi", when: True}
     - {name: "tis-datax-common-plugin.tpi", when: True}
     - {name: "{{tis_spark_hive_server_extends_tar_file_name}}", when: need_install_hadoop and need_install_spark}
 
