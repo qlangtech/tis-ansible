@@ -64,7 +64,7 @@
     path: "{{tis_data_dir}}/cfg_repo/tis_plugin_config/params-cfg/{{item.pluginDesc}}"
     state: directory
   when: not tis_local_cfg_git_repository_install and item.when
-  with_items: params_cfg_types
+  with_items: "{{params_cfg_types}}"
 
 - name: "copy com.qlangtech.tis.config.ParamsConfig.xml file"
   template:
@@ -73,7 +73,7 @@
     force: no
     mode: '0644'
   when: not tis_local_cfg_git_repository_install and item.when
-  with_items: params_cfg_types
+  with_items: "{{params_cfg_types}}"
 
 - name: copy tar
   copy:

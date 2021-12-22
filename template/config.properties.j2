@@ -15,6 +15,7 @@ tis.datasource.password={{tisconsole_db_password}}
 zk.host=127.0.0.1:2181/tis/cloud
 assemble.host=127.0.0.1
 tis.host=127.0.0.1
+deploy.mode=standalone
 {% else %}
 zk.host={{zk_host}}
 assemble.host={{ hostvars[groups['assemble'][0]].ansible_ssh_host}}
