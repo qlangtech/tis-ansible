@@ -69,13 +69,15 @@
   ignore_errors: True
   tags: deploy
 
+- debug: msg="will deploy docker {{tis_incr_name}}-{{tis_pkg_version}}:{{whether_push_docker_to_remote_repository is defined}}"
+
 - name: "Build and Push docker {{tis_incr_name}}-{{tis_pkg_version}}"
   docker_image:
     build:
       path: "{{docker_context_dir}}/{{tis_incr_name}}"
     name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}-{{tis_pkg_version}}"
     #   tag: "{{tis_pkg_version}}"
-    push: whether_push_docker_to_remote_repository | succeeded
+    push: "{{whether_push_docker_to_remote_repository is defined}}"
     force: yes
     source: build
 

@@ -109,7 +109,7 @@
     dest: /tmp/
     remote_src: yes
 
-- name: synchroniz tis
+- name: "synchroniz tis to {{app_dir}}/{{tis_app_name}}"
   synchronize:
     src: /tmp/tis/
     dest: "{{app_dir}}/{{tis_app_name}}"
@@ -117,6 +117,8 @@
     recursive: yes
   delegate_to: "{{ inventory_hostname }}"
   notify: restart tis-console
+
+
 
 #- name: copy config.properties
 #  template:
@@ -156,15 +158,23 @@
   ignore_errors: True
   register: system_initialized_token_exist
 
+- name: " debug system_initialized_token_exist"
+  debug:
+    var: system_initialized_token_exist
+
 - name: cp file 'tis_console_{{tisconsole_db_type}}.sql'
   copy: src="tis_console_{{tisconsole_db_type}}.sql" dest=/tmp/
   run_once: true
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
 
-- name: "initialize tis data in dir:{{app_dir}}/{{tis_app_name}}"
+
+#
+- name: "initialize tis data in dir:{{app_dir}}/{{tis_app_name}} -Ddata.dir={{tis_data_dir}}"
   #shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
-  shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
+  shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=50000  com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
   run_once: true
   args:
     chdir: "{{app_dir}}/{{tis_app_name}}"
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
+
+- fail: msg="Bailing out. this play requires 'bar'"
