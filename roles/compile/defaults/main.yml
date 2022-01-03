@@ -14,9 +14,7 @@ script_prefix: ""
 
 
 
-mvn_pkg_name: apache-maven-3.8.1
-mvn_parent_dir: /opt/app
-mvn_home: '{{mvn_parent_dir}}/{{mvn_pkg_name}}'
+
 appname: all
 mvn_zip_package_name: '{{mvn_pkg_name}}.zip'
 mvn_local_repo: /opt/data/mvn_repository

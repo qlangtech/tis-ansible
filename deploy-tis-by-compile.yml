@@ -91,6 +91,9 @@
         name: compile
     - include_role:
         name: flink
+    - include_role:
+        name: deploy-tar
+      tags: deploy
     # make flink docker image
     - include_role:
         name: tis-incr
@@ -121,6 +124,7 @@
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
+    tis_tar_dist_dir: "{{ tis_release_dir }}/{{tis_release_dir_name}}/{{tis_pkg_version}}/tis-uber"
   hosts: localhost
   tasks:
     - name: 'clean the targetDir {{app_dir}}'
@@ -169,8 +173,17 @@
     - name: "archive uber package,target dir:{{ tis_release_dir }}"
       archive:
         path: "{{app_dir}}"
-        dest: "{{ tis_release_dir }}/tis-uber.tar.gz"
+        dest: "{{tis_tar_dist_dir}}/tis-uber.tar.gz"
         remove: yes
+    - name: "make a soft link from {{tis_tar_dist_dir}}/tis-uber.tar.gz to {{ tis_release_dir }}/tis-uber.tar.gz"
+      file:
+        src: "{{tis_tar_dist_dir}}/tis-uber.tar.gz"
+        dest: "{{ tis_release_dir }}/tis-uber.tar.gz"
+        state: link
+        force: yes
+    - include_role:
+        name: deploy-tar
+      tags: deploy
   tags:
     - uber
 
