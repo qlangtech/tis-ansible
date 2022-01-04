@@ -1,0 +1,27 @@
+---
+
+- name: "remove old dir: {{update_center_dist_dir}}/{{app_local_dir_name}}"
+  file:
+    path: "{{update_center_dist_dir}}/{{app_local_dir_name}}"
+    state: absent
+
+- name: "untar {{update_center_dist_dir}}/{{app_local_dir_name}}-tgz.tar.gz"
+  unarchive:
+    src: '{{update_center_dist_dir}}/{{app_local_dir_name}}-tgz.tar.gz'
+    dest: "{{update_center_dist_dir}}"
+    remote_src: yes
+
+- name: "generate shell script build-update-center.sh"
+  template:
+    src: "{{item.name}}.j2"
+    dest: "{{update_center_dist_dir}}/{{app_local_dir_name}}/{{item.name}}"
+    force: no
+    mode: '0644'
+  with_items:
+    - {name: "build-update-center.sh"}
+
+- name: "execute shell script build-update-center.sh"
+  shell: 'sh ./build-update-center.sh'
+  run_once: true
+  args:
+     chdir: "{{update_center_dist_dir}}/{{app_local_dir_name}}"

@@ -1,0 +1,3 @@
+---
+app_local_dir_name: "update-center2"
+update_center_dist_dir: "{{tis_release_dir}}/{{app_local_dir_name}}"

@@ -187,7 +187,20 @@
   tags:
     - uber
 
-
+- name: build TIS plugins Meta and deploy
+  vars_files:
+    - vars.yml
+  vars:
+    git_src: "git@github.com:qlangtech/update-center2.git"
+    app_local_dir_name: "update-center2"
+    exec_deploy: False
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: compile
+  tags:
+    - update-center
+    - deploy
 
 - name: make tis-incr docker image
   #  vars_prompt:
