@@ -77,11 +77,11 @@
     - spark
 
 - name: install tis_console
-  vars:
-    tis_app_name: tjs
   vars_files:
     - vars.yml
     - vars-deploy.yml
+  vars:
+    tis_app_name: tjs
   hosts: tis-console
   tasks:
     - shell: 'ls {{tis_release_dir}}/{{tis_release_dir_name}}'
