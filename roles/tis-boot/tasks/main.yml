@@ -14,7 +14,7 @@
      dest: "{{tis_app_dir}}/{{item}}"
     with_items:
      - "tis"
-     - "tis.in.sh"
+   #  - "tis.in.sh"
 
   - debug: var=tis_app_dir
 

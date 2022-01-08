@@ -168,13 +168,13 @@
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
 
 
-#
+# -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=50000
 - name: "initialize tis data in dir:{{app_dir}}/{{tis_app_name}} -Ddata.dir={{tis_data_dir}}"
   #shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
-  shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=50000  com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
+  shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
   run_once: true
   args:
     chdir: "{{app_dir}}/{{tis_app_name}}"
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
 
-- fail: msg="Bailing out. this play requires 'bar'"
+#- fail: msg="Bailing out. this play requires 'bar'"

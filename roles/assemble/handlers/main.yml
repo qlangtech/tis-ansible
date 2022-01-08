@@ -1,6 +1,6 @@
 ---
 - name: restart assemble
-  command: ./tis restart -force
+  command: ./tis restart
   become: yes
   when: shall_exec_restart
   become_user: "{{tis_user}}"

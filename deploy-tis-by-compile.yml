@@ -156,21 +156,29 @@
 #        name: cluster-state-collector
 #    - include_role:
 #        name: solr-core
-    - name: set launch script
-      template:
-        src: "template/{{item}}.j2"
-        dest: "{{app_dir}}/bin/{{item}}"
-        force: no
-        mode: '766'
-      with_items:
-        - "tis.sh"
+#    - name: set launch script
+#      template:
+#        src: "template/{{item}}.j2"
+#        dest: "{{app_dir}}/bin/{{item}}"
+#        force: no
+#        mode: '766'
+#      with_items:
+#        - "tis.sh"
+    - name: "init logs dir '{{app_dir}}/logs'"
+      file:
+        path: "{{app_dir}}/logs"
+        state: directory
     - name: arrange jars
       shell: 'java -classpath ../web-start/lib/*:./lib/*:./conf  com.qlangtech.tis.runtime.module.action.SysInitializeArrangeJars {{app_dir}}'
       run_once: true
       args:
         chdir: "{{app_dir}}/tjs"
     - include: install_ng_tis.yml
-    - name: "archive uber package,target dir:{{ tis_release_dir }}"
+    - name: "make uber target dir:{{ tis_tar_dist_dir }}"
+      file:
+        path: "{{ tis_tar_dist_dir }}"
+        state: directory
+    - name: "archive uber package,target dir:{{ tis_tar_dist_dir }}"
       archive:
         path: "{{app_dir}}"
         dest: "{{tis_tar_dist_dir}}/tis-uber.tar.gz"
@@ -198,9 +206,10 @@
   tasks:
     - include_role:
         name: compile
+    - include_role:
+        name: update-center
   tags:
     - update-center
-    - deploy
 
 - name: make tis-incr docker image
   #  vars_prompt:

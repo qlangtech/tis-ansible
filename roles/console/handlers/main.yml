@@ -1,6 +1,6 @@
 ---
 - name: restart tis-console
-  command: ./tis restart -force
+  command: ./tis restart
   become: yes
   become_user: "{{tis_user}}"
   when: shall_exec_restart
