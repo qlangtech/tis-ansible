@@ -22,6 +22,8 @@ TIS_TIP=`cd "$TIS_TIP"; pwd`
 
 echo "working dir:$TIS_TIP"
 
+export TIS_HOME="$TIS_TIP"
+
 {% set tis_app_launch_main = '-jar ' + relative_root_dir + '/' + tis_app_name + '/' + tis_app_name + '.jar' %}
 {% if uber_pkg %}
  {% set relative_root_dir = '${TIS_TIP}/'%}
