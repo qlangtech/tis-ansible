@@ -4,3 +4,4 @@ uber_pkg: no
 tis_java_mem: "-Xms2G -Xmx3G"
 
 relative_root_dir: "{{app_dir}}"
+tis_server_port: "8080"

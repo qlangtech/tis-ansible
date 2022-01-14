@@ -13,7 +13,7 @@
     - "{{script_prefix}}deploy-assemble.sh"
 
 
-- name: "deploy assemble of '{{tis_flink_dist_dir}}' package  to remote repository"
+- name: "deploy assemble of {{script_prefix}} '{{tis_tar_dist_dir}}' package  to remote repository"
   shell: "./{{script_prefix}}deploy-assemble.sh > deploy.log"
   args:
     chdir: "{{tis_tar_dist_dir}}"

@@ -162,6 +162,14 @@ hdfs dfs -chmod -R 777 /
    ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,uber --skip-tags=deploy -i ./inventory/hosts
    ```
 
+## 发布
+
+   ``` shell script
+   ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,uber,datax-docker,flink-docker,update-center,deploy  -i ./inventory/hosts
+   ```
+
+
+
 ## 向ansible脚本中新添加一个role
 
 ```shell
