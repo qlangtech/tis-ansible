@@ -1,4 +1,9 @@
 ---
+- name: enable ntpd service
+  hosts: tis-console,assemble,solr7.6,hadoop-hdfs-namenode,hadoop-hdfs-datanode,hadoop-yarn-resource-manager,hadoop-yarn-node-manager,zookeeper
+  tasks:
+  - service: name=ntpd state=started enabled=yes
+
 - name: start zookeeper
   vars_files:
     - vars.yml
