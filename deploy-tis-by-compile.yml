@@ -68,7 +68,8 @@
     - vars.yml
   vars:
     exec_deploy: False
-    flink_extends_dist_jar_path: "{{src_root}}/{{tis_plugin_release_dir_name}}/tis-incr/tis-flink-extends/target/tis-flink-extends-dist-{{tis_pkg_version}}.jar"
+    tis_flink_extend_artifact_name: "tis-flink-extends-dist"
+    flink_extends_dist_jar_path: "{{src_root}}/{{tis_plugin_release_dir_name}}/tis-incr/tis-flink-extends/target/{{tis_flink_extend_artifact_name}}-{{tis_pkg_version}}.jar"
     app_local_dir_name: "flink"
     script_prefix: "{{app_local_dir_name}}-"
     git_src: "git@github.com:qlangtech/flink.git"

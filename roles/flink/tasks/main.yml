@@ -1,4 +1,9 @@
 ---
+- name: "delete old {{tis_flink_extend_artifact_name}} artifact jar in"
+  file:
+    path: "{{ flink_dist_dir }}/lib/{{tis_flink_extend_artifact_name}}*"
+    state: absent
+
 - name: "copy {{flink_extends_dist_jar_path}} to {{ flink_dist_dir }}/lib/"
   copy:
     src: "{{flink_extends_dist_jar_path}}"
