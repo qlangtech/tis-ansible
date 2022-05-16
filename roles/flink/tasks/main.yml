@@ -1,8 +1,16 @@
 ---
-- name: "delete old {{tis_flink_extend_artifact_name}} artifact jar in"
+
+- name: "find old {{tis_flink_extend_artifact_name}} artifact jar in '{{ flink_dist_dir }}/lib/'"
+  find:
+    paths: "{{ flink_dist_dir }}/lib/"
+    patterns: "{{tis_flink_extend_artifact_name}}*"
+  register: files_to_delete
+
+- name: "delete old files:'{{ files_to_delete.files | map(attribute='path') | join(',') }}'"
   file:
-    path: "{{ flink_dist_dir }}/lib/{{tis_flink_extend_artifact_name}}*"
+    path: "{{ item.path }}"
     state: absent
+  with_items: "{{ files_to_delete.files }}"
 
 - name: "copy {{flink_extends_dist_jar_path}} to {{ flink_dist_dir }}/lib/"
   copy:
