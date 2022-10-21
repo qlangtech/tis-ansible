@@ -31,7 +31,7 @@
     dest: "{{ tis_release_dir }}/{{ item.name }}"
     #If yes and dest is not a directory, will download the file every time and replace the file if the contents change
     force: no
-  when: item.when and release_files.stdout.find(java_gz_file_name) == -1
+  when: "item.when and release_files.stdout.find(java_gz_file_name) == -1"
   with_items:
     - {name: "{{tis_ibatis_gz_file_name}}", when: True}
     - {name: "{{ zk_gz_file_name }}", when: "{{ need_install_zookeeper }}" }

@@ -24,7 +24,7 @@
       - '/opt/app/{{spark_file_name}}'
 
   - name: delete tmp untar directory
-    file: 
+    file:
       path: "/tmp/{{ item }}"
       state: absent
     with_items:
@@ -41,11 +41,11 @@
       - "{{ spark_scala_gz_file_name }}"
       - "{{ spark_gz_file_name }}"
 
-  - name: unarchive {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_tar_file_name}}
-    unarchive:
-      src: '{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_tar_file_name}}'
-      dest: '/tmp/{{spark_file_name}}/jars/'
-    when: need_install_hadoop and need_install_spark
+#  - name: unarchive {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_tar_file_name}}
+#    unarchive:
+#      src: '{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_spark_hive_server_extends_tar_file_name}}'
+#      dest: '/tmp/{{spark_file_name}}/jars/'
+#    when: need_install_hadoop and need_install_spark
 
   - name: sychronize files
     synchronize:
@@ -68,7 +68,8 @@
       force: yes
     with_items:
       - {name: scala, version: "2.11.7" }
-      - {name: spark, version: "2.4.4-bin-hadoop2.6" }
+      #- {name: spark, version: "2.4.4-bin-hadoop2.6" }
+      - {name: spark, version: "{{spark_file_version}}" }
 
   - name: install tispark jar
     copy:
@@ -106,9 +107,9 @@
       mode: '0644'
     with_items:
       - scala_profile.sh
-      - spark_profile.sh 
+      - spark_profile.sh
   - name: copy template files
-    template:    
+    template:
       src: 'template/{{ item }}.j2'
       dest: '/opt/app/spark/conf/{{ item }}'
       owner: "{{ hadoop_user }}"

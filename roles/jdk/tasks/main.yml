@@ -32,13 +32,14 @@
     file:
       path: "/tmp/{{ jdk_dir_name }}"
       state: absent
+    ignore_errors: yes
   - name: untar java gzip file
     unarchive:
       src: "/tmp/{{ java_gz_file_name }}"
       dest: /tmp/
       remote_src: yes
   - name: make dest directory
-    file: 
+    file:
       path: "/opt/app/java/{{ jdk_dir_name }}"
       state: directory
   - name: copy fiels to destination

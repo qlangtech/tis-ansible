@@ -13,17 +13,93 @@
   tags:
     - tjs
 
-- name: stop solr
+#- name: stop solr
+#  vars_files:
+#    - vars.yml
+#  hosts: solr
+#  tasks:
+#  - command: ./solr stop -p 8080
+#    become: yes
+#    become_user: solr
+#    ignore_errors: yes
+#    args:
+#      chdir: "/opt/app/spring-boot/solr"
+
+- name: stop hive metastore
   vars_files:
     - vars.yml
-  hosts: solr
+  hosts: hadoop-hdfs-namenode
   tasks:
-  - command: ./solr stop -p 8080
-    become: yes
-    become_user: solr
-    ignore_errors: yes
-    args:
-      chdir: "/opt/app/spring-boot/solr"
+    - name: "stop HiveMetaStore"
+      shell: |
+        is_exist() {
+          pid=`ps -ef|grep HiveMetaStore|grep -v grep|awk '{print $2}' `
+
+          if [ -z "${pid}" ]; then
+           return 0
+          else
+            return 1
+          fi
+        }
+
+        # is_exist
+        pidf=$(cat ./metastore.pid)
+         # echo "$pidf"
+          echo "pid = $pidf begin kill $pidf"
+          kill $pidf
+          rm -f ./metastore.pid
+          sleep 2
+
+          is_exist
+          if [ $? -eq "1" ]; then
+            echo "pid = $pid begin kill -9 $pid"
+            kill -9  $pid
+            sleep 2
+            echo "hive metastore process stopped！" >> metastore.log
+          else
+            echo "hive metastore is not running！" >> metastore.log
+          fi
+      become: yes
+      become_user: "{{hadoop_user}}"
+      ignore_errors: yes
+      args:
+        chdir: "/opt/app/hive"
+    - name: "stop hiveServer2"
+      shell: |
+        is_exist() {
+          pid=`ps -ef|grep HiveServer2|grep -v grep|awk '{print $2}' `
+
+          if [ -z "${pid}" ]; then
+           return 0
+          else
+            return 1
+          fi
+        }
+
+        # is_exist
+        pidf=$(cat ./hiveserver2.pid)
+         # echo "$pidf"
+          echo "pid = $pidf begin kill $pidf"
+          kill $pidf
+          rm -f ./hiveserver2.pid
+          sleep 2
+
+          is_exist
+          if [ $? -eq "1" ]; then
+            echo "pid = $pid begin kill -9 $pid"
+            kill -9  $pid
+            sleep 2
+            echo "hive HiverServer2 process stopped！" >> hiveserver2.log
+          else
+            echo "hive HiverServer2 is not running！" >> hiveserver2.log
+          fi
+      become: yes
+      become_user: "{{hadoop_user}}"
+      ignore_errors: yes
+      args:
+        chdir: "/opt/app/hive"
+  tags:
+    - hive
 
 - name: stop thriftserver
   vars_files:
@@ -37,6 +113,8 @@
     args:
       chdir: "/opt/app/spark/sbin"
     when: need_install_spark and need_install_spark_shuffle
+  tags:
+    - tserver
 
 - name: stop yarn
   vars_files:
@@ -49,6 +127,9 @@
     ignore_errors: yes
     args:
       chdir: "/opt/app/hadoop/sbin"
+  tags:
+    - hadoop
+
 
 - name: stop hdfs
   vars_files:
@@ -61,6 +142,8 @@
     ignore_errors: yes
     args:
       chdir: "/opt/app/hadoop/sbin"
+  tags:
+    - hadoop
 
 - name: stop zookeeper
   vars_files:

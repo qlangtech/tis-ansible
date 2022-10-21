@@ -7,15 +7,15 @@
   - name: create user
     user:
       name: "{{ hadoop_user }}"
-      comment: "hadoop hdfs and yarn" 
+      comment: "hadoop hdfs and yarn"
       group: "{{ hadoop_group }}"
       generate_ssh_key: yes
       ssh_key_bits: 2048
       ssh_key_file: .ssh/id_rsa
       shell: /bin/bash
   - name: Config /etc/sudoers
-    lineinfile: 
-      dest: /etc/sudoers 
+    lineinfile:
+      dest: /etc/sudoers
       state: present
       line: '{{ item }}'
       validate: 'visudo -cf %s'
@@ -46,7 +46,7 @@
     with_items: "{{ groups['hadoop-hdfs-namenode'] }}"
     when: inventory_hostname in groups['hadoop-hdfs-datanode']
   - name: add main node authorized .ssh key to all nodes
-    authorized_key: 
+    authorized_key:
       user: "{{ hadoop_user }}"
       state: present
       key: "{{ lookup('file', '/tmp/.hdfs.' + item + '.id_rsa.pub') }}"
@@ -75,7 +75,7 @@
     with_items: "{{ groups['hadoop-yarn-resource-manager'] }}"
     when: inventory_hostname in groups['hadoop-yarn-node-manager']
   - name: add main node authorized .ssh key to all nodes
-    authorized_key: 
+    authorized_key:
       user: "{{ hadoop_user }}"
       state: present
       key: "{{ lookup('file', '/tmp/.yarn.' + item + '.id_rsa.pub') }}"
@@ -91,7 +91,7 @@
       mode: '0755'
     with_items:
       - /opt/logs/yarn
-      - /opt/app/hadoop-2.6.5
+      - "/opt/app/hadoop-{{hadoop_file_version}}"
       - /opt/data/hadoop/name
       - /opt/data/hadoop/data
       - /opt/data/hadoop/log
@@ -106,8 +106,8 @@
       group: root
       mode: '0644'
   - name: delete tmp untar directory
-    file: 
-      path: /tmp/hadoop-2.6.5
+    file:
+      path: "/tmp/hadoop-{{hadoop_file_version}}"
       state: absent
   - name: untar hadoop gzip file
     unarchive:
@@ -118,22 +118,21 @@
       remote_src: yes
   - name: copy fiels to destination
     synchronize:
-      src: "/tmp/hadoop-2.6.5/"
-      dest: /opt/app/hadoop-2.6.5
+      src: "/tmp/hadoop-{{hadoop_file_version}}/"
+      dest: "/opt/app/hadoop-{{hadoop_file_version}}"
       recursive: yes
     delegate_to: "{{ inventory_hostname }}"
 
   # link to hadoop-2.6.1 and hadoop
-  - name: link to hadoop-2.6.1 for tis code
+  - name: "link to hadoop-{{hadoop_file_version}} for tis code"
     file:
-      src: /opt/app/hadoop-2.6.5
-      dest: /opt/app/{{ item }}
+      src: "/opt/app/hadoop-{{hadoop_file_version}}"
+      dest: "/opt/app/{{ item }}"
       owner: "{{ hadoop_user }}"
       group: "{{ hadoop_group }}"
       state: link
       force: yes
     with_items:
-      - hadoop-2.6.1
       - hadoop
 
   # deploy config files

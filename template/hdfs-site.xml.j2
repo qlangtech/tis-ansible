@@ -20,13 +20,13 @@
   <!--NameNode存储元数据的目录 -->
   <property>
     <name>dfs.namenode.name.dir</name>
-    <value>/opt/data/hadoop/name</value>
+    <value>file:/opt/data/hadoop/name</value>
   </property>
 
   <!--DataNode存储数据块的目录-->
   <property>
     <name>dfs.datanode.data.dir</name>
-    <value>/opt/data/hadoop/data</value>
+    <value>file:/opt/data/hadoop/data</value>
   </property>
 
   <!--指定HDFS的副本数量-->
@@ -46,7 +46,7 @@
     <name>dfs.nameservices</name>
     <value>{{ groups['hadoop-hdfs-namenode'][0] }}</value>
   </property>
-  
+
   <property>
     <name>fs.permissions.umask-mode</name>
     <value>000</value>

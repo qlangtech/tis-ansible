@@ -9,7 +9,8 @@ tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/j2ee_solution/project/tis-saturn2'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
-tis_pkg_version: 3.5.0
+tis_mvn_repository: http://mvn-repo.oss-cn-hangzhou.aliyuncs.com/release
+tis_pkg_version: 3.6.0-alpha
 
 need_install_tis_collect: true;
 ng_tis_app_name: ng-tis
@@ -50,17 +51,22 @@ java_gz_file_name: jdk-8u191-linux-x64.tar.gz
 jdk_dir_name: jdk1.8.0_191
 java_home: "/opt/app/java/default"
 
-hadoop_gz_file_name: hadoop-2.6.5.tar.gz
+hadoop_file_version: "2.8.4"
+
+hadoop_gz_file_name: "hadoop-{{hadoop_file_version}}.tar.gz"
 hadoop_user: hadoop
 hadoop_group: hadoop
 
 spark_scala_gz_file_name: scala-2.11.7.tgz
-spark_file_name: spark-2.4.4-bin-hadoop2.6
+#spark_file_name: spark-2.4.4-bin-hadoop2.6
+spark_file_version: "2.4.4-bin-without-hadoop"
+spark_file_name: "spark-{{spark_file_version}}"
+
 spark_gz_file_name: '{{spark_file_name}}.tgz'
 spark_tispark_jar_file_name: tispark-core-2.1.5-spark_2.4-jar-with-dependencies.jar
 spark_thriftserver_jar_file_name: mysql-connector-java-5.1.48-bin.jar
 # 为了获得spark执行进度用
-tis_spark_hive_server_extends_tar_file_name: tis-spark-hive-server-extends.tar.gz
+# tis_spark_hive_server_extends_tar_file_name: tis-spark-hive-server-extends.tar.gz
 
 
 

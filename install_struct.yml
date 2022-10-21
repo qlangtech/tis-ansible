@@ -60,6 +60,18 @@
   tags:
     - hadoop
 
+- name: install hive
+  vars_files:
+    - vars.yml
+    - vars-deploy.yml
+  hosts: hadoop-hdfs-namenode
+  tasks:
+    - include_role:
+        name: hive
+      when: need_install_hadoop
+  tags:
+    - hive
+
 - name: install spark
   vars_files:
     - vars.yml

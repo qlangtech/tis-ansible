@@ -56,6 +56,9 @@
     app_local_dir_name: "{{tis_plugin_release_dir_name}}"
     git_src: "git@github.com:qlangtech/plugins.git"
     target_file_pattern: .*\.(tpi|tar\.gz)$
+    maven_extra_params:
+      - "''"
+      - '"-Paliyun-emr -am -pl tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
   hosts: localhost
   tasks:
     - include_role:

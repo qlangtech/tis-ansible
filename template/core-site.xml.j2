@@ -20,13 +20,13 @@
   <!-- 指定hdfs的nameservice为namenode的名称 -->
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://{{ groups['hadoop-hdfs-namenode'][0] }}:9000</value>
+    <value>hdfs://{{ groups['hadoop-hdfs-namenode'][0] }}</value>
   </property>
 
   <!-- 指定hadoop临时目录 -->
   <property>
     <name>hadoop.tmp.dir</name>
-    <value>/opt/data/hadoop/data</value>
+    <value>file:/opt/data/hadoop/data</value>
   </property>
 
   <!-- 指定zookeeper地址，为前一节配置的主机，端口2181，逗号分隔-->
@@ -45,4 +45,15 @@
     <name>io.file.buffer.size</name>
     <value>131702</value>
   </property>
+
+  <!--可以使hiveServer正常连接-->
+  <property>
+  	<name>hadoop.proxyuser.{{ hadoop_user }}.hosts</name>
+  	<value>*</value>
+  </property>
+  <property>
+  	<name>hadoop.proxyuser.{{ hadoop_user }}.groups</name>
+  	<value>*</value>
+  </property>
+
 </configuration>
