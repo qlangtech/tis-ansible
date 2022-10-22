@@ -29,26 +29,26 @@
 ######################################
 # synchronize tis-docs
 ######################################
-- name: "git pull git@github.com:qlangtech/tis-docs.git@master {{tis_docs_dir}}"
-  git:
-    repo: 'git@github.com:qlangtech/tis-docs.git'
-    dest: "{{tis_docs_dir}}/"
-    version: 'master'
-    force: yes
-    accept_hostkey: yes
-
-- name: "copy dependency libs to '{{src_root}}/{{app_local_dir_name}}'"
-  copy:
-    src: "{{generate_www_dir}}/{{ item.name }}"
-    dest: "{{tis_docs_dir}}/content/zh/docs/guide/plugin/{{ item.name }}"
-  when: item.when
-  with_items:
-    - { name: "source-sink.md"  , when: True}
-    - { name: "plugins.md"      , when: True}
-    - { name: "tpis.md"         , when: True}
-
-- name: "execute shell to deploy tis-doc"
-  shell: 'sh ./update_remote.sh'
-  run_once: true
-  args:
-    chdir: "{{tis_docs_dir}}"
+#- name: "git pull git@github.com:qlangtech/tis-docs.git@master {{tis_docs_dir}}"
+#  git:
+#    repo: 'git@github.com:qlangtech/tis-docs.git'
+#    dest: "{{tis_docs_dir}}/"
+#    version: 'master'
+#    force: yes
+#    accept_hostkey: yes
+#
+#- name: "copy dependency libs to '{{src_root}}/{{app_local_dir_name}}'"
+#  copy:
+#    src: "{{generate_www_dir}}/{{ item.name }}"
+#    dest: "{{tis_docs_dir}}/content/zh/docs/guide/plugin/{{ item.name }}"
+#  when: item.when
+#  with_items:
+#    - { name: "source-sink.md"  , when: True}
+#    - { name: "plugins.md"      , when: True}
+#    - { name: "tpis.md"         , when: True}
+#
+#- name: "execute shell to deploy tis-doc"
+#  shell: 'sh ./update_remote.sh'
+#  run_once: true
+#  args:
+#    chdir: "{{tis_docs_dir}}"
