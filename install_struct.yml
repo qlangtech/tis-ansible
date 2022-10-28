@@ -138,9 +138,10 @@
         name: assemble
       when: release_files.stdout.find('tis-assemble.tar.gz') != -1
     # collect先安装在assemble同一个节点上
-    - include_role:
-        name: cluster-state-collector
-      when: need_install_tis_collect and release_files.stdout.find('tis-collect.tar.gz') != -1
+    # 先不装 collect了
+#    - include_role:
+#        name: cluster-state-collector
+#      when: need_install_tis_collect and release_files.stdout.find('tis-collect.tar.gz') != -1
   tags:
     - assemble
 
