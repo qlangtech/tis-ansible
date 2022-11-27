@@ -1,5 +1,8 @@
 ---
 
+# skip OSS deploy
+#ansible-playbook ./deploy-tis-by-compile.yml --tags update-center,deployd --skip-tags=deploy -e "skip_update_center=yes"   -i ./inventory/hosts
+
 - name: "remove old dir: {{update_center_dist_dir}}/{{app_local_dir_name}}"
   file:
     path: "{{update_center_dist_dir}}/{{app_local_dir_name}}"

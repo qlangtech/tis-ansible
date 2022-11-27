@@ -4,6 +4,9 @@
 -- ------------------------------------------------------
 -- Server version   5.5.37
 
+CREATE DATABASE tis_console;
+USE tis_console;
+
 --
 -- Table structure for table `app_trigger_job_relation`
 --
@@ -364,7 +367,7 @@ CREATE TABLE `work_flow` (
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 ;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `work_flow_build_history`
@@ -393,7 +396,7 @@ CREATE TABLE `work_flow_build_history` (
   `asyn_sub_task_status` text COMMENT 'asyn_sub_task_status',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `work_flow_build_phase`
@@ -419,8 +422,7 @@ CREATE TABLE `work_flow_build_phase` (
 --
 
 DROP TABLE IF EXISTS `work_flow_publish_history`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `work_flow_publish_history` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT comment 'id',
   `create_time` datetime DEFAULT NULL comment 'create_time',
@@ -436,8 +438,6 @@ CREATE TABLE `work_flow_publish_history` (
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 DROP TABLE IF EXISTS `datasource_db`;
 CREATE TABLE `datasource_db` (

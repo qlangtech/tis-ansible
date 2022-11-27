@@ -124,7 +124,7 @@
     uber_attach_plugins:
       - "tis-k8s-plugin"
       - "tis-datax-common-plugin"
-    #  - "tis-local-dump-build"
+      - "tis-datax-local-executor"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
@@ -135,25 +135,25 @@
       file:
         path: '{{app_dir}}'
         state: absent
-    - include_role:
-        name: zookeeper
+#    - include_role:
+#        name: zookeeper
 #      vars:
 #        relative_root_dir: '../../'
-    - name: "start zookeeper in {{zk_parent_dir}}/{{zk_dir_name}}"
-      command: "./bin/zkServer.sh start"
-      ignore_errors: false
-      args:
-        chdir: "{{zk_parent_dir}}/{{zk_dir_name}}"
-    - name: sleep 10 sec
-      command: sleep 10
-      ignore_errors: yes
+#    - name: "start zookeeper in {{zk_parent_dir}}/{{zk_dir_name}}"
+#      command: "./bin/zkServer.sh start"
+#      ignore_errors: false
+#      args:
+#        chdir: "{{zk_parent_dir}}/{{zk_dir_name}}"
+#    - name: sleep 10 sec
+#      command: sleep 10
+#      ignore_errors: yes
     - include_role:
         name: console
-    - name: shutdown zookeeper
-      command: "./bin/zkServer.sh stop"
-      ignore_errors: yes
-      args:
-        chdir: "{{zk_parent_dir}}/{{zk_dir_name}}"
+#    - name: shutdown zookeeper
+#      command: "./bin/zkServer.sh stop"
+#      ignore_errors: yes
+#      args:
+#        chdir: "{{zk_parent_dir}}/{{zk_dir_name}}"
     - include_role:
         name: assemble
 #    - include_role:
