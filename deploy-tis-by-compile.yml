@@ -66,6 +66,23 @@
   tags:
     - pkg-plugin
 
+- name: compile tis-zepplin component tar package
+  vars_files:
+    - vars.yml
+  vars:
+    exec_deploy: True
+    app_local_dir_name: "zeppelin"
+    git_src: "git@github.com:qlangtech/zeppelin.git"
+    git_branch: "tis-v0.10.1"
+    maven_extra_params:
+      - "'-DskipRat -DskipTests=true -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package -am'"
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: compile
+  tags:
+    - zeppelin
+
 - name: package flink component tar package and deploy docker image to hub
   vars_files:
     - vars.yml
