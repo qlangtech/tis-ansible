@@ -167,6 +167,8 @@
 #      ignore_errors: yes
     - include_role:
         name: console
+  #  - name: "copy zeppelin context package"
+
 #    - name: shutdown zookeeper
 #      command: "./bin/zkServer.sh stop"
 #      ignore_errors: yes
