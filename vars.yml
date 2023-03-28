@@ -10,7 +10,7 @@ tis_release_dir: '/tmp/release'
 #tis_release_dir: '/Users/mozhenghua/Downloads'
 release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 tis_mvn_repository: http://mvn-repo.oss-cn-hangzhou.aliyuncs.com/release
-tis_pkg_version: 3.7.0
+tis_pkg_version: 3.7.1
 
 need_install_tis_collect: true;
 ng_tis_app_name: ng-tis

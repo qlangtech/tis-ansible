@@ -51,11 +51,11 @@
     with_items:
       - {name: "{{name_ng_tis_node_modules_tar}}", when: True}
 
-  - name: untar node-modules
-    unarchive:
-      src: '{{ ng_tis_src_dir }}/{{name_ng_tis_node_modules_tar}}'
-      dest: "{{ ng_tis_src_dir }}"
-      remote_src: yes
+#  - name: untar node-modules
+#    unarchive:
+#      src: '{{ ng_tis_src_dir }}/{{name_ng_tis_node_modules_tar}}'
+#      dest: "{{ ng_tis_src_dir }}"
+#      remote_src: yes
 
   - name: compile/build ng-tis
     #command: npm run ng:serve-aot

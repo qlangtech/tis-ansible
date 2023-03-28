@@ -50,7 +50,7 @@
     - { name: "plugins.mdx"      , when: True}
     - { name: "tpis.mdx"         , when: True}
 
-- name: "generate new version docs {{tis_pkg_version}}"
+- name: "generate new version docs {{tis_pkg_version}} on {{tis_docs_dir}}"
   shell: 'npm run docusaurus docs:version {{tis_pkg_version}}'
   run_once: true
   args:

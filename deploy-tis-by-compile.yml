@@ -58,7 +58,8 @@
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
       - "''"
-      - '"-Paliyun-emr -pl tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
+     # 测试期间先只用一种classifier
+      - '"-Paliyun-emr -pl tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
   hosts: localhost
   tasks:
     - include_role:
@@ -108,10 +109,10 @@
     - assert:
         that: extends_dist_file_status.stat.exists
         fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
-#    - include_role:
-#        name: compile
     - include_role:
-        name: flink
+        name: compile
+#    - include_role:
+#        name: flink
     - include_role:
         name: deploy-tar
       tags: deploy
