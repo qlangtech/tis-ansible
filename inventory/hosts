@@ -52,9 +52,11 @@ zk_group=zookeeper
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 runtime=daily
 ansible_ssh_user='root'
+tis_release_dir_name=tis
 
 #tis_online_repository=
 #hdfs_namenode_ha1=10.1.21.131
 #hdfs_namenode_ha2=10.1.21.141
+
 
 
