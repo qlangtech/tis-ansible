@@ -118,12 +118,6 @@
   delegate_to: "{{ inventory_hostname }}"
   notify: restart tis-console
 
-- name: "copy zeppelin context package from: {{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
-  unarchive:
-    src: "{{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
-    dest: "{{app_dir}}/{{tis_app_name}}"
-    remote_src: yes
-
 
 #- name: copy config.properties
 #  template:

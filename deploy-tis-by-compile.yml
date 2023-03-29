@@ -24,7 +24,7 @@
         - shall_download_release_assemble: no
   tags: always
 
-- name: make ng-tis package
+- name: "make ng-tis package"
   vars_files:
     - vars.yml
   hosts: localhost
@@ -167,6 +167,11 @@
 #      ignore_errors: yes
     - include_role:
         name: console
+    - name: "copy zeppelin context package from: {{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
+      unarchive:
+        src: "{{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
+        dest: "{{app_dir}}/"
+        remote_src: yes
       #    - name: shutdown zookeeper
 #      command: "./bin/zkServer.sh stop"
 #      ignore_errors: yes

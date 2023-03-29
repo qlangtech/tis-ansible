@@ -42,14 +42,14 @@
       force: yes
       accept_hostkey: yes
 
-  - name: "Download node-modules to {{ ng_tis_src_dir }}/{{ name_ng_tis_node_modules_tar }}"
-    get_url:
-      url: "{{ release_repository }}/{{ item.name }}"
-      dest: "{{ ng_tis_src_dir }}/{{ item.name }}"
-      force: no
-    when: item.when
-    with_items:
-      - {name: "{{name_ng_tis_node_modules_tar}}", when: True}
+#  - name: "Download node-modules to {{ ng_tis_src_dir }}/{{ name_ng_tis_node_modules_tar }}"
+#    get_url:
+#      url: "{{ release_repository }}/{{ item.name }}"
+#      dest: "{{ ng_tis_src_dir }}/{{ item.name }}"
+#      force: no
+#    when: item.when
+#    with_items:
+#      - {name: "{{name_ng_tis_node_modules_tar}}", when: True}
 
 #  - name: untar node-modules
 #    unarchive:
