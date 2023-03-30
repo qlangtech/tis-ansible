@@ -7,6 +7,6 @@ parent_dir=`pwd`
 #do
 #  cd $parent_dir/$m
 #  echo "start deploy $m"
-  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.6:putall -Drelease_dir={{tis_release_dir}}/tis -Dappname=all -Dtisasm.oss.put.skip=false
+  $mvn_bin com.qlangtech.tis:tisasm-maven-plugin:1.0.7:putall -Drelease_dir={{tis_release_dir}}/tis -Dappname=all -Dtisasm.oss.put.skip=false
   echo "success deploy $parent_dir"
 #done
