@@ -145,6 +145,8 @@
       - "tis-k8s-plugin"
       - "tis-datax-common-plugin"
       - "tis-datax-local-executor"
+      - "tis-ds-mysql-plugin"
+      - "tis-ds-mysql-v5-plugin"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
