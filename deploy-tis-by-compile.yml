@@ -145,6 +145,7 @@
       - "tis-k8s-plugin"
       - "tis-datax-common-plugin"
       - "tis-datax-local-executor"
+      - "tis-datax-local-embedded-executor"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
