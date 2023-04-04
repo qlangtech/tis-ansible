@@ -78,7 +78,7 @@
     git_src: "git@github.com:qlangtech/zeppelin.git"
     git_branch: "tis-v0.10.1"
     maven_extra_params:
-      - "'-DskipRat -DskipTests=true -Dappname=all -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package,tis-zeppelin -am'"
+      - "'-DskipRat -DskipTests=true -Pbuild-distr -Dappname=all -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package,tis-zeppelin,zeppelin-distribution,zeppelin-interpreter-shaded -am'"
   hosts: localhost
   tasks:
     - include_role:
