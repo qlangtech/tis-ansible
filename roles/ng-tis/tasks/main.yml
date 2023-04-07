@@ -79,3 +79,20 @@
       remove: yes
 
   # 需要将完成的包上传到仓库中
+  - name: copy deploy shell script to '{{ng_tis_src_dir}}'
+    template:
+      src: template/{{item}}.j2
+      dest: '{{ng_tis_src_dir}}/{{item}}'
+      mode: u+rwx
+    with_items:
+      - "deploy-assemble.sh"
+
+  - name: deploy assemble of '{{ng_tis_src_dir}}' package  to remote repository
+    shell: "./deploy-assemble.sh {{item}} > deploy_exec.log"
+    args:
+      chdir: "{{ng_tis_src_dir}}"
+    when: exec_deploy
+    with_items: '"-DappendDeplpyFileName=ng-tis.tar.gz"'
+    tags:
+      - deploy
+
