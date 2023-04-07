@@ -92,7 +92,7 @@
     args:
       chdir: "{{ng_tis_src_dir}}"
     when: exec_deploy
-    with_items: '"-DappendDeplpyFileName=ng-tis.tar.gz"'
+    with_items: '"-Dappend.deploy.file.name={{ng_tis_app_tar_file_name}}"'
     tags:
       - deploy
 

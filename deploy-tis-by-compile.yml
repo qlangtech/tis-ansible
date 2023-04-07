@@ -27,6 +27,8 @@
 - name: "make ng-tis package"
   vars_files:
     - vars.yml
+  vars:
+    exec_deploy: True
   hosts: localhost
   roles:
     - role: ng-tis
