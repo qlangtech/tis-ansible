@@ -11,7 +11,7 @@
     dest: "{{ tis_release_dir }}/{{ item.name }}"
     #If yes and dest is not a directory, will download the file every time and replace the file if the contents change
     force: no
-  delegate_to: "localhost"
+ # delegate_to: "localhost"
   when: item.when
   with_items:
     - {name: "{{hive_gz_file_name}}", when: True}

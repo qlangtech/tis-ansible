@@ -76,6 +76,7 @@
     - vars.yml
   vars:
     exec_deploy: True
+    parallel_compile: False
     app_local_dir_name: "zeppelin"
     git_src: "git@github.com:qlangtech/zeppelin.git"
     git_branch: "tis-v0.10.1"
@@ -233,6 +234,7 @@
   vars:
     git_src: "git@github.com:qlangtech/update-center2.git"
     app_local_dir_name: "update-center2"
+    tis_release_dir_name: "{{app_local_dir_name}}"
     exec_deploy: False
   hosts: localhost
   tasks:
@@ -242,6 +244,21 @@
         name: update-center
   tags:
     - update-center
+
+- name: build TIS plugins Meta and deploy
+  vars_files:
+    - vars.yml
+  vars:
+    git_src: "git@github.com:qlangtech/update-center2.git"
+    app_local_dir_name: "update-center2"
+    tis_release_dir_name: "{{app_local_dir_name}}"
+    exec_deploy: False
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: docs
+  tags:
+    - docs
 
 - name: make tis-incr docker image
   #  vars_prompt:

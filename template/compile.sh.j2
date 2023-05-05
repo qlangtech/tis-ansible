@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mvn_bin="{{mvn_home}}/bin/mvn"
+mvn_bin="{{mvn_home}}/bin/mvn {% if parallel_compile %}-T 1C {% endif%} "
 echo $mvn_bin
 echo "path:`pwd`"
 

@@ -28,36 +28,5 @@
   run_once: true
   args:
     chdir: "{{update_center_dist_dir}}/{{app_local_dir_name}}"
+  tags: deploy
 
-######################################
-# synchronize tis-docs
-######################################
-#- name: "git pull git@github.com:qlangtech/tis-doc.git@master {{tis_docs_dir}}"
-#  git:
-#    repo: 'git@github.com:qlangtech/tis-doc.git'
-#    dest: "{{tis_docs_dir}}/"
-#    version: 'master'
-#    force: yes
-#    accept_hostkey: yes
-#
-#- name: "copy markdown script to '{{tis_docs_dir}}/docs/plugin/'"
-#  copy:
-#    src: "{{generate_www_dir}}/{{ item.name }}"
-#    dest: "{{tis_docs_dir}}/docs/plugin/{{ item.name }}"
-#  when: item.when
-#  with_items:
-#    - { name: "source-sink-table.js"  , when: True}
-#    - { name: "plugins.mdx"      , when: True}
-#    - { name: "tpis.mdx"         , when: True}
-#
-#- name: "generate new version docs {{tis_pkg_version}} on {{tis_docs_dir}}"
-#  shell: 'npm run docusaurus docs:version {{tis_pkg_version}}'
-#  run_once: true
-#  args:
-#    chdir: "{{tis_docs_dir}}"
-#
-#- name: "execute shell to deploy tis-doc"
-#  shell: 'sh ./update_remote.sh'
-#  run_once: true
-#  args:
-#    chdir: "{{tis_docs_dir}}"

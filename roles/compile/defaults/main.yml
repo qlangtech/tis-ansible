@@ -12,7 +12,7 @@ exec_deploy: True
 
 script_prefix: ""
 
-
+parallel_compile: true
 
 
 appname: all
