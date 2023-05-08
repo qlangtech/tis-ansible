@@ -1,4 +1,6 @@
 #!/bin/bash
 
+# --skip-update-center: Skip generation of update center files (mostly useful during development)
+
 java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -classpath ./lib/*:./update-center2.jar -Dfile.encoding=UTF-8 -DdryRun={{ansible_check_mode}} -Dplugin_dir_root={{tis_release_dir}}/{{tis_plugin_release_dir_name}} -Dtis.plugin.release.version={{tis_pkg_version}}  io.jenkins.update_center.Main \
 --www-dir={{generate_www_dir}}  {% if skip_update_center %}--skip-update-center{% endif %}

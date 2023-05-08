@@ -5,13 +5,13 @@ ng_tis_git_branch: "master"
 
 name_ng_tis_node_modules_tar: "tis-console-ng-node-modules.tar.gz"
 
-node_ver: "v16.13.0"
+node_ver: "v16.20.0"
 #node_ver: "v18.15.0"
 node_distro: linux-x64
 node_name: "node-{{node_ver}}-{{node_distro}}"
 
-
-node_assemble_tar: "node-v16.13.0-linux-x64.tar.xz"
+node_assemble_tar: "node-v16.20.0-linux-x64.tar.gz"
+#node_assemble_tar: "node-v16.13.0-linux-x64.tar.xz"
 #node_assemble_tar: "node-v18.15.0-linux-x64.tar.xz"
 
 nodejs_dir: "/usr/local/lib/nodejs"
