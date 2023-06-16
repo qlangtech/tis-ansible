@@ -1,0 +1,9 @@
+---
+- name: copy compile shell script to '{{src_dir}}'
+  template:
+    src: template/{{item}}.j2
+    dest: '{{src_dir}}/{{item}}'
+    mode: u+rwx
+  with_items:
+    - "{{script_prefix}}compile.sh"
+    - "{{script_prefix}}deploy-assemble.sh"

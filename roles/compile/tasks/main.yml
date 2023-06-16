@@ -52,14 +52,15 @@
      force: yes
      accept_hostkey: yes
 
-  - name: copy compile shell script to '{{src_dir}}'
-    template:
-     src: template/{{item}}.j2
-     dest: '{{src_dir}}/{{item}}'
-     mode: u+rwx
-    with_items:
-      - "{{script_prefix}}compile.sh"
-      - "{{script_prefix}}deploy-assemble.sh"
+  - name: touch compile and deploy-assemble shell script
+    import_tasks: touch_shell_script.yml
+#    template:
+#     src: template/{{item}}.j2
+#     dest: '{{src_dir}}/{{item}}'
+#     mode: u+rwx
+#    with_items:
+#      - "{{script_prefix}}compile.sh"
+#      - "{{script_prefix}}deploy-assemble.sh"
 
   - name: clean old package
     file:
@@ -101,13 +102,15 @@
     with_lines:
        - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p,%f\n'
 
-  - name: deploy assemble of '{{src_dir}}' package  to remote repository
-    shell: "./{{script_prefix}}deploy-assemble.sh {{item}} > deploy_exec.log"
-    args:
-      chdir: "{{src_dir}}"
-    when: exec_deploy
-    with_items: "{{maven_extra_params}}"
-    tags:
-      - deploy
+  - name: include deploy_assemble.yml
+    import_tasks: deploy_assemble.yml
+#  - name: deploy assemble of '{{src_dir}}' package  to remote repository
+#    shell: "./{{script_prefix}}deploy-assemble.sh {{item}} > deploy_exec.log"
+#    args:
+#      chdir: "{{src_dir}}"
+#    when: exec_deploy
+#    with_items: "{{maven_extra_params}}"
+#    tags:
+#      - deploy
 
 

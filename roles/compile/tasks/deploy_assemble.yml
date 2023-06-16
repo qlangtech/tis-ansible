@@ -1,0 +1,9 @@
+---
+- name: deploy assemble of '{{src_dir}}' package  to remote repository
+  shell: "./{{script_prefix}}deploy-assemble.sh {{item}} > deploy_exec.log"
+  args:
+    chdir: "{{src_dir}}"
+  when: exec_deploy
+  with_items: "{{maven_extra_params}}"
+  tags:
+    - deploy

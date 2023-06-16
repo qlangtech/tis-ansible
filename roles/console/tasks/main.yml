@@ -177,3 +177,9 @@
   when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
 
 #- fail: msg="Bailing out. this play requires 'bar'"
+
+- name: "archive data package,target dir:{{ tis_tar_dist_dir }}"
+  archive:
+    path: "{{tis_data_dir}}"
+    dest: "{{tis_tar_dist_dir}}/tis-data.tar.gz"
+    remove: yes
