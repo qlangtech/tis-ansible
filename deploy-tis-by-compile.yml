@@ -159,6 +159,10 @@
       file:
         path: '{{app_dir}}'
         state: absent
+    - name: "make uber target dir:{{ tis_tar_dist_dir }}"
+      file:
+        path: "{{ tis_tar_dist_dir }}"
+        state: directory
 #    - include_role:
 #        name: zookeeper
 #      vars:
@@ -207,10 +211,6 @@
       args:
         chdir: "{{app_dir}}/tjs"
     - include: install_ng_tis.yml
-    - name: "make uber target dir:{{ tis_tar_dist_dir }}"
-      file:
-        path: "{{ tis_tar_dist_dir }}"
-        state: directory
     - name: "archive uber package,target dir:{{ tis_tar_dist_dir }}"
       archive:
         path: "{{app_dir}}"
