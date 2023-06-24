@@ -4,6 +4,6 @@ mvn_bin="{{mvn_home}}/bin/mvn"
 echo $mvn_bin
 echo "path:`pwd`"
 
-$mvn_bin clean compile package -DskipTests=true -Dfast -Dscala-2.11
+$mvn_bin clean compile {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} package {% endif%}  -DskipTests=true -Dfast -Dscala-2.11
 
 
