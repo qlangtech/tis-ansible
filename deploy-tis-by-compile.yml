@@ -49,28 +49,6 @@
   tags:
     - pkg
 
-
-- name: compile tis-plugin component tar package
-  vars:
-    ansible_group_priority: 10
-    exec_deploy: True
-    app_local_dir_name: "{{tis_plugin_release_dir_name}}"
-    tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
-    git_src: "git@github.com:qlangtech/plugins.git"
-    target_file_pattern: .*\.(tpi|tar\.gz)$
-    maven_extra_params:
-      - "''"
-     # 测试期间先只用一种classifier
-      - '"-Paliyun-emr -pl tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
-  vars_files:
-    - vars.yml
-  hosts: localhost
-  tasks:
-    - include_role:
-        name: compile
-  tags:
-    - pkg-plugin
-
 - name: compile tis-zepplin component tar package
   vars_files:
     - vars.yml
@@ -88,6 +66,29 @@
         name: compile
   tags:
     - zeppelin
+
+- name: compile tis-plugin component tar package
+  vars:
+    ansible_group_priority: 10
+    exec_deploy: True
+    app_local_dir_name: "{{tis_plugin_release_dir_name}}"
+    tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
+    git_src: "git@github.com:qlangtech/plugins.git"
+    target_file_pattern: .*\.(tpi|tar\.gz)$
+    maven_extra_params:
+      - "''"
+     # 测试期间先只用一种classifier
+     # - '"-Paliyun-emr -pl tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: compile
+  tags:
+    - pkg-plugin
+
+
 
 - name: package flink component tar package and deploy docker image to hub
   vars_files:

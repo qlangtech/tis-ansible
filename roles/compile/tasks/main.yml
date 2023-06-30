@@ -52,8 +52,18 @@
      force: yes
      accept_hostkey: yes
 
+  - name: "register whether_deploy_to_tis_repository"
+    shell: "echo 1"
+    register: whether_deploy_to_tis_repository
+    ignore_errors: True
+    tags: deploy-tis-repo
+
+
+
   - name: touch compile and deploy-assemble shell script
     import_tasks: touch_shell_script.yml
+    vars:
+      deploy_tis_repository: "{{whether_deploy_to_tis_repository is defined}}"
 #    template:
 #     src: template/{{item}}.j2
 #     dest: '{{src_dir}}/{{item}}'
@@ -69,17 +79,11 @@
     with_lines:
        - find {{src_dir}} -type f -regextype egrep -regex "{{target_file_pattern}}" -printf '%p\n'
 
-  - name: "register whether_deploy_to_tis_repository"
-    shell: "echo 1"
-    register: whether_deploy_to_tis_repository
-    ignore_errors: True
-    tags: deploy-tis-repo
 
   - name: "compile and package {{src_dir}} "
     shell: "./{{script_prefix}}compile.sh {{appname}} {{item}} > exec.log"
     args:
      chdir: "{{src_dir}}"
-     deploy_tis_repository: "{{whether_deploy_to_tis_repository is defined}}"
     with_items: "{{maven_extra_params}}"
 
 #  - name: clear release dir package
