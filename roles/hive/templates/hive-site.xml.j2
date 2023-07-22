@@ -57,6 +57,39 @@
     </property>
 -->
 
+{% if kerberos.enable %}
+<!-- auth kerberos -->
+    <property>
+      <name>hive.server2.authentication</name>
+      <value>KERBEROS</value>
+    </property>
+
+    <property>
+      <name>hive.server2.authentication.kerberos.principal</name>
+      <value>{{kerberos.hs2.principal}}</value>
+    </property>
+
+    <property>
+      <name>hive.server2.authentication.kerberos.keytab</name>
+      <value>{{kerberos.hs2.keytab}}</value>
+    </property>
+
+    <property>
+      <name>hive.metastore.sasl.enabled</name>
+      <value>true</value>
+    </property>
+
+    <property>
+      <name>hive.metastore.kerberos.keytab.file</name>
+      <value>{{kerberos.hms.keytab}}</value>
+    </property>
+
+    <property>
+      <name>hive.metastore.kerberos.principal</name>
+      <value>{{kerberos.hms.principal}}</value>
+    </property>
+<!-- end auth kerberos -->
+{% endif %}
     <property>
         <name>hive.server2.thrift.client.user</name>
         <value>{{ hadoop_user }}</value>

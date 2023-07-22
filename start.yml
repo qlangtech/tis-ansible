@@ -59,8 +59,9 @@
   hosts: hadoop-hdfs-namenode
   tasks:
     - name: "start hive metastore"
+      ## enable debug: --debug
       shell: |
-        nohup ./bin/hive --service metastore  >./metastore.log 2>&1 &
+        nohup ./bin/hive  --service metastore  >./metastore.log 2>&1 &
         echo $! > metastore.pid
         echo "start metastore successed pid is $! "
       become: yes

@@ -56,14 +56,16 @@
     shell: "echo 1"
     register: whether_deploy_to_tis_repository
     ignore_errors: True
-    tags: deploy-tis-repo
+    tags:
+      - never
+      - deploy-tis-repo
 
 
 
   - name: touch compile and deploy-assemble shell script
     import_tasks: touch_shell_script.yml
     vars:
-      deploy_tis_repository: "{{whether_deploy_to_tis_repository is defined}}"
+      deploy_tis_repository: "{{whether_deploy_to_tis_repository is defined and exec_deploy}}"
 #    template:
 #     src: template/{{item}}.j2
 #     dest: '{{src_dir}}/{{item}}'

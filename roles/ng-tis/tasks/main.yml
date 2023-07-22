@@ -64,6 +64,11 @@
     args:
         chdir: "{{ng_tis_src_dir}}"
 
+  - name: 'ensures {{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/WEB-INF dir exists'
+    file:
+      path: "{{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/WEB-INF"
+      state: directory
+
   - name: "copy web.xml from '{{ng_tis_src_dir}}' to {{ng_tis_src_dir}}/dist/{{ng_tis_app_name}}/"
     copy:
       src: '{{ng_tis_src_dir}}/{{item.file_name}}'

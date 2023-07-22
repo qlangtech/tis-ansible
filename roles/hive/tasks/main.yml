@@ -70,6 +70,7 @@
     mode: '0644'
   with_items:
     - "hive-site.xml"
+    - "core-site.xml"
     - "hive-env.sh"
 
 - name: "unlink /opt/app/hive"
