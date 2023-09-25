@@ -54,9 +54,9 @@
   <!--启用的资源调度器主类。目前可用的有FIFO、Capacity Scheduler和Fair Scheduler-->
   <property>
     <name>yarn.resourcemanager.scheduler.class</name>
-    <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler</value> 
+    <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fifo.FifoScheduler</value>
   </property>
-  
+
   {% if hadoop_log_dirs is defined %}
   <property>
     <name>yarn.nodemanager.log-dirs</name>
@@ -138,4 +138,28 @@
     <value>7337</value>
   </property>
   {% endif %}
+
+
+  <!--YARN kerberos security-->
+{% if kerberos.enable %}
+   <property>
+    <name>yarn.resourcemanager.keytab</name>
+    <value>{{kerberos.yarn.keytab}}</value>
+   </property>
+
+   <property>
+    <name>yarn.resourcemanager.principal</name>
+    <value>{{kerberos.yarn.principal}}</value>
+   </property>
+
+   <property>
+    <name>yarn.nodemanager.keytab</name>
+    <value>{{kerberos.yarn.keytab}}</value>
+   </property>
+
+   <property>
+    <name>yarn.nodemanager.principal</name>
+    <value>{{kerberos.yarn.principal}}</value>
+   </property>
+{% endif %}
 </configuration>

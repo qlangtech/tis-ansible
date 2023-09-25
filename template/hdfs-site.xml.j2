@@ -51,4 +51,80 @@
     <name>fs.permissions.umask-mode</name>
     <value>000</value>
   </property>
+
+{% if kerberos.enable %}
+  <property>
+    <name>dfs.block.access.token.enable</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir.perm</name>
+    <value>700</value>
+  </property>
+  <property>
+    <name>dfs.namenode.keytab.file</name>
+    <value>{{kerberos.hdfs_namenode.keytab}}</value>
+  </property>
+  <property>
+    <name>dfs.namenode.kerberos.principal</name>
+    <value>{{kerberos.hdfs_namenode.principal}}</value>
+  </property>
+
+  <property>
+    <name>dfs.namenode.kerberos.https.principal</name>
+    <value>{{kerberos.hdfs_namenode.principal}}</value>
+  </property>
+<!--https://hadoop.apache.org/docs/r2.7.2/hadoop-project-dist/hadoop-common/SecureMode.html#Secure_DataNode-->
+  <!---->
+
+  <property>
+      <name>dfs.data.transfer.protection</name>
+      <value>privacy</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.address</name>
+    <value>0.0.0.0:1004</value>
+  </property>
+
+  <property>
+    <name>dfs.http.policy</name>
+    <value>HTTP_ONLY</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.http.address</name>
+    <value>0.0.0.0:1006</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.keytab.file</name>
+    <value>{{kerberos.hdfs_datanode.keytab}}</value>
+  </property>
+  <property>
+    <name>dfs.datanode.kerberos.principal</name>
+    <value>{{kerberos.hdfs_datanode.principal}}</value>
+  </property>
+  <!---->
+  <property>
+    <name>dfs.datanode.kerberos.https.principal</name>
+    <value>{{kerberos.hdfs_datanode.principal}}</value>
+  </property>
+
+  <property>
+    <name>dfs.webhdfs.enabled</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>dfs.web.authentication.kerberos.principal</name>
+    <value>{{kerberos.hdfs_namenode.principal}}</value>
+  </property>
+
+  <property>
+    <name>dfs.web.authentication.kerberos.keytab</name>
+    <value>{{kerberos.hdfs_namenode.keytab}}</value>
+  </property>
+
+{% endif %}
 </configuration>

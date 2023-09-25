@@ -51,13 +51,22 @@ jdk_dir_name: jdk1.8.0_191
 java_home: "/opt/app/java/default"
 
 kerberos:
-  enable: false
+  enable: False
   #hive server2
   hs2:
    principal: "tis/tis@EXAMPLE.COM"
    keytab: "/opt/app/hive/conf/tis.keytab"
   #hive metastore
   hms:
+    principal: "tis/tis@EXAMPLE.COM"
+    keytab: "/opt/app/hive/conf/tis.keytab"
+  hdfs_datanode:
+    principal: "tis/tis@EXAMPLE.COM"
+    keytab: "/opt/app/hive/conf/tis.keytab"
+  hdfs_namenode:
+    principal: "tis/tis@EXAMPLE.COM"
+    keytab: "/opt/app/hive/conf/tis.keytab"
+  yarn:
     principal: "tis/tis@EXAMPLE.COM"
     keytab: "/opt/app/hive/conf/tis.keytab"
 
@@ -67,9 +76,10 @@ spark_version: "2.4.4"
 hadoop_file_version: "2.8.4"
 hive_version: "2.3.7"
 
-#spark_version: "3.3.1"
-#hadoop_file_version: "3.2.1"
+#spark_version: "3.3.2"
+#hadoop_file_version: "3.2.4"
 #hive_version: "3.1.3"
+#hive_meta_db: "hive3"
 
 hadoop_gz_file_name: "hadoop-{{hadoop_file_version}}.tar.gz"
 hadoop_user: hadoop

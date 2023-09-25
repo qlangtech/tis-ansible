@@ -168,6 +168,8 @@
       - hdfs-site.xml
       - mapred-site.xml
       - yarn-site.xml
+      - hadoop-env.sh
+
   - name: init namenode
     file:
       path: /opt/app/hadoop/etc/hadoop/slaves.exclude

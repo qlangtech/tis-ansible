@@ -4,8 +4,9 @@
 hive_dir_file_name: "apache-hive-{{hive_version}}-bin"
 hive_gz_file_name: "{{hive_dir_file_name}}.tar.gz"
 
+hive_meta_db: "hive"
 
-jdo_option_connection_url: "jdbc:mysql://192.168.28.200:3306/hive?useSSL=false"
+jdo_option_connection_url: "jdbc:mysql://192.168.28.200:3306/{{hive_meta_db}}?useSSL=false"
 jdo_option_connection_username: "root"
 jdo_option_connection_password: "123456"
 
