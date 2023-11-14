@@ -45,7 +45,7 @@ CREATE TABLE `application` (
   `work_flow_id` bigint DEFAULT NULL,
   `dpt_id` bigint NOT NULL ,
   `dpt_name` varchar(50) DEFAULT NULL ,
-  `full_build_cron_time` varchar(50) DEFAULT 'full_build_cron_time',
+  `full_build_cron_time` varchar(120) DEFAULT 'full_build_cron_time',
   `last_process_time` timestamp DEFAULT NULL,
   PRIMARY KEY (`app_id`)
 ) ;

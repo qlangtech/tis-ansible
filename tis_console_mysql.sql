@@ -48,7 +48,7 @@ CREATE TABLE `application` (
   `work_flow_id` int(11) DEFAULT NULL,
   `dpt_id` int(11) NOT NULL COMMENT 'dpt_id',
   `dpt_name` varchar(50) DEFAULT NULL COMMENT 'dpt_name',
-  `full_build_cron_time` varchar(50) DEFAULT 'full_build_cron_time',
+  `full_build_cron_time` varchar(120) DEFAULT 'full_build_cron_time',
   `last_process_time` datetime DEFAULT NULL,
   PRIMARY KEY (`app_id`),
   UNIQUE KEY `application_idx_projname_delete` (`project_name`),
