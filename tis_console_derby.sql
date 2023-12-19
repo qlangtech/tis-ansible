@@ -336,7 +336,7 @@ CREATE TABLE `work_flow` (
   `name` varchar(50) DEFAULT NULL ,
   `op_user_id` int NOT NULL ,
   `op_user_name` varchar(50) DEFAULT NULL ,
-  `git_path` varchar(50) NOT NULL ,
+  `git_path` clob DEFAULT NULL ,
   `in_change` smallint NOT NULL DEFAULT 0  ,
   `create_time` timestamp DEFAULT NULL ,
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
