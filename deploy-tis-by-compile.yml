@@ -78,7 +78,7 @@
     maven_extra_params:
       - '-Pcentos '
      # 测试期间先只用一种classifier
-      - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
+      - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
   vars_files:
     - vars.yml
   hosts: localhost
@@ -212,6 +212,12 @@
       args:
         chdir: "{{app_dir}}/tjs"
     - include: install_ng_tis.yml
+    - name: "archive data package,from {{tis_data_dir}}, target dir:{{ tis_tar_dist_dir }}/.."
+      archive:
+        path: "{{tis_data_dir}}"
+        dest: "{{tis_tar_dist_dir}}/../tis-data.tar.gz"
+        remove: false
+      delegate_to: "{{ inventory_hostname }}"
     - name: "archive uber package,target dir:{{ tis_tar_dist_dir }}"
       archive:
         path: "{{app_dir}}"
