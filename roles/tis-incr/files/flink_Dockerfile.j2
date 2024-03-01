@@ -84,19 +84,24 @@ WORKDIR $FLINK_HOME
 #  chown -R flink:flink .;
 
 ADD {{tis_incr_tar_name}} $FLINK_HOME
+ADD {{tis_data_tar_file_name}} /opt/data/
 
 
 # Configure container
 COPY docker-entrypoint.sh /
 
+
+
 RUN INSTALL_PKGS="tar unzip bc which lsof gettext java-1.8.0-openjdk java-1.8.0-openjdk-devel" && \
     yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    mkdir -p /opt/data/tis && chown -R flink:flink /opt/data/tis && \
+    mkdir -p /opt/data/tis && chown -R flink:flink /opt/data/tis && mv /opt/data/data/* /opt/data/tis/ && \
 	mkdir -p /opt/logs && chown -R flink:flink /opt/logs && \
     mkdir -p /opt/tis &&  chown -R flink:flink /opt/tis && chown -R flink:flink $FLINK_HOME && chmod +x /docker-entrypoint.sh && \
     chmod g=u /etc/passwd && \
     /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+
+
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 6123 8081

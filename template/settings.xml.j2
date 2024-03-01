@@ -4,16 +4,22 @@
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
     <localRepository>{{mvn_local_repo}}</localRepository>
-    <!--
+
     <mirrors>
-        <mirror>
-            <id>mirror</id>
-            <mirrorOf>!rdc-releases,!rdc-snapshots,!jenkins-release</mirrorOf>
-            <name>mirror</name>
-           <url>https://maven.aliyun.com/repository/public</url>
-        </mirror>
+       <mirror>
+                   <id>mirror</id>
+                   <!--
+                   <mirrorOf>!rdc-releases,!rdc-snapshots,!jenkins-release</mirrorOf>
+                   -->
+                   <mirrorOf>central</mirrorOf>
+                   <name>mirror</name>
+                 <!--
+                  <url>https://maven.aliyun.com/repository/public</url>
+                  -->
+                  <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+       </mirror>
     </mirrors>
-    -->
+
     <profiles>
 
     <profile>

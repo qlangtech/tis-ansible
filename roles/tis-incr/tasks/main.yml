@@ -30,12 +30,20 @@
     path: '{{docker_context_dir}}/{{tis_incr_name}}'
     state: directory
 
-- name: copy {{tis_incr_name}} to docker context dir
+- name: "copy dependency files to docker context dir '{{tis_release_dir}}/{{tis_release_dir_name}}'"
   copy:
     src: '{{tis_release_dir}}/{{tis_release_dir_name}}/{{item.tar_name}}'
     dest: '{{docker_context_dir}}/{{item.app}}/'
-  with_items:
-    - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
+  with_items: "{{docker_context_dependencies_files}}"
+#    - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
+
+- name: "copy dependency files to docker context dir '{{tis_release_dir}}/{{tis_plugin_release_dir_name}}'"
+  copy:
+    src: '{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/{{item.tar_name}}'
+    dest: '{{docker_context_dir}}/{{item.app}}/'
+  with_items: "{{docker_context_plugin_dependencies_files}}"
+
+
 
 - name: "copy {{entrypoint_shell_name}}.j2 to docker context dir"
   template:

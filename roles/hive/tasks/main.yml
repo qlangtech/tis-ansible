@@ -47,7 +47,7 @@
     mode: '0755'
   when: hudi_spark_bundle.when
 
-- name: "copy dependency libs to '{{ tis_release_dir }}'"
+- name: "copy dependency libs to '{{ item.parentPath }}'"
   copy:
     src: "{{ tis_release_dir }}/{{ item.name }}"
     dest: "{{ item.parentPath }}/{{ item.name }}"

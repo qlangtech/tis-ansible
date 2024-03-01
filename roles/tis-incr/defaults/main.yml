@@ -6,3 +6,7 @@ docker_file_template: "Dockerfile.j2"
 entrypoint_shell_name: "run.sh"
 
 docker_context_dir: "{{tis_release_dir}}/docker-context"
+docker_context_dependencies_files:
+  - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
+
+docker_context_plugin_dependencies_files: []

@@ -1,26 +1,30 @@
-FROM centos:7
-#build commend  docker build -t tis/tis-incr  .
-MAINTAINER baisui <baisui@qlangtech.com>
-
-#WORKDIR /srv/ansible
-#RUN ansible localhost -c local -m ping -vvvv
-#RUN ansible localhost -c local  -a "repo=git@github.com:qlangtech/tis-ansible.git dest=/srv/ansible version='master' accept_hostkey=true" -m git
-
-RUN INSTALL_PKGS="tar unzip bc which lsof java-1.8.0-openjdk java-1.8.0-openjdk-devel" && \
-    yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    yum clean all -y && \
-    mkdir -p /opt/data/tis && chmod -R 777 /opt/data/tis && \
-	mkdir -p /opt/logs && chmod -R 777 /opt/logs && \
-    mkdir -p /opt/tis &&  chmod -R a+rwX /opt/tis && \
-    chmod g=u /etc/passwd && \
-    /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
-
-ADD {{tis_incr_tar_name}} /opt/tis/
-ADD run.sh /opt/tis/
-
-RUN chmod +x /opt/tis/run.sh
+# 基础镜像（支持 amd64 & arm64），based on Ubuntu 18.04.4 LTS
+FROM adoptopenjdk:8-jdk-hotspot
+# 维护者
+MAINTAINER dudiao(idudiao@163.com)
+# 设置时区
+ENV TZ=Asia/Shanghai
 
 
-ENTRYPOINT ["/opt/tis/run.sh"]
 
+# 设置其他环境变量
+ENV APP_NAME=powerjob-worker-samples
+# 传递 SpringBoot 启动参数 和 JVM参数
+ENV PARAMS=""
+
+ENV JVMOPTIONS=""
+ADD ./{{tis_data_tar_file_name}} /opt/data/
+ADD ./tis-datax-executor.tar.gz /opt/tis/
+ADD ./{{powerjob_tar_file_name}} /
+
+RUN mv /opt/data/data /opt/data/tis  && mv /powerjob-worker-samples/powerjob-worker-samples.jar /  && mv /powerjob-worker-samples/wait-for-it.sh /  &&\
+	mkdir -p /opt/logs && \
+    mkdir -p /opt/tis
+
+# 将应用 jar 包拷入 docker
+#COPY target/powerjob-worker-samples.jar /powerjob-worker-samples.jar
+#COPY ./wait-for-it.sh /wait-for-it.sh
+# 暴露端口（HTTP + AKKA）
+EXPOSE 8081 27777
+# 启动应用
+ENTRYPOINT ["sh","-c","java $JVMOPTIONS -jar /powerjob-worker-samples.jar $PARAMS"]

@@ -59,7 +59,7 @@
     git_src: "git@github.com:qlangtech/zeppelin.git"
     git_branch: "tis-v0.10.1"
     maven_extra_params:
-      - "'-DskipRat -DskipTests=true -Pbuild-distr -Dappname=all -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package,tis-zeppelin,zeppelin-distribution,zeppelin-interpreter-shaded -am'"
+      - "'-DskipRat -Denforcer.skip=true -DskipTests=true -Pbuild-distr -Dappname=all -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package,tis-zeppelin,zeppelin-distribution,zeppelin-interpreter-shaded -am'"
   hosts: localhost
   tasks:
     - include_role:
@@ -78,7 +78,7 @@
     maven_extra_params:
       - '-Pcentos '
      # 测试期间先只用一种classifier
-      - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
+     # - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
   vars_files:
     - vars.yml
   hosts: localhost
@@ -89,44 +89,6 @@
     - pkg-plugin
 
 
-
-- name: package flink component tar package and deploy docker image to hub
-  vars_files:
-    - vars.yml
-  vars:
-    exec_deploy: False
-    tis_flink_extend_artifact_name: "tis-flink-extends-dist"
-    flink_extends_dist_jar_path: "{{src_root}}/{{tis_plugin_release_dir_name}}/tis-incr/tis-flink-extends/target/{{tis_flink_extend_artifact_name}}-{{tis_pkg_version}}.jar"
-    app_local_dir_name: "flink"
-    script_prefix: "{{app_local_dir_name}}-"
-    git_src: "git@github.com:qlangtech/flink.git"
-    git_branch: "tis-1.13.1"
-    target_file_pattern: .*\.(tpi|tar\.gz)$
-    tis_incr_name: "{{app_local_dir_name}}"
-    tis_incr_tar_name: "{{app_local_dir_name}}-{{git_branch}}-bin.tar.gz"
-    docker_file_template: "{{app_local_dir_name}}_Dockerfile.j2"
-    entrypoint_shell_name: "docker-entrypoint.sh"
-  hosts: localhost
-  tasks:
-    - name: "register '{{flink_extends_dist_jar_path}}' status"
-      stat:
-       path: "{{flink_extends_dist_jar_path}}"
-      register: extends_dist_file_status
-    - assert:
-        that: extends_dist_file_status.stat.exists
-        fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
-#    - include_role:
-#        name: compile
-    - include_role:
-        name: flink
-    - include_role:
-        name: deploy-tar
-      tags: deploy
-    # make flink docker image
-    - include_role:
-        name: tis-incr
-  tags:
-    - flink-docker
 
 
 - name: build Uber package
@@ -149,7 +111,8 @@
       - "tis-k8s-plugin"
       - "tis-datax-common-plugin"
       - "tis-datax-local-executor"
-      - "tis-datax-local-embedded-executor"
+      - "tis-powerjob-common-plugin"
+    #  - "tis-datax-local-embedded-executor"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
@@ -215,7 +178,7 @@
     - name: "archive data package,from {{tis_data_dir}}, target dir:{{ tis_tar_dist_dir }}/.."
       archive:
         path: "{{tis_data_dir}}"
-        dest: "{{tis_tar_dist_dir}}/../tis-data.tar.gz"
+        dest: "{{tis_tar_dist_dir}}/../{{tis_data_tar_file_name}}"
         remove: false
       delegate_to: "{{ inventory_hostname }}"
     - name: "archive uber package,target dir:{{ tis_tar_dist_dir }}"
@@ -234,6 +197,47 @@
       tags: deploy
   tags:
     - uber
+
+- name: package flink component tar package and deploy docker image to hub
+  vars_files:
+    - vars.yml
+  vars:
+    exec_deploy: False
+    tis_flink_extend_artifact_name: "tis-flink-extends-dist"
+    flink_extends_dist_jar_path: "{{src_root}}/{{tis_plugin_release_dir_name}}/tis-incr/tis-flink-extends/target/{{tis_flink_extend_artifact_name}}-{{tis_pkg_version}}.jar"
+    app_local_dir_name: "flink"
+    script_prefix: "{{app_local_dir_name}}-"
+    git_src: "git@github.com:qlangtech/flink.git"
+    git_branch: "tis-1.18.1"
+    target_file_pattern: .*\.(tpi|tar\.gz)$
+    tis_incr_name: "{{app_local_dir_name}}"
+    tis_incr_tar_name: "{{app_local_dir_name}}-{{git_branch}}-bin.tar.gz"
+    docker_file_template: "{{app_local_dir_name}}_Dockerfile.j2"
+    entrypoint_shell_name: "docker-entrypoint.sh"
+    docker_context_dependencies_files:
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/{{tis_data_tar_file_name}}"}
+  hosts: localhost
+  tasks:
+    - name: "register '{{flink_extends_dist_jar_path}}' status"
+      stat:
+        path: "{{flink_extends_dist_jar_path}}"
+      register: extends_dist_file_status
+    - assert:
+        that: extends_dist_file_status.stat.exists
+        fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
+#    - include_role:
+#        name: compile
+    - include_role:
+        name: flink
+    - include_role:
+        name: deploy-tar
+      tags: deploy
+    # make flink docker image
+    - include_role:
+        name: tis-incr
+  tags:
+    - flink-docker
 
 - name: build TIS plugins Meta and deploy
   vars_files:
@@ -281,7 +285,7 @@
     - incr
 #   - deploy
 
-- name: make DataX docker image
+- name: "make powerjob-worker docker image"
   #  vars_prompt:
   #    - name: "docker_password"
   #      prompt: "docker repository password"
@@ -290,6 +294,11 @@
     - vars.yml
   vars:
     tis_incr_name: 'tis-datax-executor'
+    docker_context_dependencies_files:
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/{{tis_data_tar_file_name}}"}
+    docker_context_plugin_dependencies_files:
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{powerjob_tar_file_name}}"}
   hosts: localhost
   roles:
     - role: tis-incr
