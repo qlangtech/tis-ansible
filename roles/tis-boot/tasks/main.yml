@@ -8,7 +8,7 @@
 - file: path={{tis_app_dir}} state=directory
 - file: path={{tis_log_dir}} state=directory owner={{tis_user}}
 
-- name: copy tis start script
+- name: "copy tis start script"
   template:
     src: ./template/{{item.name}}.j2
     dest: "{{tis_app_dir}}/{{item.name}}"
@@ -51,9 +51,9 @@
     dest: /tmp/
     remote_src: yes
 
-- name: synchroniz web-start files
+- name: "synchroniz web-start files,dest:{{app_dir}}/web-start"
   synchronize:
-    src: /tmp/web-start/
+    src: "/tmp/web-start/"
     dest: "{{app_dir}}/web-start"
     delete: yes
     recursive: yes

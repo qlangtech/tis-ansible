@@ -11,7 +11,7 @@ USE tis_console;
 -- Table structure for table `app_trigger_job_relation`
 --
 
-DROP TABLE  `app_trigger_job_relation`;
+DROP TABLE IF EXISTS  `app_trigger_job_relation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `app_trigger_job_relation` (

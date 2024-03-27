@@ -82,7 +82,7 @@
   with_items:
     - "tis.tar.gz"
 
-- name: copy plugins from "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/"
+- name: "copy plugins from {{tis_release_dir}}/{{tis_plugin_release_dir_name}}/"
   synchronize:
     src: "{{tis_release_dir}}/{{tis_plugin_release_dir_name}}/"
     dest: "{{tis_data_dir}}/libs/plugins/"
@@ -97,6 +97,7 @@
     dest: "{{tis_data_dir}}/libs/plugins/"
   when: uber_pkg
   with_items: "{{uber_attach_plugins}}"
+
 
 - name: delete history tis.tar.gz
   file:
@@ -174,7 +175,7 @@
   run_once: true
   args:
     chdir: "{{app_dir}}/{{tis_app_name}}"
-  when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0
+  when: system_initialized_token_exist.stdout.find('system_initialized_token') < 0 and not uber_docker_pkg
 
 #- fail: msg="Bailing out. this play requires 'bar'"
 

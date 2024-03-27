@@ -30,7 +30,7 @@
     path: '{{docker_context_dir}}/{{tis_incr_name}}'
     state: directory
 
-- name: "copy dependency files to docker context dir '{{tis_release_dir}}/{{tis_release_dir_name}}'"
+- name: "copy dependency files to docker context dir from: '{{tis_release_dir}}/{{tis_release_dir_name}}'"
   copy:
     src: '{{tis_release_dir}}/{{tis_release_dir_name}}/{{item.tar_name}}'
     dest: '{{docker_context_dir}}/{{item.app}}/'
@@ -79,12 +79,15 @@
 
 - debug: msg="will deploy docker {{tis_incr_name}}-{{tis_pkg_version}}:{{whether_push_docker_to_remote_repository is defined}}"
 
-- name: "Build and Push docker {{tis_incr_name}}-{{tis_pkg_version}}"
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html#ansible-collections-community-docker-docker-image-module
+- name: "Build and Push docker {{tis_incr_name}}-{{tis_pkg_version}} in {{docker_context_dir}}/{{tis_incr_name}}"
   docker_image:
     build:
       path: "{{docker_context_dir}}/{{tis_incr_name}}"
+      rm: True
     name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}"
-    tag: "{{tis_pkg_version}}"
+    tag: "{{tis_pkg_version}}.2"
+    # tag: "latest"
     push: "{{whether_push_docker_to_remote_repository is defined}}"
     force: yes
     source: build

@@ -14,10 +14,13 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 # limitations under the License.
+# https://github.com/qlangtech/flink-docker/blob/master/1.18/scala_2.12-java8-ubuntu/Dockerfile
 ###############################################################################
 
 #FROM openjdk:8-jre
-FROM gosu/centos:7
+#FROM gosu/centos:7
+
+FROM eclipse-temurin:8-jre-jammy as build
 
 
 
@@ -52,12 +55,7 @@ FROM gosu/centos:7
 #    GPG_KEY=19F2195E1B4816D765A2C324C2EED7B111D464BA \
 #    CHECK_GPG=true
 
-# Prepare environment
-ENV FLINK_HOME=/opt/flink
-ENV PATH=$FLINK_HOME/bin:$PATH
-RUN groupadd --system --gid=9999 flink && \
-    useradd --system --home-dir $FLINK_HOME --uid=9999 --gid=flink flink
-WORKDIR $FLINK_HOME
+
 
 # Install Flink
 #RUN set -ex; \
@@ -83,7 +81,8 @@ WORKDIR $FLINK_HOME
 #  \
 #  chown -R flink:flink .;
 
-ADD {{tis_incr_tar_name}} $FLINK_HOME
+ADD  {{tis_incr_tar_name}} /opt/flink
+
 ADD {{tis_data_tar_file_name}} /opt/data/
 
 
@@ -92,16 +91,42 @@ COPY docker-entrypoint.sh /
 
 
 
-RUN INSTALL_PKGS="tar unzip bc which lsof gettext java-1.8.0-openjdk java-1.8.0-openjdk-devel" && \
-    yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
-    rpm -V $INSTALL_PKGS && \
-    mkdir -p /opt/data/tis && chown -R flink:flink /opt/data/tis && mv /opt/data/data/* /opt/data/tis/ && \
-	mkdir -p /opt/logs && chown -R flink:flink /opt/logs && \
-    mkdir -p /opt/tis &&  chown -R flink:flink /opt/tis && chown -R flink:flink $FLINK_HOME && chmod +x /docker-entrypoint.sh && \
-    chmod g=u /etc/passwd && \
-    /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+#RUN INSTALL_PKGS="tar unzip bc which lsof gettext java-1.8.0-openjdk java-1.8.0-openjdk-devel" && \
+#    yum install -y --enablerepo=centosplus $INSTALL_PKGS && \
+#    rpm -V $INSTALL_PKGS && \
+#    mkdir -p /opt/data/tis && chown -R flink:flink /opt/data/tis && mv /opt/data/data/* /opt/data/tis/ && \
+#	mkdir -p /opt/logs && chown -R flink:flink /opt/logs && \
+#    mkdir -p /opt/tis &&  chown -R flink:flink /opt/tis && chown -R flink:flink $FLINK_HOME && chmod +x /docker-entrypoint.sh && \
+#    chmod g=u /etc/passwd && \
+#    /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
 
+RUN mkdir -p /opt/data/tis && mv /opt/data/data/* /opt/data/tis/
+
+
+FROM eclipse-temurin:8-jre-jammy
+
+# Grab gosu for easy step-down from root
+ENV GOSU_VERSION 1.11
+RUN set -ex; \
+  wget -nv -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)"; \
+  chmod +x /usr/local/bin/gosu; \
+  gosu nobody true
+
+
+
+# Prepare environment
+ENV FLINK_HOME=/opt/flink
+ENV PATH=$FLINK_HOME/bin:$PATH
+RUN groupadd --system --gid=9999 flink && \
+    useradd --system --home-dir $FLINK_HOME --uid=9999 --gid=flink flink
+WORKDIR $FLINK_HOME
+
+COPY --from=build --chown=flink:flink ["/opt/data"  ,"/opt/data/"]
+COPY --from=build --chown=flink:flink ["/opt/flink"  ,"/opt/flink/"]
+COPY --from=build --chown=flink:flink ["/docker-entrypoint.sh" ,"/"]
+
+RUN  mkdir -p /opt/logs && chown -R flink:flink /opt/logs && chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 6123 8081

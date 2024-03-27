@@ -107,12 +107,13 @@
     tisconsole_db_dbname: 'tis_console_db'
     shall_exec_restart: no
     uber_pkg: yes
-    uber_attach_plugins:
-      - "tis-k8s-plugin"
-      - "tis-datax-common-plugin"
-      - "tis-datax-local-executor"
-      - "tis-powerjob-common-plugin"
-    #  - "tis-datax-local-embedded-executor"
+#defile in vars.yml
+#    uber_attach_plugins:
+#      - "tis-k8s-plugin"
+#      - "tis-datax-common-plugin"
+#      - "tis-datax-local-executor"
+#      - "tis-powerjob-common-plugin"
+#    #  - "tis-datax-local-embedded-executor"
     zk_user: tis
     zk_group: tis
     zk_node_id: 1
@@ -175,28 +176,65 @@
       args:
         chdir: "{{app_dir}}/tjs"
     - include: install_ng_tis.yml
+    - name: "copy SQL script from tis_console_mysql.sql to {{tis_data_dir}}/sql/"
+      copy:
+        src: "tis_console_mysql.sql"
+        dest: "{{tis_data_dir}}/sql/"
     - name: "archive data package,from {{tis_data_dir}}, target dir:{{ tis_tar_dist_dir }}/.."
       archive:
         path: "{{tis_data_dir}}"
-        dest: "{{tis_tar_dist_dir}}/../{{tis_data_tar_file_name}}"
+        dest: "{{tis_tar_dist_dir}}/{{tis_data_tar_file_name}}"
         remove: false
       delegate_to: "{{ inventory_hostname }}"
     - name: "archive uber package,target dir:{{ tis_tar_dist_dir }}"
       archive:
         path: "{{app_dir}}"
-        dest: "{{tis_tar_dist_dir}}/tis-uber.tar.gz"
+        dest: "{{tis_tar_dist_dir}}/{{tis_uber_tar_file_name}}"
         remove: yes
-    - name: "make a soft link from {{tis_tar_dist_dir}}/tis-uber.tar.gz to {{ tis_release_dir }}/tis-uber.tar.gz"
+    - name: "make a soft link from {{tis_tar_dist_dir}}/{{tis_uber_tar_file_name}} to {{ tis_release_dir }}/{{tis_uber_tar_file_name}}"
       file:
-        src: "{{tis_tar_dist_dir}}/tis-uber.tar.gz"
-        dest: "{{ tis_release_dir }}/tis-uber.tar.gz"
+        src: "{{tis_tar_dist_dir}}/{{tis_uber_tar_file_name}}"
+        dest: "{{ tis_release_dir }}/{{tis_uber_tar_file_name}}"
         state: link
         force: yes
-    - include_role:
+    - name: "deploy all tar package from uber builder"
+      include_role:
         name: deploy-tar
       tags: deploy
   tags:
     - uber
+
+- name: "make uber docker image"
+  #  vars_prompt:
+  #    - name: "docker_password"
+  #      prompt: "docker repository password"
+  #      private: yes
+  vars_files:
+    - vars.yml
+  #  - vars-uber-docker.yml
+  vars:
+    tis_incr_name: 'tis-console'
+    app_dir: '{{tis_release_dir}}/{{tis_release_dir_name}}/{{tis_incr_name}}/tis-boot'
+    bin_dir_name: "bin"
+    tis_app_dir: "{{app_dir}}/{{bin_dir_name}}"
+    data_dir_name: 'data'
+    relative_root_dir: '/opt/app/tis-uber'
+    app_home: "{{relative_root_dir}}"
+    tis_data_dir: '/opt/{{data_dir_name}}'
+    uber_docker_pkg: yes
+    docker_file_template: "uber_Dockerfile.j2"
+    docker_context_plugin_dependencies_files: []
+    docker_context_dependencies_files:
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/tis-uber/{{tis_uber_tar_file_name}}"}
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_name}}/tis-boot"}
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: tis-boot
+    - include_role:
+        name: tis-incr
+  tags:
+    - uber-docker
 
 - name: package flink component tar package and deploy docker image to hub
   vars_files:
@@ -216,7 +254,7 @@
     entrypoint_shell_name: "docker-entrypoint.sh"
     docker_context_dependencies_files:
       - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
-      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/{{tis_data_tar_file_name}}"}
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/tis-uber/{{tis_data_tar_file_name}}"}
   hosts: localhost
   tasks:
     - name: "register '{{flink_extends_dist_jar_path}}' status"
@@ -271,18 +309,18 @@
   tags:
     - docs
 
-- name: make tis-incr docker image
-  #  vars_prompt:
-  #    - name: "docker_password"
-  #      prompt: "docker repository password"
-  #      private: yes
-  vars_files:
-    - vars.yml
-  hosts: localhost
-  roles:
-    - role: tis-incr
-  tags:
-    - incr
+#- name: make tis-incr docker image
+#  #  vars_prompt:
+#  #    - name: "docker_password"
+#  #      prompt: "docker repository password"
+#  #      private: yes
+#  vars_files:
+#    - vars.yml
+#  hosts: localhost
+#  roles:
+#    - role: tis-incr
+#  tags:
+#    - incr
 #   - deploy
 
 - name: "make powerjob-worker docker image"
@@ -295,7 +333,7 @@
   vars:
     tis_incr_name: 'tis-datax-executor'
     docker_context_dependencies_files:
-      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/{{tis_data_tar_file_name}}"}
+      - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/tis-uber/{{tis_data_tar_file_name}}"}
     docker_context_plugin_dependencies_files:
       - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
       - {app: "{{tis_incr_name}}" ,tar_name: "{{powerjob_tar_file_name}}"}
@@ -304,6 +342,7 @@
     - role: tis-incr
   tags:
     - datax-docker
+
 
 
 

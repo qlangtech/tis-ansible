@@ -11,6 +11,8 @@ release_repository: http://tis-release.oss-cn-beijing.aliyuncs.com
 tis_mvn_repository: http://mvn-repo.oss-cn-hangzhou.aliyuncs.com/release
 tis_pkg_version: "4.0.0"
 
+
+
 powerjob_tar_file_name: "powerjob-worker-samples.tar.gz"
 tis_data_tar_file_name: "tis-data.tar.gz"
 need_install_tis_collect: true;
@@ -113,3 +115,14 @@ tis_user: root
 mvn_pkg_name: apache-maven-3.8.1
 mvn_parent_dir: /opt/app
 mvn_home: '{{mvn_parent_dir}}/{{mvn_pkg_name}}'
+
+tis_uber_tar_file_name: "tis-uber.tar.gz"
+
+uber_attach_plugins:
+  - "tis-k8s-plugin"
+  - "tis-datax-common-plugin"
+  - "tis-datax-local-executor"
+  - "tis-powerjob-common-plugin"
+ #  - "tis-datax-local-embedded-executor"
+
+

@@ -16,7 +16,7 @@
 #  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #  See the License for the specific language governing permissions and
 # limitations under the License.
-# reference: https://github.com/qlangtech/flink-docker/blob/master/1.13/scala_2.11-java8-debian/docker-entrypoint.sh
+# https://github.com/qlangtech/flink-docker/blob/master/1.18/scala_2.12-java8-ubuntu/docker-entrypoint.sh
 ###############################################################################
 
 COMMAND_STANDALONE="standalone-job"
@@ -80,8 +80,9 @@ prepare_configuration() {
     set_config_option blob.server.port 6124
     set_config_option query.server.port 6125
 
-    TASK_MANAGER_NUMBER_OF_TASK_SLOTS=${TASK_MANAGER_NUMBER_OF_TASK_SLOTS:-1}
-    set_config_option taskmanager.numberOfTaskSlots ${TASK_MANAGER_NUMBER_OF_TASK_SLOTS}
+    if [ -n "${TASK_MANAGER_NUMBER_OF_TASK_SLOTS}" ]; then
+        set_config_option taskmanager.numberOfTaskSlots ${TASK_MANAGER_NUMBER_OF_TASK_SLOTS}
+    fi
 
     if [ -n "${FLINK_PROPERTIES}" ]; then
         echo "${FLINK_PROPERTIES}" >> "${CONF_FILE}"
@@ -91,11 +92,24 @@ prepare_configuration() {
 
 maybe_enable_jemalloc() {
     if [ "${DISABLE_JEMALLOC:-false}" == "false" ]; then
-        export LD_PRELOAD=$LD_PRELOAD:/usr/lib/x86_64-linux-gnu/libjemalloc.so
+        JEMALLOC_PATH="/usr/lib/$(uname -m)-linux-gnu/libjemalloc.so"
+        JEMALLOC_FALLBACK="/usr/lib/x86_64-linux-gnu/libjemalloc.so"
+        if [ -f "$JEMALLOC_PATH" ]; then
+            export LD_PRELOAD=$LD_PRELOAD:$JEMALLOC_PATH
+        elif [ -f "$JEMALLOC_FALLBACK" ]; then
+            export LD_PRELOAD=$LD_PRELOAD:$JEMALLOC_FALLBACK
+        else
+            if [ "$JEMALLOC_PATH" = "$JEMALLOC_FALLBACK" ]; then
+                MSG_PATH=$JEMALLOC_PATH
+            else
+                MSG_PATH="$JEMALLOC_PATH and $JEMALLOC_FALLBACK"
+            fi
+            echo "WARNING: attempted to load jemalloc from $MSG_PATH but the library couldn't be found. glibc will be used instead."
+        fi
     fi
 }
 
-# maybe_enable_jemalloc
+maybe_enable_jemalloc
 
 copy_plugins_if_required
 
