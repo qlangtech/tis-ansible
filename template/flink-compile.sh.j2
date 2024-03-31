@@ -8,6 +8,7 @@ echo "path:`pwd`"
 #第一部分由flink工程中执行`./deploy.sh` 脚本将flink核心jar包传送到TIS的maven仓库中
 #第二部分是此处执行由flink-dist依赖的flink 需要的插件
 
+
 $mvn_bin clean compile {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} package {% endif%}  -DskipTests=true -Dfast -Dscala-2.11 -Pdocs-and-source \
 -pl flink-dist,flink-kubernetes\
 ,flink-dist-scala\
