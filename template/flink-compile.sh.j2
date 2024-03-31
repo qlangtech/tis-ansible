@@ -9,7 +9,7 @@ echo "path:`pwd`"
 #第二部分是此处执行由flink-dist依赖的flink 需要的插件
 
 $mvn_bin clean compile {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} package {% endif%}  -DskipTests=true -Dfast -Dscala-2.11 -Pdocs-and-source \
--pl flink-dist\
+-pl flink-dist,flink-kubernetes\
 ,flink-dist-scala\
 ,flink-table/flink-table-api-java-uber\
 ,flink-table/flink-table-runtime\

@@ -4,6 +4,8 @@ FROM adoptopenjdk:8-jdk-hotspot
 # 设置时区
 # docker 容器时间设置 https://developer.aliyun.com/article/1159657
 ENV TZ=Asia/Shanghai
+# used by org.apache.flink.kubernetes.kubeclient.Fabric8FlinkKubeClient
+ENV TIS_K8S_ENV=true
 
 ADD ./{{tis_uber_tar_file_name}} /opt/app/
 ADD ./tis-boot/bin /opt/app/tis-uber/bin
