@@ -49,6 +49,8 @@
      repo: '{{git_src}}'
      dest: '{{src_dir}}'
      version: '{{git_branch}}'
+     #https://docs.ansible.com/ansible/latest/collections/ansible/builtin/git_module.html#parameter-recursive
+     recursive: no
      force: yes
      accept_hostkey: yes
 

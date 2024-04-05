@@ -73,7 +73,7 @@
     exec_deploy: True
     app_local_dir_name: "{{tis_plugin_release_dir_name}}"
     tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
-    git_src: "git@github.com:qlangtech/plugins.git"
+    git_src: "git@gitee.com:qlangtech/plugins.git"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
       - '-Pcentos '

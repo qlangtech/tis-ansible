@@ -108,6 +108,8 @@ FROM eclipse-temurin:8-jre-jammy
 
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.11
+# used by org.apache.flink.kubernetes.kubeclient.Fabric8FlinkKubeClient
+ENV TIS_K8S_ENV=true
 RUN set -ex; \
   wget -nv -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)"; \
   chmod +x /usr/local/bin/gosu; \

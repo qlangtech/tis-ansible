@@ -1,6 +1,7 @@
 ---
 # defaults file for compile
-git_src: git@github.com:qlangtech/tis.git
+#git_src: git@github.com:qlangtech/tis.git
+git_src: git@gitee.com:qlangtech/tis.git
 
 app_local_dir_name: "{{tis_release_dir_name}}"
 src_dir: "{{src_root}}/{{app_local_dir_name}}"

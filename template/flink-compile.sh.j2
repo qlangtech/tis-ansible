@@ -13,6 +13,7 @@ $mvn_bin clean compile {% if deploy_tis_repository %} deploy -Ptis-repo {% else 
 -pl flink-dist,flink-kubernetes\
 ,flink-dist-scala\
 ,flink-table/flink-table-api-java-uber\
+,flink-table/flink-table-planner\
 ,flink-table/flink-table-runtime\
 ,flink-libraries/flink-cep\
 ,flink-connectors/flink-connector-files\
