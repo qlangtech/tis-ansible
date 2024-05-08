@@ -11,7 +11,7 @@ jdo_option_connection_username: "root"
 jdo_option_connection_password: "123456"
 
 hudi_version: "0.14.1"
-hudi_install: True
+hudi_install: False
 
 
 

@@ -41,6 +41,9 @@
     - vars-deploy.yml
   hosts: hadoop-yarn-resource-manager
   tasks:
+  - name: "sleep for awale"
+    command: sleep 10
+    ignore_errors: yes
   - name: "execute start-yarn.sh"
     command: ./start-yarn.sh
     become: yes

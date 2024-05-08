@@ -1,7 +1,7 @@
 tis_log_dir_name: "logs"
 tis_log_dir: "/opt/{{tis_log_dir_name}}/tis"
 uber_pkg: no
-tis_java_mem: "-Xms2G -Xmx3G"
+tis_java_mem: "-Xms2G -Xmx3G -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=1024m"
 
 relative_root_dir: "{{app_dir}}"
 app_home: "{{app_dir}}"

@@ -58,11 +58,11 @@ JAR_PID={{relative_root_dir}}$JAR_NAME\.pid
 {% endif %}
 
 if [ -z "$JAVA_JVM_OPTS" ]; then
-    JAVA_JVM_OPTS="{{tis_java_mem}}"
+    JAVA_JVM_OPTS="{{tis_java_mem}} "
 fi
 
 
-JAVA_OPTS="$JAVA_JVM_OPTS -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=1024m -XX:ParallelGCThreads=4 -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=utf-8 -Dtis.launch.port=$SERVER_PORT {{not_fetch_from_center_repository}} -Ddata.dir={{tis_data_dir}} -Dlog.dir=$LOG_FILE -Dweb.root.dir={{app_home}}  -Xrunjdwp:transport=dt_socket,address=50000,suspend=n,server=y"
+JAVA_OPTS="$JAVA_JVM_OPTS  -XX:ParallelGCThreads=4 -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=utf-8 -Dtis.launch.port=$SERVER_PORT {{not_fetch_from_center_repository}} -Ddata.dir={{tis_data_dir}} -Dlog.dir=$LOG_FILE -Dweb.root.dir={{app_home}}  -Xrunjdwp:transport=dt_socket,address=50000,suspend=n,server=y"
 
 
 is_exist() {

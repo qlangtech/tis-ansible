@@ -129,6 +129,13 @@ COPY --from=build --chown=flink:flink ["/opt/flink"  ,"/opt/flink/"]
 COPY --from=build --chown=flink:flink ["/docker-entrypoint.sh" ,"/"]
 
 RUN  mkdir -p /opt/logs && chown -R flink:flink /opt/logs && chmod +x /docker-entrypoint.sh
+  # && \
+  # Replace default REST/RPC endpoint bind address to use the container's network interface \
+  #sed -i 's/rest.address: localhost/rest.address: 0.0.0.0/g' $FLINK_HOME/conf/flink-conf.yaml; \
+  #sed -i 's/rest.bind-address: localhost/rest.bind-address: 0.0.0.0/g' $FLINK_HOME/conf/flink-conf.yaml; \
+  #sed -i 's/jobmanager.bind-host: localhost/jobmanager.bind-host: 0.0.0.0/g' $FLINK_HOME/conf/flink-conf.yaml; \
+  #sed -i 's/taskmanager.bind-host: localhost/taskmanager.bind-host: 0.0.0.0/g' $FLINK_HOME/conf/flink-conf.yaml; \
+  #sed -i '/taskmanager.host: localhost/d' $FLINK_HOME/conf/flink-conf.yaml;
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 EXPOSE 6123 8081

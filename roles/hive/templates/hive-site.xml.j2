@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
+
+  <property>
+    <name>hive.server2.thrift.port</name>
+    <value>10000</value>
+    <description>hive thrift port</description>
+  </property>
+  <property>
+    <name>hive.server2.thrift.bind.host</name>
+    <value>0.0.0.0</value>
+    <description>hive thrift server</description>
+  </property>
+
     <property>
         <name>hive.metastore.uris</name>
         <value>thrift://{{hostvars[inventory_hostname].ansible_ssh_host}}:9083</value>
