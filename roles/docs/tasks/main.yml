@@ -3,9 +3,9 @@
 ######################################
 # synchronize tis-docs
 ######################################
-- name: "git pull git@github.com:qlangtech/tis-doc.git@master {{tis_docs_dir}}"
+- name: "git pull git@gitee.com:qlangtech/tis-doc.git@master {{tis_docs_dir}}"
   git:
-    repo: 'git@github.com:qlangtech/tis-doc.git'
+    repo: 'git@gitee.com:qlangtech/tis-doc.git'
     dest: "{{tis_docs_dir}}/"
     version: 'master'
     force: yes
