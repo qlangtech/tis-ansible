@@ -86,7 +86,7 @@
       path: "{{docker_context_dir}}/{{tis_incr_name}}"
       rm: True
     name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}"
-    tag: "{{tis_pkg_version}}.37"
+    tag: "{{tis_pkg_version}}"
     # tag: "latest"
     push: "{{whether_push_docker_to_remote_repository is defined}}"
     force: yes
