@@ -59,3 +59,13 @@
     recursive: yes
   delegate_to: "{{ inventory_hostname }}"
 
+- file:
+    path: "{{app_dir}}/web-start/conf/tis-web-config"
+    state: directory
+- name: "copy config.properties"
+  template:
+    src: "template/{{item}}.j2"
+    dest: "{{app_dir}}/web-start/conf/tis-web-config/{{item}}"
+  with_items:
+     - "config.properties"
+

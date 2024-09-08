@@ -78,7 +78,8 @@
     maven_extra_params:
       - '-Pcentos '
      # 测试期间先只用一种classifier
-      - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin,tis-incr/tis-sink-hudi-plugin"'
+     # hudi 相关的也先去掉： tis-incr/tis-sink-hudi-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin
+     # - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
   vars_files:
     - vars.yml
   hosts: localhost
@@ -140,6 +141,7 @@
 #    - name: sleep 10 sec
 #      command: sleep 10
 #      ignore_errors: yes
+
     - include_role:
         name: console
     - name: "copy zeppelin context package from: {{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
@@ -186,6 +188,8 @@
         dest: "{{tis_tar_dist_dir}}/{{tis_data_tar_file_name}}"
         remove: false
       delegate_to: "{{ inventory_hostname }}"
+
+
     - name: "archive uber package,target dir:{{ tis_tar_dist_dir }}"
       archive:
         path: "{{app_dir}}"

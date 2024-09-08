@@ -61,14 +61,14 @@
       - "flume.properties"
     notify: restart assemble
 
-  - name: copy config.properties
-    template:
-     src: 'template/{{item}}.j2'
-     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/{{item}}"
-    with_items:
-     - "config.properties"
-   #  - "yarn-site.xml"
-    notify: restart assemble
+#  - name: copy config.properties
+#    template:
+#     src: 'template/{{item}}.j2'
+#     dest: "{{app_dir}}/tis-assemble/conf/tis-web-config/{{item}}"
+#    with_items:
+#     - "config.properties"
+#     - "yarn-site.xml"
+#    notify: restart assemble
 
   - name: path owner set
     file:

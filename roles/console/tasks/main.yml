@@ -125,18 +125,18 @@
 #     src: template/hdfs-site-proxy.xml.j2
 #     dest: /opt/app/spring-boot/tis/conf/tis-web-config/hdfs-site.xml
 
-- file:
-    path: "{{app_dir}}/{{tis_app_name}}/conf/tis-web-config"
-    state: directory
+#- file:
+#    path: "{{app_dir}}/{{tis_app_name}}/conf/tis-web-config"
+#    state: directory
 
-- name: copy config.properties
-  template:
-    src: "template/{{item}}.j2"
-    dest: "{{app_dir}}/{{tis_app_name}}/conf/tis-web-config/{{item}}"
-  with_items:
-    - "config.properties"
-  #   - "yarn-site.xml"
-  notify: restart tis-console
+#- name: copy config.properties
+#  template:
+#    src: "template/{{item}}.j2"
+#    dest: "{{app_dir}}/{{tis_app_name}}/conf/tis-web-config/{{item}}"
+#  with_items:
+#    - "config.properties"
+#    - "yarn-site.xml"
+#  notify: restart tis-console
 
 - name: path owner set
   file:
@@ -170,8 +170,8 @@
 
 # -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=50000
 - name: "initialize tis data in dir:{{app_dir}}/{{tis_app_name}} -Ddata.dir={{tis_data_dir}}"
-  #shell: java -classpath ../web-start/lib/*:./lib/*:./conf com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
-  shell: java -classpath ../web-start/lib/*:./lib/*:./conf -Ddata.dir={{tis_data_dir}} com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
+  #shell: java -classpath ../web-start/lib/*:./lib/*:./conf:../web-start/conf/tis-web-config com.qlangtech.tis.runtime.module.action.SysInitializeAction 1>./init_stdout 2>./init_stderr
+  shell: java -classpath ../web-start/lib/*:./lib/*:./conf:../web-start/conf -Ddata.dir={{tis_data_dir}} com.qlangtech.tis.runtime.module.action.SysInitializeAction /tmp/tis_console_{{tisconsole_db_type}}.sql {{tisconsole_db_type}} > init_db.log
   run_once: true
   args:
     chdir: "{{app_dir}}/{{tis_app_name}}"
