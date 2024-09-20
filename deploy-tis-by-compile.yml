@@ -79,7 +79,9 @@
       - '-Pcentos '
      # 测试期间先只用一种classifier
      # hudi 相关的也先去掉： tis-incr/tis-sink-hudi-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin
-     # - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
+      - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
+      - '"-Pcdh -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-aliyun-jindo-sdk-extends-hadoop3x,tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
+
   vars_files:
     - vars.yml
   hosts: localhost
@@ -217,6 +219,8 @@
     - vars.yml
   #  - vars-uber-docker.yml
   vars:
+    tisconsole_db_type: 'derby'
+    tisconsole_db_dbname: 'tis_console_db'
     tis_incr_name: 'tis-console'
     app_dir: '{{tis_release_dir}}/{{tis_release_dir_name}}/{{tis_incr_name}}/tis-boot'
     bin_dir_name: "bin"

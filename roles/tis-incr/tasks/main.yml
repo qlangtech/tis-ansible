@@ -80,17 +80,31 @@
 - debug: msg="will deploy docker {{tis_incr_name}}-{{tis_pkg_version}}:{{whether_push_docker_to_remote_repository is defined}}"
 
 # https://docs.ansible.com/ansible/latest/collections/community/docker/docker_image_module.html#ansible-collections-community-docker-docker-image-module
-- name: "Build and Push docker {{tis_incr_name}}-{{tis_pkg_version}} in {{docker_context_dir}}/{{tis_incr_name}}"
-  docker_image:
-    build:
-      path: "{{docker_context_dir}}/{{tis_incr_name}}"
-      rm: True
-    name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}"
-    tag: "{{tis_pkg_version}}"
-    # tag: "latest"
-    push: "{{whether_push_docker_to_remote_repository is defined}}"
-    force: yes
-    source: build
+#- name: "Build and Push docker {{tis_incr_name}}-{{tis_pkg_version}} in {{docker_context_dir}}/{{tis_incr_name}}"
+#  docker_image:
+#    build:
+#      path: "{{docker_context_dir}}/{{tis_incr_name}}"
+#      rm: True
+#    name: "registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}"
+#    tag: "{{tis_pkg_version}}"
+#    # tag: "latest"
+#    push: "{{whether_push_docker_to_remote_repository is defined}}"
+#    force: yes
+#    source: build
+#    timeout: 240
+
+- name: "Build docker {{tis_incr_name}}-{{tis_pkg_version}} in {{docker_context_dir}}/{{tis_incr_name}}"
+  shell: 'docker build -t registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}:{{tis_pkg_version}} .'
+  run_once: true
+  args:
+    chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
+
+- name: "Push docker {{tis_incr_name}}-{{tis_pkg_version}} in {{docker_context_dir}}/{{tis_incr_name}}"
+  shell: 'docker push registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}:{{tis_pkg_version}}'
+  run_once: true
+  when: "{{whether_push_docker_to_remote_repository is defined}}"
+  args:
+    chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
 
 
 
