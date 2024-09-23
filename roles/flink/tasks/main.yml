@@ -23,7 +23,7 @@
     sed -i 's/rest.bind-address: localhost/rest.bind-address: 0.0.0.0/g' conf/flink-conf.yaml; \
     sed -i 's/jobmanager.bind-host: localhost/jobmanager.bind-host: 0.0.0.0/g' conf/flink-conf.yaml; \
     sed -i 's/taskmanager.bind-host: localhost/taskmanager.bind-host: 0.0.0.0/g' conf/flink-conf.yaml;
- #   sed -i '/taskmanager.host: localhost/d' conf/flink-conf.yaml;
+ #   sed -i '/taskmanager.host: localhost/d' conf/flink-conf.yaml; comment reason: https://github.com/datavane/tis/issues/362, but when build docker image taskmanager.host shall be removed
   args:
     chdir: "{{ flink_dist_dir }}"
 
