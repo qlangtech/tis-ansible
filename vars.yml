@@ -50,8 +50,8 @@ zk_gz_file_name: zookeeper-3.4.14.tar.gz
 #zk_dir_name: "zookeeper-3.4.14"
 #zk_install_dir: "{{zk_parent_dir}}/{{zk_dir_name}}"
 
-java_gz_file_name: jdk-8u191-linux-x64.tar.gz
-jdk_dir_name: jdk1.8.0_191
+java_gz_file_name: jdk-11.0.23_linux-x64_bin.tar.gz
+jdk_dir_name: jdk-11.0.23
 java_home: "/opt/app/java/default"
 
 kerberos:

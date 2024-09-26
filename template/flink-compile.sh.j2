@@ -10,7 +10,7 @@ echo "path:`pwd`"
 
 #,flink-table/flink-table-planner\
 
-$mvn_bin clean  {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} install {% endif%}  -DskipTests=true -Dfast -Dscala-2.12 -Pdocs-and-source -Dcheckstyle.skip \
+$mvn_bin clean  {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} install {% endif%}  -DskipTests=true -Dfast -Dscala-2.12 -Pdocs-and-source -Pjava11-target -Dcheckstyle.skip \
 -pl flink-dist,flink-kubernetes\
 ,flink-dist-scala\
 ,flink-table/flink-table-api-java-uber\

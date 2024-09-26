@@ -102,7 +102,7 @@
 - name: "Push docker {{tis_incr_name}}-{{tis_pkg_version}} in {{docker_context_dir}}/{{tis_incr_name}}"
   shell: 'docker push registry.cn-hangzhou.aliyuncs.com/tis/{{tis_incr_name}}:{{tis_pkg_version}}'
   run_once: true
-  when: "{{whether_push_docker_to_remote_repository is defined}}"
+  when: "whether_push_docker_to_remote_repository is defined"
   args:
     chdir: "{{docker_context_dir}}/{{tis_incr_name}}"
 
