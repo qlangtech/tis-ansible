@@ -172,7 +172,7 @@
 #        - "tis.sh"
     - name: "init logs dir '{{app_dir}}/logs'"
       file:
-        path: "{{app_dir}}/logs"
+        path: "{{app_dir}}/logs/gc"
         state: directory
     - name: arrange jars
       shell: 'java -classpath ../web-start/lib/*:./lib/*:./conf  com.qlangtech.tis.runtime.module.action.SysInitializeArrangeJars {{app_dir}}'
