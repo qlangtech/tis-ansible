@@ -20,7 +20,7 @@
 #FROM openjdk:8-jre
 #FROM gosu/centos:7
 
-FROM eclipse-temurin:8-jre-jammy as build
+FROM eclipse-temurin:11-jre-jammy as build
 
 
 
@@ -104,7 +104,7 @@ COPY docker-entrypoint.sh /
 RUN mkdir -p /opt/data/tis && mv /opt/data/data/* /opt/data/tis/
 
 
-FROM eclipse-temurin:8-jre-jammy
+FROM eclipse-temurin:11-jre-jammy
 
 # Grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.11

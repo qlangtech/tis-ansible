@@ -1,5 +1,5 @@
 ---
-- name: Download tis plugins to {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}
+- name: Download tis plugins to {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_pkg_version}}
   get_url:
     url: "{{ release_repository }}/{{tis_pkg_version}}/{{tis_plugin_release_dir_name}}/{{ item.name }}"
     dest: "{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_pkg_version}}/{{ item.name }}"
@@ -25,4 +25,4 @@
     dest: "{{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{ item }}"
     state: link
   with_lines:
-    - find {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_pkg_version}} -type f -name "*" -printf '%f\n'
+    - find {{ tis_release_dir }}/{{tis_plugin_release_dir_name}}/{{tis_pkg_version}} -maxdepth 1 -type f -name "*.tpi" -printf '%f\n'
