@@ -17,7 +17,7 @@ parallel_compile: true
 
 
 appname: all
-mvn_zip_package_name: '{{mvn_pkg_name}}.zip'
+mvn_zip_package_name: '{{mvn_pkg_name}}-bin.tar.gz'
 mvn_local_repo: /opt/data/mvn_repository
 
 maven_extra_params:
