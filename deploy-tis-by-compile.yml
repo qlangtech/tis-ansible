@@ -49,23 +49,23 @@
   tags:
     - pkg
 
-- name: compile tis-zepplin component tar package
-  vars_files:
-    - vars.yml
-  vars:
-    exec_deploy: True
-    parallel_compile: False
-    app_local_dir_name: "zeppelin"
-    git_src: "git@github.com:qlangtech/zeppelin.git"
-    git_branch: "tis-v0.10.1"
-    maven_extra_params:
-      - "'-DskipRat -Denforcer.skip=true -DskipTests=true -Pbuild-distr -Dappname=all -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package,tis-zeppelin,zeppelin-distribution,zeppelin-interpreter-shaded -am'"
-  hosts: localhost
-  tasks:
-    - include_role:
-        name: compile
-  tags:
-    - zeppelin
+#- name: compile tis-zepplin component tar package
+#  vars_files:
+#    - vars.yml
+#  vars:
+#    exec_deploy: True
+#    parallel_compile: False
+#    app_local_dir_name: "zeppelin"
+#    git_src: "git@github.com:qlangtech/zeppelin.git"
+#    git_branch: "tis-v0.10.1"
+#    maven_extra_params:
+#      - "'-DskipRat -Denforcer.skip=true -DskipTests=true -Pbuild-distr -Dappname=all -pl jdbc-tis,elasticsearch-tis,zeppelin-server,zeppelin-client,zeppelin-package,tis-zeppelin,zeppelin-distribution,zeppelin-interpreter-shaded -am'"
+#  hosts: localhost
+#  tasks:
+#    - include_role:
+#        name: compile
+#  tags:
+#    - zeppelin
 
 - name: compile tis-plugin component tar package
   vars:
@@ -76,7 +76,7 @@
     git_src: "git@gitee.com:qlangtech/plugins.git"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
-      - '"-Pcentos -Pdefault-emr"'
+      - '"-Pcentos -Pdefault-emr "'
      # 测试期间先只用一种classifier
      # hudi 相关的也先去掉： tis-incr/tis-sink-hudi-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin
       - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
@@ -146,11 +146,11 @@
 
     - include_role:
         name: console
-    - name: "copy zeppelin context package from: {{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
-      unarchive:
-        src: "{{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
-        dest: "{{app_dir}}/"
-        remote_src: yes
+#    - name: "copy zeppelin context package from: {{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
+#      unarchive:
+#        src: "{{tis_release_dir}}/{{tis_release_dir_name}}/tis-zeppelin.tar.gz"
+#        dest: "{{app_dir}}/"
+#        remote_src: yes
       #    - name: shutdown zookeeper
 #      command: "./bin/zkServer.sh stop"
 #      ignore_errors: yes
