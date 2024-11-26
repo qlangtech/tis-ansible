@@ -91,6 +91,25 @@
   tags:
     - pkg-plugin
 
+- name: compile tis-plugins-commercial component tar package
+  vars:
+    ansible_group_priority: 10
+    exec_deploy: True
+    app_local_dir_name: "tis-plugins-commercial"
+    tis_release_dir_name: "tis-plugins-commercial"
+    git_src: "git@gitee.com:qlangtech/tis-plugins-commercial.git"
+    target_file_pattern: .*\.(tpi|tar\.gz)$
+    maven_extra_params:
+      - '""'
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: compile
+  tags:
+    - pkg-plugin
+
 
 
 
