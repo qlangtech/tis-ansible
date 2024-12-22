@@ -98,6 +98,7 @@
     app_local_dir_name: "tis-sqlserver-plugin"
     tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
     git_src: "git@gitee.com:qlangtech/tis-sqlserver-plugin.git"
+    git_branch: "dev"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
       - '""'
@@ -108,7 +109,7 @@
     - include_role:
         name: compile
   tags:
-    - pkg-plugin
+    - tis-sqlserver-plugin
 
 - name: compile tis-plugins-commercial component tar package
   vars:

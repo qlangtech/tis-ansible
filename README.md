@@ -165,7 +165,7 @@ hdfs dfs -chmod -R 777 /
 ## 发布
 
    ``` shell script
-   ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,ng-tis,uber,uber-docker,datax-docker,flink-docker,update-center,deploy,zeppelin  -i ./inventory/hosts
+   ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,tis-sqlserver-plugin,pkg-plugin-vip,ng-tis,uber,uber-docker,datax-docker,flink-docker,update-center,deploy,deploy-tis-repo  -i ./inventory/hosts
    ```
 
 
