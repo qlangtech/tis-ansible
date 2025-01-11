@@ -76,11 +76,12 @@
     git_src: "git@gitee.com:qlangtech/plugins.git"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
-      - '"-Pcentos -Pdefault-emr "'
+    #  - '"-Pcentos -Pdefault-emr "'
+      - '"-Pcentos -Pcdh "'
      # 测试期间先只用一种classifier
      # hudi 相关的也先去掉： tis-incr/tis-sink-hudi-plugin,tis-datax/tis-datax-hudi-common,tis-datax/tis-datax-hudi-plugin
       - '"-Paliyun-emr -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
-      - '"-Pcdh -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-aliyun-jindo-sdk-extends-hadoop3x,tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
+    #  - '"-Pcdh -Pcentos -pl tis-datax/tis-aliyun-jindo-sdk-extends/tis-aliyun-jindo-sdk-extends-hadoop3x,tis-datax/tis-aliyun-jindo-sdk-extends/tis-datax-hdfs-aliyun-emr-plugin,tis-datax/tis-hive-plugin,tis-datax/tis-datax-hdfs-plugin,tis-datax/tis-datax-hdfs-reader-writer-plugin,tis-datax/tis-hive-flat-table-builder-plugin"'
 
   vars_files:
     - vars.yml
@@ -91,7 +92,7 @@
   tags:
     - pkg-plugin
 
-- name: compile tis-sqlserver-plugin component tar package
+- name: "compile tis-sqlserver-plugin component tar package"
   vars:
     ansible_group_priority: 10
     exec_deploy: True

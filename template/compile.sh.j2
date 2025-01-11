@@ -4,6 +4,6 @@ mvn_bin="{{mvn_home}}/bin/mvn {% if parallel_compile %}-T 1C {% endif%} "
 echo $mvn_bin
 echo "path:`pwd`"
 
-$mvn_bin clean {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} install {% endif%} -Dmaven.test.skip=true  -Dappname=$1  $2
+$mvn_bin clean {% if deploy_tis_repository %} deploy -Ptis-repo {% else %} install -o {% endif%} -Dmaven.test.skip=true  -Dappname=$1  $2
 
 

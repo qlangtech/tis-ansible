@@ -1,7 +1,6 @@
 ---
 
 # skip OSS deploy
-#ansible-playbook ./deploy-tis-by-compile.yml --tags update-center,deployd --skip-tags=deploy -e "skip_update_center=yes"   -i ./inventory/hosts
 
 - name: "remove old dir: {{update_center_dist_dir}}/{{app_local_dir_name}}"
   file:
@@ -14,12 +13,20 @@
     dest: "{{update_center_dist_dir}}"
     remote_src: yes
 
+- name: "register shall_update_center"
+  shell: "echo 1"
+  register: shall_update_center
+  ignore_errors: True
+  tags: deploy
+
 - name: "generate shell script build-update-center.sh to '{{update_center_dist_dir}}/{{app_local_dir_name}}'"
   template:
     src: "{{item.name}}.j2"
     dest: "{{update_center_dist_dir}}/{{app_local_dir_name}}/{{item.name}}"
     force: no
     mode: '0644'
+  vars:
+    skip_update_center: "{{shall_update_center is not defined}}"
   with_items:
     - {name: "build-update-center.sh"}
 
@@ -28,5 +35,4 @@
   run_once: true
   args:
     chdir: "{{update_center_dist_dir}}/{{app_local_dir_name}}"
-  tags: deploy
 
