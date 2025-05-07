@@ -124,6 +124,7 @@ uber_attach_plugins:
   - "tis-datax-common-plugin"
   - "tis-datax-local-executor"
   - "tis-powerjob-common-plugin"
- #  - "tis-datax-local-embedded-executor"
+  # embedded-executor is dependency from DataFlow DryRun
+  - "tis-datax-local-embedded-executor"
 
 
