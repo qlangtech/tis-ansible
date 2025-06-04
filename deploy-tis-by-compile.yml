@@ -296,7 +296,7 @@
     app_local_dir_name: "flink"
     script_prefix: "{{app_local_dir_name}}-"
     git_src: "git@github.com:qlangtech/flink.git"
-    git_branch: "tis-1.18.1"
+    git_branch: "tis-1.20.1"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     tis_incr_name: "{{app_local_dir_name}}"
     tis_incr_tar_name: "{{app_local_dir_name}}-{{git_branch}}-bin.tar.gz"
@@ -314,8 +314,8 @@
     - assert:
         that: extends_dist_file_status.stat.exists
         fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
-#    - include_role:
-#        name: compile
+    - include_role:
+        name: compile
     - include_role:
         name: flink
     - include_role:
