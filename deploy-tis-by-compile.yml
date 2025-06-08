@@ -132,6 +132,27 @@
     - tis-sqlserver-plugin
 
 
+- name: "compile tis-paimon-plugin component tar package"
+  vars:
+    ansible_group_priority: 10
+    exec_deploy: True
+    app_local_dir_name: "tis-paimon-plugin"
+    tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
+    git_src: "git@gitee.com:qlangtech/tis-paimon-plugin.git"
+    git_branch: "dev"
+    target_file_pattern: .*\.(tpi|tar\.gz)$
+    maven_extra_params:
+      - '" -Pcdh "'
+      - '" -Paliyun-emr "'
+
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: compile
+  tags:
+    - tis-paimon-plugin
 
 
 
@@ -314,8 +335,8 @@
     - assert:
         that: extends_dist_file_status.stat.exists
         fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
-    - include_role:
-        name: compile
+#    - include_role:
+#        name: compile
     - include_role:
         name: flink
     - include_role:

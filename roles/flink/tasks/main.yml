@@ -19,11 +19,19 @@
 
 - name: "replace flink bind address to '0.0.0.0' in {{ flink_dist_dir }}"
   shell: |
-    sed -i 's/rest.address: localhost/rest.address: 0.0.0.0/g' conf/flink-conf.yaml; \
-    sed -i 's/rest.bind-address: localhost/rest.bind-address: 0.0.0.0/g' conf/flink-conf.yaml; \
-    sed -i 's/jobmanager.bind-host: localhost/jobmanager.bind-host: 0.0.0.0/g' conf/flink-conf.yaml; \
-    sed -i 's/taskmanager.bind-host: localhost/taskmanager.bind-host: 0.0.0.0/g' conf/flink-conf.yaml;
- #   sed -i '/taskmanager.host: localhost/d' conf/flink-conf.yaml; comment reason: https://github.com/datavane/tis/issues/362, but when build docker image taskmanager.host shall be removed
+    #    sed -i 's/rest.address: localhost/rest.address: 0.0.0.0/g' conf/flink-conf.yaml; \
+    #    sed -i 's/rest.bind-address: localhost/rest.bind-address: 0.0.0.0/g' conf/flink-conf.yaml; \
+    #    sed -i 's/jobmanager.bind-host: localhost/jobmanager.bind-host: 0.0.0.0/g' conf/flink-conf.yaml; \
+    #    sed -i 's/taskmanager.bind-host: localhost/taskmanager.bind-host: 0.0.0.0/g' conf/flink-conf.yaml;
+     ##   sed -i '/taskmanager.host: localhost/d' conf/flink-conf.yaml; comment reason: https://github.com/datavane/tis/issues/362, but when build docker image taskmanager.host shall be removed
+     ## upgrade to version: 1.20.1 config file change to conf/config.yaml
+      CONF_FILE="./conf/config.yaml"; \
+      /bin/bash "./bin/config-parser-utils.sh" "./conf" "./bin" "./lib" \
+      "-repKV" "rest.address,localhost,0.0.0.0" \
+      "-repKV" "rest.bind-address,localhost,0.0.0.0" \
+      "-repKV" "jobmanager.bind-host,localhost,0.0.0.0" \
+      "-repKV" "taskmanager.bind-host,localhost,0.0.0.0" \
+      "-rmKV" "taskmanager.host=localhost"; \
   args:
     chdir: "{{ flink_dist_dir }}"
 
