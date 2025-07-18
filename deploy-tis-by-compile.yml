@@ -92,6 +92,26 @@
   tags:
     - pkg-plugin
 
+- name: "compile tis-paimon-plugin component tar package"
+  vars:
+    ansible_group_priority: 10
+    exec_deploy: True
+    app_local_dir_name: "tis-paimon-plugin"
+    tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
+    git_src: "git@gitee.com:qlangtech/tis-paimon-plugin.git"
+    git_branch: "master"
+    target_file_pattern: .*\.(tpi|tar\.gz)$
+    maven_extra_params:
+      - '""'
+  vars_files:
+    - vars.yml
+  hosts: localhost
+  tasks:
+    - include_role:
+        name: compile
+  tags:
+    - tis-paimon-plugin
+
 - name: compile tis-plugins-commercial component tar package
   vars:
     ansible_group_priority: 10
@@ -132,6 +152,8 @@
     - tis-sqlserver-plugin
 
 
+
+
 - name: "compile tis-paimon-plugin component tar package"
   vars:
     ansible_group_priority: 10
@@ -139,7 +161,7 @@
     app_local_dir_name: "tis-paimon-plugin"
     tis_release_dir_name: "{{tis_plugin_release_dir_name}}"
     git_src: "git@gitee.com:qlangtech/tis-paimon-plugin.git"
-    git_branch: "dev"
+    git_branch: "master"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
       - '" -Pcdh "'
