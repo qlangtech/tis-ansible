@@ -32,6 +32,9 @@
       "-repKV" "jobmanager.bind-host,localhost,0.0.0.0" \
       "-repKV" "taskmanager.bind-host,localhost,0.0.0.0" \
       "-rmKV" "taskmanager.host=localhost"; \
+    echo "metrics.reporters: tis" >> $CONF_FILE ;\
+    echo "metrics.reporter.tis.factory.class: com.qlangtech.plugins.incr.flink.metrics.TISPBReporterFactory" >> $CONF_FILE ;\
+    echo "metrics.reporter.tis.interval: 10 SECONDS" >> $CONF_FILE ;
   args:
     chdir: "{{ flink_dist_dir }}"
 

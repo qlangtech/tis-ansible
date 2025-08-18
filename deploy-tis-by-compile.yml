@@ -102,7 +102,8 @@
     git_branch: "master"
     target_file_pattern: .*\.(tpi|tar\.gz)$
     maven_extra_params:
-      - '""'
+      - '"-Pcdh "'
+      - '"-Paliyun-emr "'
   vars_files:
     - vars.yml
   hosts: localhost
@@ -357,8 +358,8 @@
     - assert:
         that: extends_dist_file_status.stat.exists
         fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
-#    - include_role:
-#        name: compile
+    - include_role:
+        name: compile
     - include_role:
         name: flink
     - include_role:
