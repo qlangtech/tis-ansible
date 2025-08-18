@@ -358,8 +358,8 @@
     - assert:
         that: extends_dist_file_status.stat.exists
         fail_msg: "file: '{{flink_extends_dist_jar_path}}' must exists"
-    - include_role:
-        name: compile
+#    - include_role:
+#        name: compile
     - include_role:
         name: flink
     - include_role:
