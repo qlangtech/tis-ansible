@@ -1,7 +1,17 @@
 #!/bin/bash
 
+################################################################################
+# TIS Service Control Script
+# This script provides start/stop/restart/status operations for TIS applications
+# Compatible with: macOS (Darwin) and Linux
+# Generated from Ansible template: roles/tis-boot/template/tis.j2
+################################################################################
+
 # If intend to active Zeppelin Notebook in TIS , Download tis-zeppelin-0.10.1-bin-all.tar.gz from TIS repository,And uncomment line below
 # export ZEPPELIN_HOME=/xxxxx/zeppelin-0.10.1-bin-all
+
+# Exit on error in strict mode (disabled by default for compatibility)
+# set -euo pipefail
 
 # Initialize variables that cannot be provided by a .conf file
 #WORKING_DIR="$(pwd)"
@@ -10,18 +20,18 @@ PRG="$0"
 
 # Resolve symlinks to this script
 while [ -h "$PRG" ] ; do
-  ls=`ls -ld "$PRG"`
+  ls=$(ls -ld "$PRG")
   # Drop everything prior to ->
-  link=`expr "$ls" : '.*-> \(.*\)$'`
-  if expr "$link" : '/.*' > /dev/null; then
+  link=$(echo "$ls" | sed 's/.*-> //')
+  if [[ "$link" == /* ]]; then
     PRG="$link"
   else
-    PRG=`dirname "$PRG"`/"$link"
+    PRG=$(dirname "$PRG")/"$link"
   fi
 done
 
-TIS_TIP=`dirname "$PRG"`/..
-TIS_TIP=`cd "$TIS_TIP"; pwd`
+TIS_TIP=$(dirname "$PRG")/..
+TIS_TIP=$(cd "$TIS_TIP"; pwd)
 
 echo "working dir:$TIS_TIP"
 
@@ -66,7 +76,14 @@ JAVA_OPTS="$JAVA_JVM_OPTS -Djdk.tls.client.protocols=TLSv1.2 -XX:+UseG1GC -XX:Pa
 
 
 is_exist() {
-  pid=`ps -ef|grep $JAR_NAME|grep -v grep|awk '{print $2}' `
+  # Use pgrep for cross-platform compatibility (macOS and Linux)
+  # -f matches against full command line, -x for exact match
+  pid=$(pgrep -f "$JAR_NAME" 2>/dev/null || true)
+
+  # If pgrep not available, fall back to ps with portable options
+  if [ -z "$pid" ] && ! command -v pgrep >/dev/null 2>&1; then
+    pid=$(ps ax -o pid,command | grep "$JAR_NAME" | grep -v grep | awk '{print $1}' | head -n 1)
+  fi
 
   if [ -z "${pid}" ]; then
    return 0
@@ -81,48 +98,165 @@ start() {
   is_exist
   if [ $? -eq "1" ]; then
     echo "$APP_NAME is already running pid is ${pid}"
-  else
+    return 0
+  fi
+
+  # Check if Java is available
+  if ! command -v java >/dev/null 2>&1; then
+    echo "Error: Java is not installed or not in PATH"
+    echo "Please install Java and ensure it's available in PATH"
+    return 1
+  fi
+
+  # Display Java version
+  echo "Using Java version:"
+  java -version 2>&1 | head -n 1
+
+  # Create necessary directories
+  if [ ! -d "$LOG_FILE" ]; then
+    echo "Creating log directory: $LOG_FILE"
+    mkdir -p "$LOG_FILE" 2>/dev/null || {
+      echo "Error: Cannot create log directory $LOG_FILE"
+      return 1
+    }
+  fi
+
+  if [ ! -d "$LOG_FILE/gc" ]; then
+    echo "Creating GC log directory: $LOG_FILE/gc"
+    mkdir -p "$LOG_FILE/gc" 2>/dev/null || {
+      echo "Warning: Cannot create GC directory $LOG_FILE/gc"
+    }
+  fi
+
+  # Check if JAR file exists (for non-classpath launch)
+  # Note: This check is basic and may need adjustment based on actual deployment
+
+  echo "Starting $APP_NAME..."
 
   {% if uber_docker_pkg %}
       java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/HeapDump.hprof {{tis_app_launch_main}}
   {% else %}
      exec java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/HeapDump.hprof {{tis_app_launch_main}} >$LOG_FILE/tis.log 2>&1 &
-     echo $! > $JAR_PID
-     echo "start $APP_NAME successed pid is $! "
-     tail -1000f $LOG_FILE/tis.log | sed '/Started/Q'
-  {% endif %}
+     local start_pid=$!
+     echo $start_pid > $JAR_PID
+     echo "Started $APP_NAME successfully, pid=$start_pid"
 
-   fi
+     # Wait a moment to ensure process started
+     sleep 2
+
+     # Verify process is still running
+     if ! kill -0 $start_pid 2>/dev/null; then
+       echo "Error: Process failed to start. Check logs at $LOG_FILE/tis.log"
+       rm -f "$JAR_PID"
+       return 1
+     fi
+
+     echo "Following startup logs (will stop when 'Started' appears)..."
+     tail -f -n 1000 $LOG_FILE/tis.log | sed '/Started/q'
+  {% endif %}
 }
 
 
 stop() {
-  # is_exist
-  pidf=$(cat $JAR_PID)
-  # echo "$pidf"
-  echo "pid = $pidf begin kill $pidf"
-  kill $pidf
-  rm -rf $JAR_PID
-  sleep 2
-
   is_exist
-  if [ $? -eq "1" ]; then
-    echo "pid = $pid begin kill -9 $pid"
-    kill -9  $pid
-    sleep 2
-    echo "$APP_NAME process stopped！"
-  else
+  if [ $? -eq "0" ]; then
     echo "$APP_NAME is not running！"
+    return 0
   fi
+
+  # Check if PID file exists
+  if [ ! -f "$JAR_PID" ]; then
+    echo "Warning: PID file $JAR_PID not found, but process is running (pid=$pid)"
+    echo "Attempting to stop process $pid..."
+    kill "$pid" 2>/dev/null
+    sleep 2
+
+    is_exist
+    if [ $? -eq "1" ]; then
+      echo "Process still running, forcing stop with kill -9..."
+      kill -9 "$pid" 2>/dev/null
+      sleep 1
+    fi
+    echo "$APP_NAME process stopped！"
+    return 0
+  fi
+
+  # Read PID from file
+  pidf=$(cat "$JAR_PID" 2>/dev/null)
+
+  if [ -z "$pidf" ]; then
+    echo "Error: PID file is empty"
+    rm -f "$JAR_PID"
+    return 1
+  fi
+
+  echo "Stopping $APP_NAME (pid=$pidf)..."
+
+  # Try graceful shutdown first
+  if kill "$pidf" 2>/dev/null; then
+    echo "Sent SIGTERM to process $pidf, waiting for graceful shutdown..."
+
+    # Wait up to 10 seconds for graceful shutdown
+    for i in {1..10}; do
+      sleep 1
+      if ! kill -0 "$pidf" 2>/dev/null; then
+        echo "$APP_NAME stopped gracefully"
+        rm -f "$JAR_PID"
+        return 0
+      fi
+    done
+
+    # Force kill if still running
+    echo "Process did not stop gracefully, forcing shutdown..."
+    kill -9 "$pidf" 2>/dev/null
+    sleep 1
+  else
+    echo "Warning: Process $pidf not found, cleaning up PID file"
+  fi
+
+  rm -f "$JAR_PID"
+  echo "$APP_NAME stopped！"
 }
 
 
 status() {
   is_exist
   if [ $? -eq "1" ]; then
-    echo "$APP_NAME is running，pid is ${pid}"
+    echo "$APP_NAME is running, pid=${pid}"
+
+    # Show additional process information if available
+    if command -v ps >/dev/null 2>&1; then
+      echo ""
+      echo "Process details:"
+      # Use portable ps options for both macOS and Linux
+      ps -p "$pid" -o pid,ppid,user,%cpu,%mem,etime,command 2>/dev/null || \
+      ps -p "$pid" -o pid,user,command 2>/dev/null
+    fi
+
+    # Show PID file location
+    if [ -f "$JAR_PID" ]; then
+      echo ""
+      echo "PID file: $JAR_PID"
+    else
+      echo ""
+      echo "Warning: PID file $JAR_PID does not exist"
+    fi
+
+    # Show log file location
+    if [ -f "$LOG_FILE/tis.log" ]; then
+      echo "Log file: $LOG_FILE/tis.log"
+      echo ""
+      echo "Last 5 log lines:"
+      tail -n 5 "$LOG_FILE/tis.log" 2>/dev/null
+    fi
   else
-    echo "$APP_NAME is not running！"
+    echo "$APP_NAME is not running"
+
+    # Check if there's a stale PID file
+    if [ -f "$JAR_PID" ]; then
+      echo "Warning: Found stale PID file at $JAR_PID"
+      echo "Run './tis stop' to clean up"
+    fi
   fi
 }
 

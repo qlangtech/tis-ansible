@@ -57,7 +57,7 @@
 #      dest: "{{ ng_tis_src_dir }}"
 #      remote_src: yes
 
-  - name: compile/build ng-tis
+  - name: 'compile/build ng-tis in {{ng_tis_src_dir}}'
     #command: npm run ng:serve-aot
     #shell: npm run ng:serve-aot > exec.log && npm run build:elements >> exec.log
     shell: npm run ng:serve-aot > exec.log
