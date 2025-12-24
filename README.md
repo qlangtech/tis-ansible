@@ -167,7 +167,9 @@ hdfs dfs -chmod -R 777 /
    ``` shell script
    ansible-playbook ./deploy-tis-by-compile.yml --tags pkg,pkg-plugin,tis-sqlserver-plugin,tis-paimon-plugin,pkg-plugin-vip,ng-tis,uber,uber-docker,datax-docker,flink-docker,update-center,deploy,deploy-tis-repo  -i ./inventory/hosts
    ```
-
+部分Tag说明
+1. deploy-tis-repo：maven 执行过程中将 artifact deploy 到远程仓库中，适合最终发布过程中执行
+2. deploy：执行docker镜像deploy到远程仓库中，将TIS的部分部分tgz组件部署到仓库中,如tis-uber等
 
 
 ## 向ansible脚本中新添加一个role
