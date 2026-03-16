@@ -356,17 +356,34 @@ CREATE TABLE `usr_dpt_relation` (
 DROP TABLE IF EXISTS `work_flow`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+--CREATE TABLE `work_flow` (
+--  `id` int(11) NOT NULL AUTO_INCREMENT comment 'id',
+--  `name` varchar(50) DEFAULT NULL comment 'name',
+--  `op_user_id` int(11) NOT NULL comment 'op_user_id',
+--  `op_user_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL comment 'op_user_name',
+--  `git_path` text DEFAULT NULL comment 'git_path',
+--  `in_change` tinyint(4) NOT NULL DEFAULT '0'  comment 'in_change',
+--  `create_time` datetime DEFAULT NULL comment 'create_time',
+--  `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
+--  PRIMARY KEY (`id`)
+--) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 ;
+
 CREATE TABLE `work_flow` (
-  `id` int(11) NOT NULL AUTO_INCREMENT comment 'id',
-  `name` varchar(50) DEFAULT NULL comment 'name',
-  `op_user_id` int(11) NOT NULL comment 'op_user_id',
-  `op_user_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL comment 'op_user_name',
-  `git_path` text DEFAULT NULL comment 'git_path',
-  `in_change` tinyint(4) NOT NULL DEFAULT '0'  comment 'in_change',
-  `create_time` datetime DEFAULT NULL comment 'create_time',
-  `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP comment 'op_time',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `op_user_id` int(11) NOT NULL,
+  `op_user_name` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `git_path` text,
+  `in_change` tinyint(4) NOT NULL DEFAULT '0',
+  `create_time` datetime DEFAULT NULL,
+  `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `dag_spec_path` varchar(256) DEFAULT NULL COMMENT 'DAG拓扑结构文件路径,相对于NULL/workflow/',
+  `schedule_cron` varchar(64) DEFAULT NULL COMMENT '定时调度Cron表达式',
+  `enable_schedule` tinyint(1) DEFAULT '0' COMMENT '是否启用定时调度',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `constraint_unique_name` (`name`),
+  KEY `idx_workflow_schedule` (`enable_schedule`,`schedule_cron`)
+) ENGINE=InnoDB AUTO_INCREMENT=238 DEFAULT CHARSET=utf8mb4
 
 
 --
@@ -394,7 +411,12 @@ CREATE TABLE `work_flow_build_history` (
   `end_phase` tinyint(4) DEFAULT NULL comment 'end_phase',
   `last_ver` smallint(4) DEFAULT 0 comment 'last_ver',
   `asyn_sub_task_status` text COMMENT 'asyn_sub_task_status',
-  PRIMARY KEY (`id`)
+  `dag_runtime` text COMMENT 'DAG运行时状态JSON,包含所有节点执行状态',
+   `wf_context` text COMMENT '工作流上下文,节点间数据共享',
+   `instance_status` varchar(32) DEFAULT NULL COMMENT '实例状态:WAITING/RUNNING/SUCCEED/FAILED/STOPPED',
+   PRIMARY KEY (`id`),
+   KEY `idx_wfbh_instance_status` (`instance_status`),
+   KEY `idx_wfbh_create_time` (`create_time`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 
 
@@ -462,3 +484,27 @@ CREATE TABLE `datasource_table` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4;
 
+DROP TABLE IF EXISTS `dag_node_execution`;
+CREATE TABLE `dag_node_execution` (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
+    workflow_instance_id INT NOT NULL COMMENT '关联workflow_build_history.id',
+    node_id BIGINT NOT NULL COMMENT '节点ID',
+    node_name VARCHAR(128) NOT NULL COMMENT '节点名称',
+    node_type VARCHAR(32) NOT NULL COMMENT '节点类型:TASK/CONTROL',
+    task_name VARCHAR(256) COMMENT '关联的任务名称',
+    status VARCHAR(32) COMMENT '节点状态:WAITING/RUNNING/SUCCEED/FAILED/CANCELED',
+    result TEXT COMMENT '节点执行结果',
+    start_time DATETIME COMMENT '开始时间',
+    finished_time DATETIME COMMENT '完成时间',
+    skip_when_failed TINYINT(1) DEFAULT 0 COMMENT '失败时是否跳过',
+    enable TINYINT(1) DEFAULT 1 COMMENT '节点是否启用',
+    retry_times INT DEFAULT 0 COMMENT '重试次数',
+    worker_address VARCHAR(128) COMMENT '执行节点地址',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    INDEX idx_wf_instance(workflow_instance_id),
+    INDEX idx_node_id(node_id),
+    INDEX idx_status(status),
+    INDEX idx_worker(worker_address),
+    INDEX idx_create_time(create_time)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='DAG节点执行详情表';

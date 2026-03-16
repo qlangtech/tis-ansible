@@ -340,9 +340,14 @@ CREATE TABLE `work_flow` (
   `in_change` smallint NOT NULL DEFAULT 0  ,
   `create_time` timestamp DEFAULT NULL ,
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-)  ;
+   `dag_spec_path` varchar(256) DEFAULT NULL ,
+   `schedule_cron` varchar(64) DEFAULT NULL ,
+   `enable_schedule` SMALLINT DEFAULT 0 ,
+   PRIMARY KEY (`id`),
+   CONSTRAINT `constraint_unique_name` UNIQUE (`name`)
+);
 
+CREATE INDEX "idx_workflow_schedule" ON `work_flow` (`enable_schedule`, `schedule_cron`);
 
 
 DROP TABLE IF EXISTS `work_flow_build_history`;
@@ -366,9 +371,14 @@ CREATE TABLE `work_flow_build_history` (
   `end_phase` smallint DEFAULT NULL ,
   `last_ver` smallint DEFAULT 0 ,
   `asyn_sub_task_status` clob ,
+  `dag_runtime` clob ,
+  `wf_context` clob ,
+  `instance_status` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ;
 
+CREATE INDEX "idx_work_flow_build_history_status" ON `work_flow_build_history` (`instance_status`);
+CREATE INDEX "idx_work_flow_build_history_create_time" ON `work_flow_build_history` (`create_time`);
 --
 -- Table structure for table `work_flow_build_phase`
 --
@@ -431,3 +441,31 @@ CREATE TABLE `datasource_table` (
   `op_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   PRIMARY KEY (`id`)
 ) ;
+
+DROP TABLE IF EXISTS "dag_node_execution";
+CREATE TABLE "dag_node_execution" (
+    "id" BIGINT NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    "workflow_instance_id" INTEGER NOT NULL,
+    "node_id" BIGINT NOT NULL,
+    "node_name" VARCHAR(128) NOT NULL,
+    "node_type" VARCHAR(32) NOT NULL,
+    "task_name" VARCHAR(256),
+    "status" VARCHAR(32),
+    "result" CLOB,
+    "start_time" TIMESTAMP,
+    "finished_time" TIMESTAMP,
+    "skip_when_failed" SMALLINT DEFAULT 0,
+    "enable" SMALLINT DEFAULT 1,
+    "retry_times" INTEGER DEFAULT 0,
+    "worker_address" VARCHAR(128),
+    "create_time" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    "update_time" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "pk_dag_node_execution_id" PRIMARY KEY ("id")
+);
+
+-- 2. 创建索引
+CREATE INDEX "idx_wf_instance" ON "dag_node_execution" ("workflow_instance_id");
+CREATE INDEX "idx_node_id" ON "dag_node_execution" ("node_id");
+CREATE INDEX "idx_status" ON "dag_node_execution" ("status");
+CREATE INDEX "idx_worker" ON "dag_node_execution" ("worker_address");
+CREATE INDEX "idx_create_time" ON "dag_node_execution" ("create_time");
