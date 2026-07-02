@@ -37,6 +37,19 @@ echo "working dir:$TIS_TIP"
 
 export TIS_HOME="$TIS_TIP"
 
+{% include 'detect-host-ip.j2' %}
+
+AKKA_HOST_IP=$(detect_host_ip)
+
+export AKKA_HOSTNAME="$AKKA_HOST_IP"
+
+if [ "$TIS_LAUNCH_MODE" = "datax-worker" ]; then
+    export AKKA_ROLES="worker"
+else
+    export AKKA_SEED_NODES="akka://TIS-DAG-System@${AKKA_HOST_IP}:2551"
+    export AKKA_ROLES="scheduler,worker"
+fi
+
 {% set tis_app_launch_main = '-jar ' + relative_root_dir + '/' + tis_app_name + '/' + tis_app_name + '.jar' %}
 {% if uber_pkg %}
  {% set relative_root_dir = '${TIS_TIP}'%}
@@ -44,6 +57,7 @@ export TIS_HOME="$TIS_TIP"
 {% endif %}
 
 {% set tis_app_launch_main = '-classpath ' + relative_root_dir + '/'  + tis_app_name+ '/lib/*:' + relative_root_dir + '/' + tis_app_name+ '/conf:'+relative_root_dir+ '/' + tis_app_name + '/' + tis_app_name + '.jar com.qlangtech.tis.web.start.TisApp' %}
+{% set datax_worker_launch_main = '-classpath ' + relative_root_dir + '/' + tis_app_name + '/lib/*:' + relative_root_dir + '/' + tis_app_name + '/conf:' + relative_root_dir + '/' + tis_app_name + '/' + tis_app_name + '.jar com.qlangtech.tis.plugin.datax.DataXWorkerLauncher' %}
 
 
 {% set not_fetch_from_center_repository = '' %}
@@ -55,11 +69,21 @@ export TIS_HOME="$TIS_TIP"
 {% endif %}
 
 
+if [ "$TIS_LAUNCH_MODE" = "datax-worker" ]; then
+    TIS_APP_LAUNCH_MAIN="{{datax_worker_launch_main}}"
+    PROCESS_FLAG="datax-worker-process"
+    JDWP_ADDRESS_PORT=50001
+else
+    TIS_APP_LAUNCH_MAIN="{{tis_app_launch_main}}"
+    PROCESS_FLAG="tis-process"
+    JDWP_ADDRESS_PORT=50000
+fi
+
 APP_NAME={{tis_app_name}}
 SERVER_PORT={{tis_server_port}}
 #JAR_PATH='/app/uid-consumer'
 JAR_NAME={{tis_app_name}}.jar
-JAR_PID={{relative_root_dir}}$JAR_NAME\.pid
+JAR_PID={{relative_root_dir}}${PROCESS_FLAG}.pid
 
 {% if uber_pkg %}
  LOG_FILE="{{relative_root_dir}}/logs"
@@ -72,17 +96,14 @@ if [ -z "$JAVA_JVM_OPTS" ]; then
 fi
 
 
-JAVA_OPTS="$JAVA_JVM_OPTS -Djdk.tls.client.protocols=TLSv1.2 -XX:+UseG1GC -XX:ParallelGCThreads=4  -Xlog:gc* -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=utf-8 -Dtis.launch.port=$SERVER_PORT {{not_fetch_from_center_repository}} -Ddata.dir={{tis_data_dir}} -Dlog.dir=$LOG_FILE -Dweb.root.dir={{app_home}}  -Xrunjdwp:transport=dt_socket,address=*:50000,suspend=n,server=y"
+JAVA_OPTS="$JAVA_JVM_OPTS -Djdk.tls.client.protocols=TLSv1.2 -XX:+UseG1GC -XX:ParallelGCThreads=4  -Xlog:gc* -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=utf-8 -Dtis.launch.port=$SERVER_PORT {{not_fetch_from_center_repository}} -Ddata.dir={{tis_data_dir}} -Dlog.dir=$LOG_FILE -Dweb.root.dir={{app_home}}  -Xrunjdwp:transport=dt_socket,address=*:$JDWP_ADDRESS_PORT,suspend=n,server=y"
 
 
 is_exist() {
-  # Use pgrep for cross-platform compatibility (macOS and Linux)
-  # -f matches against full command line, -x for exact match
-  pid=$(pgrep -f "$JAR_NAME" 2>/dev/null || true)
+  pid=$(pgrep -f "$PROCESS_FLAG" 2>/dev/null || true)
 
-  # If pgrep not available, fall back to ps with portable options
   if [ -z "$pid" ] && ! command -v pgrep >/dev/null 2>&1; then
-    pid=$(ps ax -o pid,command | grep "$JAR_NAME" | grep -v grep | awk '{print $1}' | head -n 1)
+    pid=$(ps ax -o pid,command | grep "$PROCESS_FLAG" | grep -v grep | awk '{print $1}' | head -n 1)
   fi
 
   if [ -z "${pid}" ]; then
@@ -131,28 +152,28 @@ start() {
   # Check if JAR file exists (for non-classpath launch)
   # Note: This check is basic and may need adjustment based on actual deployment
 
-  echo "Starting $APP_NAME..."
+  echo "Starting $PROCESS_FLAG..."
 
   {% if uber_docker_pkg %}
-      java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/HeapDump.hprof {{tis_app_launch_main}}
+      java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/${PROCESS_FLAG}-gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/${PROCESS_FLAG}-HeapDump.hprof $TIS_APP_LAUNCH_MAIN
   {% else %}
-     exec java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/HeapDump.hprof {{tis_app_launch_main}} >$LOG_FILE/tis.log 2>&1 &
+     exec java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/${PROCESS_FLAG}-gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/${PROCESS_FLAG}-HeapDump.hprof $TIS_APP_LAUNCH_MAIN >$LOG_FILE/$PROCESS_FLAG.log 2>&1 &
      local start_pid=$!
      echo $start_pid > $JAR_PID
-     echo "Started $APP_NAME successfully, pid=$start_pid"
+     echo "Started $PROCESS_FLAG successfully, pid=$start_pid"
 
      # Wait a moment to ensure process started
      sleep 2
 
      # Verify process is still running
      if ! kill -0 $start_pid 2>/dev/null; then
-       echo "Error: Process failed to start. Check logs at $LOG_FILE/tis.log"
+       echo "Error: Process failed to start. Check logs at $LOG_FILE/$PROCESS_FLAG.log"
        rm -f "$JAR_PID"
        return 1
      fi
 
      echo "Following startup logs (will stop when 'Started' appears)..."
-     tail -f -n 1000 $LOG_FILE/tis.log | sed '/Started/q'
+     tail -f -n 1000 $LOG_FILE/$PROCESS_FLAG.log | sed '/Started/q'
   {% endif %}
 }
 
@@ -160,7 +181,7 @@ start() {
 stop() {
   is_exist
   if [ $? -eq "0" ]; then
-    echo "$APP_NAME is not running！"
+    echo "$PROCESS_FLAG is not running！"
     return 0
   fi
 
@@ -177,7 +198,7 @@ stop() {
       kill -9 "$pid" 2>/dev/null
       sleep 1
     fi
-    echo "$APP_NAME process stopped！"
+    echo "$PROCESS_FLAG process stopped！"
     return 0
   fi
 
@@ -190,7 +211,7 @@ stop() {
     return 1
   fi
 
-  echo "Stopping $APP_NAME (pid=$pidf)..."
+  echo "Stopping $PROCESS_FLAG (pid=$pidf)..."
 
   # Try graceful shutdown first
   if kill "$pidf" 2>/dev/null; then
@@ -200,7 +221,7 @@ stop() {
     for i in {1..10}; do
       sleep 1
       if ! kill -0 "$pidf" 2>/dev/null; then
-        echo "$APP_NAME stopped gracefully"
+        echo "$PROCESS_FLAG stopped gracefully"
         rm -f "$JAR_PID"
         return 0
       fi
@@ -215,14 +236,14 @@ stop() {
   fi
 
   rm -f "$JAR_PID"
-  echo "$APP_NAME stopped！"
+  echo "$PROCESS_FLAG stopped！"
 }
 
 
 status() {
   is_exist
   if [ $? -eq "1" ]; then
-    echo "$APP_NAME is running, pid=${pid}"
+    echo "$PROCESS_FLAG is running, pid=${pid}"
 
     # Show additional process information if available
     if command -v ps >/dev/null 2>&1; then
@@ -243,14 +264,14 @@ status() {
     fi
 
     # Show log file location
-    if [ -f "$LOG_FILE/tis.log" ]; then
-      echo "Log file: $LOG_FILE/tis.log"
+    if [ -f "$LOG_FILE/$PROCESS_FLAG.log" ]; then
+      echo "Log file: $LOG_FILE/$PROCESS_FLAG.log"
       echo ""
       echo "Last 5 log lines:"
-      tail -n 5 "$LOG_FILE/tis.log" 2>/dev/null
+      tail -n 5 "$LOG_FILE/$PROCESS_FLAG.log" 2>/dev/null
     fi
   else
-    echo "$APP_NAME is not running"
+    echo "$PROCESS_FLAG is not running"
 
     # Check if there's a stale PID file
     if [ -f "$JAR_PID" ]; then

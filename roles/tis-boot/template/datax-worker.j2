@@ -1,0 +1,24 @@
+#!/bin/bash
+PRG="$0"
+while [ -h "$PRG" ] ; do
+  ls=$(ls -ld "$PRG")
+  link=$(echo "$ls" | sed 's/.*-> //')
+  if [[ "$link" == /* ]]; then
+    PRG="$link"
+  else
+    PRG=$(dirname "$PRG")/"$link"
+  fi
+done
+SCRIPT_DIR=$(dirname "$PRG")
+
+{% include 'detect-host-ip.j2' %}
+
+AKKA_HOST_IP=$(detect_host_ip)
+
+# AKKA_PORT shall be distinction with each other on dataX Worker node
+export AKKA_PORT=2552
+export AKKA_SEED_NODES="akka://TIS-DAG-System@${AKKA_HOST_IP}:2551"
+export JAVA_JVM_OPTS="-Xms3G -Xmx3G -XX:MetaspaceSize=512m -XX:MaxMetaspaceSize=1024m "
+
+export TIS_LAUNCH_MODE="datax-worker"
+exec "$SCRIPT_DIR/tis" "$@"

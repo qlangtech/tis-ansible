@@ -1,0 +1,18 @@
+# Detect host IP address (avoid 127.0.0.1)
+# Shared function used by tis and datax-worker scripts
+detect_host_ip() {
+    local ip=""
+    if [ "$(uname)" = "Darwin" ]; then
+        ip=$(ipconfig getifaddr en0 2>/dev/null || ifconfig | grep 'inet ' | grep -v '127.0.0.1' | head -1 | awk '{print $2}')
+    else
+        ip=$(hostname -I 2>/dev/null | awk '{print $1}')
+        if [ -z "$ip" ]; then
+            ip=$(ip route get 1.0.0.0 2>/dev/null | awk '{for(i=1;i<=NF;i++) if ($i=="src") print $(i+1)}')
+        fi
+    fi
+    if [ -z "$ip" ]; then
+        echo "Warning: Could not detect host IP address for AKKA" >&2
+        ip="127.0.0.1"
+    fi
+    echo "$ip"
+}

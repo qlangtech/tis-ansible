@@ -16,6 +16,7 @@
   when: item.when
   with_items:
     - {name: "tis", when: True}
+    - {name: "datax-worker", when: True}
     - {name: "zookeeper" , when: "{{uber_pkg}}"}
 #  - "tis.in.sh"
 

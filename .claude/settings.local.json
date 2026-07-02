@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /opt/misc/tis-ansible -name *.yml -type f)"
+    ]
+  }
+}
