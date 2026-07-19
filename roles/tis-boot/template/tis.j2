@@ -155,9 +155,9 @@ start() {
   echo "Starting $PROCESS_FLAG..."
 
   {% if uber_docker_pkg %}
-      java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/${PROCESS_FLAG}-gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/${PROCESS_FLAG}-HeapDump.hprof $TIS_APP_LAUNCH_MAIN
+      java --add-opens java.base/java.lang=ALL-UNNAMED $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/${PROCESS_FLAG}-gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/${PROCESS_FLAG}-HeapDump.hprof $TIS_APP_LAUNCH_MAIN
   {% else %}
-     exec java $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/${PROCESS_FLAG}-gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/${PROCESS_FLAG}-HeapDump.hprof $TIS_APP_LAUNCH_MAIN >$LOG_FILE/$PROCESS_FLAG.log 2>&1 &
+     exec java --add-opens java.base/java.lang=ALL-UNNAMED $JAVA_OPTS -Xlog:gc:$LOG_FILE/gc/${PROCESS_FLAG}-gclog.log -XX:HeapDumpPath=$LOG_FILE/gc/${PROCESS_FLAG}-HeapDump.hprof $TIS_APP_LAUNCH_MAIN >$LOG_FILE/$PROCESS_FLAG.log 2>&1 &
      local start_pid=$!
      echo $start_pid > $JAR_PID
      echo "Started $PROCESS_FLAG successfully, pid=$start_pid"

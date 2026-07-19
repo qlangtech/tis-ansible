@@ -16,11 +16,11 @@ ENV PARAMS=""
 ENV JVMOPTIONS=""
 ADD ./{{tis_data_tar_file_name}} /opt/data/
 ADD ./tis-datax-executor.tar.gz /opt/tis/
-ADD ./{{powerjob_tar_file_name}} /
+# ADD ./{{powerjob_tar_file_name}} /
 
-RUN mv /opt/data/data /opt/data/tis  && mv /powerjob-worker-samples/powerjob-worker-samples.jar /  && mv /powerjob-worker-samples/wait-for-it.sh /  &&\
-	mkdir -p /opt/logs && \
-    mkdir -p /opt/tis
+#RUN mv /opt/data/data /opt/data/tis  && mv /powerjob-worker-samples/powerjob-worker-samples.jar /  && mv /powerjob-worker-samples/wait-for-it.sh /  &&\
+#	mkdir -p /opt/logs && \
+#    mkdir -p /opt/tis
 
 # 将应用 jar 包拷入 docker
 #COPY target/powerjob-worker-samples.jar /powerjob-worker-samples.jar

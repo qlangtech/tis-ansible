@@ -431,7 +431,7 @@
       - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_pkg_version}}/tis-uber/{{tis_data_tar_file_name}}"}
     docker_context_plugin_dependencies_files:
       - {app: "{{tis_incr_name}}" ,tar_name: "{{tis_incr_tar_name}}"}
-      - {app: "{{tis_incr_name}}" ,tar_name: "{{powerjob_tar_file_name}}"}
+#     - {app: "{{tis_incr_name}}" ,tar_name: "{{powerjob_tar_file_name}}"}
   hosts: localhost
   roles:
     - role: tis-incr

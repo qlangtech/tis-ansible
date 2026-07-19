@@ -13,7 +13,7 @@ tis_pkg_version: "5.1.0"
 
 
 
-powerjob_tar_file_name: "powerjob-worker-samples.tar.gz"
+#powerjob_tar_file_name: "powerjob-worker-samples.tar.gz"
 tis_data_tar_file_name: "tis-data.tar.gz"
 need_install_tis_collect: true;
 ng_tis_app_name: ng-tis
